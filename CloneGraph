@@ -52,3 +52,86 @@ public class Solution {
     }
 
 }
+
+
+----
+public class Solution {
+
+
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node)
+    {
+
+		if(node == null) return null;
+
+		HashMap<UndirectedGraphNode, UndirectedGraphNode> map = 
+			new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+
+		LinkedList<UndirectedGraphNode> q = new LinkedList<UndirectedGraphNode>();
+
+		q.addLast(node);
+		map.put(node, new UndirectedGraphNode(node.label));
+
+		while(!q.isEmpty())
+		{
+			UndirectedGraphNode cur = q.removeFirst();
+			for(UndirectedGraphNode l:cur.neighbors)
+			{
+				if(!map.containsKey(l))
+				{
+					UndirectedGraphNode neighbor = new UndirectedGraphNode(l.label);
+					map.get(cur).neighbors.add(neighbor);
+					map.put(l,neighbor);
+					q.addLast(l);
+				}
+				else
+				{
+					map.get(cur).neighbors.add(map.get(l));
+				}
+			}
+		}
+		return map.get(node);
+	 }
+}
+
+---
+
+public class Solution {
+
+
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node)
+    {
+
+		if(node == null) return null;
+
+		HashMap<UndirectedGraphNode, UndirectedGraphNode> map = 
+			new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+
+		Stack<UndirectedGraphNode> q = new Stack<UndirectedGraphNode>();
+
+		UndirectedGraphNode cp = new UndirectedGraphNode(node.label);
+		map.put(node, cp);
+
+		q.push(node);
+		while(!q.isEmpty())
+		{
+			UndirectedGraphNode cur = q.pop();
+
+			for(UndirectedGraphNode l:cur.neighbors)
+			{
+				if(!map.containsKey(l))
+				{
+					UndirectedGraphNode ll = new UndirectedGraphNode(l.label);
+					map.put(l,ll);
+					map.get(cur).neighbors.add(ll);
+					q.push(l);
+				}
+				else
+				{
+					map.get(cur).neighbors.add(map.get(l));
+				}
+			}
+		}
+
+		return map.get(node);
+    }
+}
