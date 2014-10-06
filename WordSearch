@@ -1,0 +1,91 @@
+WordSearch
+
+Given a 2D board and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+For example,
+Given board =
+
+[
+  ["ABCE"],
+  ["SFCS"],
+  ["ADEE"]
+]
+word = "ABCCED", -> returns true,
+word = "SEE", -> returns true,
+word = "ABCB", -> returns false.
+
+--
+public class Solution {
+    
+    public boolean exist(char[][] board, String word, int i, int j, boolean[][] map)
+    {
+        if(word.length() == 0) return true;
+        if(i-1>=0 && !map[i-1][j])
+        {
+            if(word.charAt(0) == board[i-1][j])
+            {
+                map[i-1][j] = true;
+                if(exist(board, word.substring(1), i-1, j, map))
+                    return true;
+                map[i-1][j] = false;
+            }        
+        }
+        
+        if(j-1>=0 && !map[i][j-1])
+        {
+            if(word.charAt(0) == board[i][j-1])
+            {
+                map[i][j-1] = true;
+                if(exist(board, word.substring(1), i, j-1, map))
+                    return true;
+                map[i][j-1] = false;
+            }        
+        }
+        
+        if(i+1<board.length && !map[i+1][j])
+        {
+            if(word.charAt(0) == board[i+1][j])
+            {
+                map[i+1][j] = true;
+                if(exist(board, word.substring(1), i+1, j, map))
+                    return true;
+                map[i+1][j] = false;
+            }        
+        }
+        
+        if(j+1<board[0].length && !map[i][j+1])
+        {
+            if(word.charAt(0) == board[i][j+1])
+            {
+                map[i][j+1] = true;
+                if(exist(board, word.substring(1), i, j+1, map))
+                    return true;
+                map[i][j+1] = false;
+            }        
+        }
+        return false;
+    }
+
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        if(m==0) return false;
+        int n = board[0].length;
+        if(n==0) return false;
+        if(word.length() == 0 ) return true;
+
+        boolean[][] map = new boolean[m][n];
+        
+        for(int i=0;i<m;i++)
+            for(int j =0; j<n; j++)
+                if( board[i][j] == word.charAt(0))
+                {
+                    map[i][j] = true;
+                    if(exist(board, word.substring(1), i, j, map))
+                        return true;
+                    map[i][j] = false;
+                }
+        return false;
+    }
+}

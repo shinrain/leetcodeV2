@@ -1,0 +1,65 @@
+ValidSudoku
+
+Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+
+---
+
+public class Solution {
+    public boolean isValidSudoku(char[][] board) {
+    	int n = board.length;
+    	boolean[] rec = new boolean[9];
+
+
+    	for(int i=0;i<n;i++)
+    	{
+	    	for(int j=0;j<9;j++)
+	    		rec[j] = false;
+
+    		for(int j =0; j< n; j++)
+    		{
+    			if(board[i][j] == '.') continue;
+    			int cur = (int)(board[i][j]-'0');
+    			if( cur<1 || cur >9 || rec[cur-1] ) return false;
+    			else rec[cur-1] = true;
+    		}
+    	}
+
+    	for(int i=0;i<n;i++)
+    	{
+	    	for(int j=0;j<9;j++)
+	    		rec[j] = false;
+
+    		for(int j =0; j< n; j++)
+    		{
+    			if(board[j][i] == '.') continue;
+    			int cur = (int)(board[j][i]-'0');
+    			if( cur<1 || cur >9 || rec[cur-1] ) return false;
+    			else rec[cur-1] = true;
+    		}
+    	}
+
+    	for(int i=0; i<3;i++)
+    	{
+    		for(int j=0; j<3; j++)
+    		{
+		    	for(int k=0;k<9;k++)
+		    		rec[k] = false;
+		    	for(int k=0;k<3;k++)
+		    	{
+		    		for(int v =0; v<3; v++)
+		    		{
+		    			int ii = i*3+k;
+		    			int jj = j*3+v;
+		    			if(board[ii][jj] == '.') continue;
+		    			int cur = (int)(board[ii][jj]-'0');
+		    			if( cur<1 || cur >9 || rec[cur-1] ) return false;
+		    			else rec[cur-1] = true;	
+		    		}
+		    	}
+    		}
+    	}
+    	return true;
+    }
+}

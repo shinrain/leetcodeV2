@@ -1,0 +1,70 @@
+RemoveDuplicatesfromSortedListII
+
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+For example,
+Given 1->2->3->3->4->4->5, return 1->2->5.
+Given 1->1->1->2->3, return 2->3.
+---
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+ 	public  ListNode remove(ListNode cur)
+ 	{
+ 		if(cur == null || cur.next == null) return cur;
+ 		int val = cur.val;
+ 		while(cur!=null)
+ 		{
+ 			ListNode t = cur.next;
+ 			if(cur.val == val)
+ 			{
+ 				cur.next = null;
+ 				cur = t;
+ 			}else
+ 			{
+ 				return cur;
+ 			}
+ 		}
+ 		return null;
+ 	}
+    public ListNode deleteDuplicates(ListNode head) {
+    	if(head == null) return head;
+
+    	ListNode cur = head;
+    	head = null;
+    	ListNode tail = null;
+
+		while(cur!=null)
+		{
+			if(cur.next == null || cur.val != cur.next.val)
+			{
+				ListNode t = cur.next;
+				cur.next = null;
+				if(tail == null)
+				{
+					head = cur;
+					tail = cur;
+				}
+				else
+				{
+					tail.next = cur;
+					tail = cur;
+				}
+				cur = t;
+			}else
+			{
+				cur = remove(cur);
+			}
+		}   
+		return head;
+    }
+}

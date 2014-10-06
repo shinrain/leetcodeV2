@@ -1,0 +1,58 @@
+SpiralMatrix
+
+Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+For example,
+Given the following matrix:
+
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+You should return [1,2,3,6,9,8,7,4,5].
+---
+
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        
+        List<Integer> re = new ArrayList<Integer>();
+        int m = matrix.length;
+        if(m==0) return re;
+        int n = matrix[0].length;
+        if(n==0) return re;
+
+        int layer = (Math.min(m,n)+1)/2;
+        int count =0;
+        for(int i=0;i<layer;i++)
+        {
+        	for(int j=i; j<n-i; j++)
+        	{	
+        		re.add(matrix[i][j]);
+        		if(++count >= m*n) break;
+        	}
+        	if(count >= m*n) break;
+        	for(int j=i+1; j<m-i; j++)
+        	{
+        		re.add(matrix[j][n-i-1]);
+        		if(++count >= m*n) break;
+        	}
+        	if(count >= m*n) break;
+        	for(int j=n-i-2; j>=i; j--)
+        	{
+        		re.add(matrix[m-i-1][j]);
+        		if(++count >= m*n) break;
+        	}
+        	if(count >= m*n) break;
+        	for(int j=m-i-2; j>i; j--)
+        	{
+        		re.add(matrix[j][i]);
+        		if(++count >= m*n) break;
+        	}
+        	if(count >= m*n) break;
+        }
+        return re;
+    
+    
+    }
+}

@@ -1,0 +1,91 @@
+ScrambleString
+
+Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
+
+Below is one possible representation of s1 = "great":
+
+    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+To scramble the string, we may choose any non-leaf node and swap its two children.
+
+For example, if we choose the node "gr" and swap its two children, it produces a scrambled string "rgeat".
+
+    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+We say that "rgeat" is a scrambled string of "great".
+
+Similarly, if we continue to swap the children of nodes "eat" and "at", it produces a scrambled string "rgtae".
+
+    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+We say that "rgtae" is a scrambled string of "great".
+
+Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.
+---
+
+class Pair
+{
+    String s1;
+    String s2;
+    public Pair(String _s1, String _s2)
+    {
+        s1 = _s1; s2 = _s2;
+    }
+    
+    public int hashCode()
+    {
+        return 31*s1.hashCode() + s2.hashCode();    
+    }
+    public boolean equals(Object o)
+    {
+        if(o!=null && o instanceof Pair)
+        {
+            Pair _o = (Pair)o;
+            return (s1.equals(_o.s1) && s2.equals(_o.s2)) ||  (s2.equals(_o.s1) && s1.equals(_o.s2));
+        }
+        return false;
+    }
+}
+
+public class Solution {
+    public boolean isScramble(String s1, String s2, HashMap<Pair, Boolean> map)
+    {
+        int n = s1.length();
+        if(n!=s2.length()) return false;
+        if(s1.equals(s2)) return true;
+        
+        Pair p = new Pair(s1, s2);
+        if(map.containsKey(p)) return map.get(p);
+        
+        for(int i=1; i< n; i++)
+        {
+            if(( isScramble(s1.substring(0, i), s2.substring(0,i), map) && isScramble(s1.substring(i), s2.substring(i), map) ) 
+                || ( isScramble(s1.substring(0, i), s2.substring(n-i), map) && isScramble(s1.substring(i), s2.substring(0, n-i), map)) )
+            {
+                map.put(p,true);
+                return true;
+            }
+        }
+        map.put(p,false);
+        return false; 
+    }
+    
+    public boolean isScramble(String s1, String s2) {
+        return isScramble(s1, s2, new HashMap<Pair, Boolean>());
+    }
+}

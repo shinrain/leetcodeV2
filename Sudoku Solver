@@ -1,0 +1,71 @@
+Sudoku Solver
+
+Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+Empty cells are indicated by the character '.'.
+
+You may assume that there will be only one unique solution.
+
+---
+
+public class Solution {
+	public boolean valid(char[][] board, int i, int j)
+	{
+		for(int k=0;k<9;k++)
+			if(k!=i && board[k][j] == board[i][j]) return false;
+		for(int k=0;k<9;k++)
+			if(k!=j && board[i][k] == board[i][j]) return false;
+		int c = i/3, d = j/3;
+		int ii = i%3, jj=j%3;
+
+		for(int k=0;k<3;k++)
+			for(int v = 0; v<3; v++)
+			{
+				if((c*3+k !=i && d*3+v!=j) && board[c*3+k][d*3+v] == board[i][j]) return false;
+			}
+		return true;
+	}
+
+	public boolean solveSudoku(char[][] board, int i, int j)
+	{
+		int n = board.length;
+		if(i==n) return true;
+		if(board[i][j]=='.')
+		{
+			for(char k = '1';k<='9';k++)
+			{
+				board[i][j] = k;
+				if(valid(board,i,j))
+				{
+					if(j+1==n)
+					{
+						if(solveSudoku(board, i+1,0)) return true;
+					}
+					else
+					{
+						if(solveSudoku(board, i,j+1)) return true;
+					}
+				}
+			}
+			board[i][j] ='.';
+		}
+		else
+		{
+			if(j+1==n)
+			{
+				if(solveSudoku(board, i+1,0)) return true;
+			}
+			else
+			{
+				if(solveSudoku(board, i,j+1)) return true;
+			}
+		}
+		return false;
+	}
+
+    public void solveSudoku(char[][] board)
+    {
+        solveSudoku(board, 0, 0);
+    }
+
+}

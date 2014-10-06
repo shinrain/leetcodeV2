@@ -1,0 +1,83 @@
+MinimumWindowSubstring
+
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+For example,
+S = "ADOBECODEBANC"
+T = "ABC"
+Minimum window is "BANC".
+
+Note:
+If there is no such window in S that covers all characters in T, return the emtpy string "".
+
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+
+---
+
+public class Solution {
+    public String minWindow(String S, String T)
+    {
+        int mm = S.length();
+        int n = T.length();
+        char[] s = S.toCharArray();
+        char[] t = T.toCharArray();
+
+        if(n==0 || mm==0 || mm<n) return "";
+
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        int m = 0;
+        for(char c:t)
+            if(map.containsKey(c))
+                map.put(c,map.get(c)+1);
+            else
+            {
+                map.put(c, 1);
+            }
+        
+        m = map.size();
+        int maxStart = 0, maxEnd = Integer.MAX_VALUE;
+        int i = 0, j = 0;
+        
+        for(;j<mm;j++)
+        {
+            if(m>0)
+            {
+                if(map.containsKey(s[j]))
+                {
+                    int val = map.get(s[j]);
+                    if(val == 1) m--;
+                    map.put(s[j], val-1);
+                }
+            }
+            
+            if(m<=0)
+            {
+                for(;i<=j;i++)
+                {
+
+                    char c = s[i];
+                    if(map.containsKey(c))
+                    {
+                        int val = map.get(c);
+                        map.put(c, val+1);
+                        if(val==0) m++;
+                        if(m>0)
+                        {
+                            break;
+                        }
+                    }
+                }
+                if(i>j) return T;
+
+                if(m>0 && (j-i) < maxEnd-maxStart)
+                {
+                    maxStart = i;
+                    maxEnd = j;
+                }
+                i++;
+            }
+        }
+        if(maxEnd == Integer.MAX_VALUE) return "";
+        return S.substring(maxStart, maxEnd+1);
+    }
+}

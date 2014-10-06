@@ -1,0 +1,110 @@
+LRUCache
+
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+----
+
+class mem
+{
+	int key;
+	int value;
+	mem prev;
+	mem next;
+	mem(int _key, int _value)
+	{
+		key = _key;
+		value = _value;
+		prev = null;
+		next = null;
+	}
+
+}
+
+public class LRUCache {
+    
+    int capacity;
+    int size;
+    mem head;
+    mem tail;
+    HashMap<Integer, mem> map;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        map = new HashMap<Integer, mem>();
+        size = 0;
+        mem head = null;
+        mem tail = null;
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+
+         mem m = map.get(key);
+         if(size == 1 || m == head)
+         {
+         	return m.value;
+         }
+
+         if(m==tail)
+         {
+         	tail = m.prev;
+         	m.prev = null;
+         	tail.next = null;
+         	
+         	m.next = head;
+         	head.prev = m;
+         	head = m;
+         }else
+         {
+         	m.prev.next = m.next;
+         	m.next.prev = m.prev;
+         	
+         	m.next = head;
+         	head.prev = m;
+         	m.prev = null;
+         	head = m;
+         }
+         return m.value;
+    }
+    
+    public void set(int key, int value) {
+        if( map.containsKey(key))
+        {
+        	mem m = map.get(key);
+        	m.value = value;
+        	get(key);
+        }
+        else
+        {
+        	if(size<capacity)
+        	{
+        		mem m = new mem(key, value);
+        		if(size == 0)
+        		{
+        		    head = m;
+        		    tail = m;
+        		}
+        		else
+        		{
+        		    m.next = head;
+        		    head.prev = m;
+        		    head = m;
+        		}
+        		map.put(key, m);
+        		size++;
+        	}
+        	else
+        	{
+        		int k = tail.key;
+        		map.remove(k);
+        		tail.value = value;
+        		tail.key = key;
+        		map.put(key, tail);
+        		get(key);
+        	}
+        }
+
+    }
+}

@@ -1,0 +1,84 @@
+ReorderList
+
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+You must do this in-place without altering the nodes' values.
+
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}.
+
+---
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+	public static ListNode reverse(ListNode head)
+	{
+		ListNode cur = head;
+		head = null;
+		while(cur!=null)
+		{
+			ListNode t = cur.next;
+			cur.next = head;
+			head = cur;
+			cur = t;
+		}
+		return head;
+	}
+
+	public static ListNode merge(ListNode n1, ListNode n2)
+	{
+		if(n1==null) return n2;
+		if(n2 == null) return n1;
+
+		ListNode head = null, tail = null;
+		while(n1 != null && n2 !=null)
+		{
+			if(head == null)
+			{
+				head = n1;
+				tail = n1;
+				n1 = tail.next;
+				tail.next = null;
+			}
+			else
+			{
+				tail.next = n1;
+				tail = n1;
+				n1 = n1.next;
+				tail.next = null;
+			}
+				tail.next = n2;
+				tail = n2;
+				n2 = n2.next;
+				tail.next = null;
+		}
+		if(n1!=null && tail!=null) tail.next = n1;
+		return head;
+	}
+    
+    public static void reorderList(ListNode head) {
+        if(head == null || head.next == null) return;
+
+        ListNode left = head, right = head;
+        int count=0;
+        while(right.next != null)
+        {
+        	count++;
+        	right = right.next;
+        	if(count%2==0) left = left.next;
+        }
+        right = left.next;
+        left.next = null;
+        head = merge(head, reverse(right));
+    }
+}

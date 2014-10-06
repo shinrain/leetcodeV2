@@ -1,0 +1,89 @@
+MergeIntervals
+
+Given a collection of intervals, merge all overlapping intervals.
+
+For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[15,18].
+
+---
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+	public static boolean check(List<Interval> intervals, int[] index, int l, int r)
+	{
+		return intervals.get(index[l]).start <= intervals.get(index[r]).start ;
+	}
+
+	public static int partition(List<Interval> intervals, int[] index, int l, int r)
+	{
+		if(l>r || l<0 || r>=index.length) return -1;
+		int p = l;
+		int i = l-1, j = r+1;
+		while(i<j)
+		{
+			while((++i)<j && check(intervals, index, i, p));
+			while(i<=(--j) && !check(intervals, index, j, p));
+			if(i>j) break;
+
+			int t = index[i];
+			index[i] = index[j];
+			index[j] = t;
+		}
+		int t = index[l];
+		index[l] = index[j];
+		index[j] = t;
+		return j;
+	}
+
+	public static void	sort(List<Interval> intervals, int[] index, int l, int r)
+	{
+		if(l>=r) return;
+
+		int p = partition(intervals, index, l, r);
+		sort(intervals, index, l, p-1);
+		sort(intervals, index, p+1, r);
+	}
+
+    public List<Interval> merge(List<Interval> intervals) {
+        int n = intervals.size();
+        if(n<=1) return intervals;
+
+        int[] index = new int[n];
+        for(int i=0; i<n; i++)
+        	index[i] = i;
+        sort(intervals, index, 0, n-1);
+        // for(int i:index)
+        // 	System.out.print(intervals.get(i)+" ");
+        // System.out.println();
+        List<Interval> new_intervals = new ArrayList<Interval>();
+
+        Interval prev = intervals.get(index[0]);
+        new_intervals.add(prev);
+
+        for(int i=1; i<n;i++)
+        {
+        	Interval cur = intervals.get(index[i]);
+
+        	if(cur.start > prev.end)
+        	{
+
+        		new_intervals.add(cur);
+        		prev = cur;
+        	}
+        	else if(cur.end > prev. end)
+        	{
+
+        		prev.end = cur.end;
+        	}
+        }
+        return new_intervals;
+    }
+}

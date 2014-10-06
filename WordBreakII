@@ -1,0 +1,44 @@
+WordBreakII
+
+Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+
+Return all such possible sentences.
+
+For example, given
+s = "catsanddog",
+dict = ["cat", "cats", "and", "sand", "dog"].
+
+A solution is ["cats and dog", "cat sand dog"].
+
+---
+public class Solution {
+    
+    public List<String> wordBreak(String s, HashMap<Integer, List<String>> map, Set<String> dict) {
+        List<String> re = new ArrayList<String>();
+        int n = s.length();
+        if(n==0) return re;
+        if(map.containsKey(n)) return map.get(n);
+        
+        for(int i=n-1; i>=0; i--)
+        {
+            if(dict.contains(s.substring(i)))
+            {
+                if(i==0)
+                {
+                    re.add(s);
+                }
+                List<String> r = wordBreak(s.substring(0,i), map, dict);
+                for(String list : r)
+                {
+                    re.add(list+" "+s.substring(i));
+                }
+            }
+        }
+        if(re.size()>0) map.put(n, re);
+        return re;
+    }
+    public List<String> wordBreak(String s, Set<String> dict) {
+        HashMap<Integer, List<String>> map = new HashMap<Integer, List<String>>();
+        return wordBreak(s, map, dict);
+    }
+}

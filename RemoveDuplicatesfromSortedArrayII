@@ -1,0 +1,54 @@
+RemoveDuplicatesfromSortedArrayII
+
+Follow up for "Remove Duplicates":
+What if duplicates are allowed at most twice?
+
+For example,
+Given sorted array A = [1,1,1,2,2,3],
+
+Your function should return length = 5, and A is now [1,1,2,2,3].
+
+---
+
+public class Solution {
+    public int removeDuplicates(int[] A) {
+
+        int n = A.length;
+        if(n<=2) return n;
+
+        int i=1, j=0;
+        int count =1;
+        int val = A[0];
+
+        while(i<n)
+        {
+        	if(A[i] == A[i-1])
+        	{
+        		count++;
+        		if(count>2)
+        		{
+        			break;
+        		}
+        	}
+        	else break;
+        	i++;
+        }
+
+        j=i;
+        while(j<n)
+        {
+        	if(A[j]!=val){ count =1; val = A[j]; A[i++] = A[j];}
+        	else
+        	{
+        		count++;
+        		if(count<=2)
+        		{
+        			A[i++]=A[j];
+        		}
+        	}
+        	j++;
+        }
+        return i;
+    
+    }
+}

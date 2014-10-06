@@ -1,0 +1,60 @@
+ValidNumber
+
+Validate if a given string is numeric.
+
+Some examples:
+"0" => true
+" 0.1 " => true
+"abc" => false
+"1 a" => false
+"2e10" => true
+
+---
+
+public class Solution {
+    public boolean isNumber(String s) {
+
+    	boolean number = false, e = false, dot = false, sign = false;
+
+    	int i=0;
+    	while(i<s.length() && s.charAt(i) == ' ') i++;
+    	if(i==s.length()) return false;
+
+    	int j=s.length()-1;
+    	while(j>=0 && s.charAt(j) == ' ') j--;
+    	if(j<0) return false;
+
+    	for(; i<=j; i++)
+    	{
+    		char c = s.charAt(i);
+    		if(c == '+' || c=='-')
+    		{
+    			if(sign || number) return false;
+    			sign = true;
+    		}
+    		else if(c == 'e')
+    		{
+    			if(e || !number) return false;
+    			e = true;
+    			number = false;
+    			sign = false;
+    		}else if(c == '.')
+    		{
+    			if(dot || e) return false;
+    			dot = true;
+    			if(!sign) sign = true;
+
+    		}else if(c>='0' && c<='9')
+    		{
+    			if(!number) number = true;
+    			if(!sign) sign = true;
+    		}
+    		else{
+    			return false;
+    		}
+    	}
+    	return number;
+    
+    
+    }
+}

@@ -1,0 +1,77 @@
+ReverseLinkedListII
+
+Reverse a linked list from position m to n. Do it in-place and in one-pass.
+
+For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+
+return 1->4->3->2->5->NULL.
+
+Note:
+Given m, n satisfy the following condition:
+1 ≤ m ≤ n ≤ length of list.
+
+--
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode reverse(ListNode nd)
+    {
+        if(nd == null || nd.next == null) return nd;
+        ListNode newHead = null, cur = nd;
+        
+        while(cur!=null)
+        {
+            ListNode tmp = cur.next;
+            cur.next = newHead;
+            newHead = cur;
+            cur = tmp;
+        }
+        return newHead;
+    }
+
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null) return null;
+        if(n<=m) return head;
+        
+        ListNode cur = head;
+        int count =0;
+        
+        while(cur.next!=null && count <n-m)
+        {
+            count++;
+            cur = cur.next;
+        }
+        if(count!=n-m) return head;
+        
+        ListNode sec = head, prev = null;
+        
+        count = 1;
+        while(count<m && cur.next!=null)
+        {
+            count++;
+            cur = cur.next;
+            prev = sec;
+            sec = sec.next;
+        }
+        if(count!=m) return head;
+        
+        
+        ListNode rd = cur.next;
+        cur.next = null;
+        
+        if(prev == null)    head = reverse(sec);
+        else    prev.next = reverse(sec);
+        sec.next = rd;
+        return head;
+    }
+}

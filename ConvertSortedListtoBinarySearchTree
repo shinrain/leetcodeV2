@@ -1,0 +1,67 @@
+ConvertSortedListtoBinarySearchTree
+
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+
+---
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+
+        if(head == null) return null;
+        if(head.next == null) return new TreeNode(head.val);
+
+        ListNode first = head, second = head, prev = null;
+        int count = 0;
+
+        while(first.next !=null)
+        {
+        	count++;
+        	first = first.next;
+        	if(count%2 ==0){
+        		prev = second;
+        		second = second.next;
+        	}
+        }
+        if(count%2 == 0)
+        {
+        	if(prev == null)
+        	{
+        		TreeNode root = new TreeNode(first.val);
+        		root.left = new TreeNode(second.val);
+        		return root;
+        	}
+        	prev.next = null;
+        	TreeNode root = new TreeNode(second.val);
+        	root.left	= sortedListToBST(head);
+        	ListNode t = second.next;
+        	second.next = null;
+        	root.right = sortedListToBST(t);
+        	return root;
+        }
+        else
+        {
+        	ListNode t = second.next;
+        	second.next = null;
+        	TreeNode root = new TreeNode(t.val);
+        	root.left = sortedListToBST(head);
+        	root.right = sortedListToBST(t.next);
+        	return root;
+        }
+  }
+}

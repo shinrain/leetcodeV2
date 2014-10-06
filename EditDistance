@@ -1,0 +1,48 @@
+EditDistance
+
+Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+
+You have the following 3 operations permitted on a word:
+
+a) Insert a character
+b) Delete a character
+c) Replace a character
+---
+
+public class Solution {
+    public int minDistance(String word1, String word2) {
+
+    	char[] a = word1.toCharArray();
+	    char[] b = word2.toCharArray();
+	    int m = a.length;
+	    int n = b.length;
+	    if(m==0) return n;
+	    if(n==0) return m;
+
+	    int[] re = new int[m+1];
+	    for(int i=0;i<re.length;i++)
+	    	re[i] = i;
+		for(int i=0;i<n;i++)
+		{
+			int pre = -1;
+			for(int j=0;j<re.length;j++)
+			{
+				if(j==0)
+				{
+					pre = re[j];
+					re[j]++;
+				}
+				else
+				{
+					int t = re[j];
+					if(a[j-1] != b[i]) re[j] = Math.min(re[j-1], Math.min(pre, re[j]))+1;
+					else
+						re[j] = pre;
+					pre = t;
+				}
+			}
+		}
+		return re[m];
+    
+    }
+}

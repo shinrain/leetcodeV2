@@ -1,0 +1,42 @@
+Pow(x,n)
+
+---
+public class Solution {
+    public double pow(double x, int n) {
+        
+    	if(x==0 || x==1 || n==1) return x;
+    	if(n==0)  return 1.0;
+
+    	if(n==Integer.MIN_VALUE)
+    	{
+    		n++;
+    		n=-n;
+    		double ret = pow(x,n/2);
+    		if(n%2==1)
+    		{
+    			return 1/(ret*ret*x*x);
+    		}else
+    		{
+    			return 1/(ret*ret*x);
+    		}
+    	}
+
+    	boolean flag = false;
+    	if(n<0)
+    	{
+    		flag = true;
+    		n=-n;
+    	}
+    	double ret = pow(x,n/2);
+    	ret*=ret;
+    	if(n%2==1)
+    	{
+    		ret *= x;
+    	}
+    	if(flag)
+    		ret = 1/ret;
+    	return ret;
+
+    
+    }
+}

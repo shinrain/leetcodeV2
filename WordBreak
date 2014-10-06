@@ -1,0 +1,39 @@
+WordBreak
+
+Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+For example, given
+s = "leetcode",
+dict = ["leet", "code"].
+
+Return true because "leetcode" can be segmented as "leet code".
+--------
+public class Solution {
+	public boolean wordBreak(String s, Set<String> dict, int[] map)
+	{
+		int n = s.length();
+		if(n==0) return true;
+		if(map[n-1]!=0) return map[n-1]==1;
+
+		for(int i=n-1; i>0;i--)
+		{
+			if(dict.contains(s.substring(i)) && wordBreak(s.substring(0,i), dict, map)) return true;
+		}
+		map[n-1] = -1;
+		return false;
+	}
+
+    public boolean wordBreak(String s, Set<String> dict) {
+    	int n = s.length();
+    	if(n==0) return false;
+
+        int[] map = new int[n];
+    	for(int i=0;i<n;i++)
+    	{
+    		if(dict.contains(s.substring(0,i+1)))
+    			map[i] = 1;
+    	}
+    	return wordBreak(s,dict,map);
+    }
+
+}

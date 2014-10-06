@@ -1,0 +1,49 @@
+Combinations
+
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+For example,
+If n = 4 and k = 2, a solution is:
+
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+---
+
+public class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List< List<Integer> > re = new ArrayList<List<Integer>>();
+        if(n<k || k==0) return re;
+
+        if(n==k)
+        {
+            List<Integer> r = new ArrayList<Integer>();
+            for(int i=1; i<= n; i++)
+                r.add(i);
+            re.add(r);
+            return re;
+        }
+            List<List<Integer>> rr = combine(n-1, k-1);
+            if(rr.size() == 0)
+            {
+	    	   List<Integer> r = new ArrayList<Integer>();
+	    	   r.add(n);
+	    	   re.add(r);
+            }
+            for(List<Integer> iter : rr)
+            {
+                iter.add(n);
+                re.add(iter);
+            }
+            rr = combine(n-1,k);
+            for(List<Integer> iter:rr)
+                re.add(iter);
+        
+        return re;
+    }
+}

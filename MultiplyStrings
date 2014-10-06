@@ -1,0 +1,58 @@
+MultiplyStrings
+
+Given two numbers represented as strings, return multiplication of the numbers as a string.
+
+Note: The numbers can be arbitrarily large and are non-negative
+
+----
+
+public class Solution {
+    	public static void reverse(char[] s, int l, int r)
+	{
+		while(l<r)
+		{
+			char c = s[l];
+			s[l] = s[r];
+			s[r]=c;
+			l++; r--;
+		}
+	}
+
+    public String multiply(String num1, String num2) {
+        
+        char[] n1 = num1.toCharArray();
+        char[] n2 = num2.toCharArray();
+
+        if(n1.length==0) return num2;
+        if(n2.length==0) return num1;
+
+        char[] re = new char[n1.length+n2.length];
+        reverse(n1, 0, n1.length-1);
+        reverse(n2, 0, n2.length-1);
+
+        int carry = 0;
+
+        for(int i=0;i<re.length;i++)
+        {
+			int val = carry;
+        	for(int j = 0; j<=i && j<n1.length;j++)
+        	{
+        		int k = i-j;
+        		if( k >=0 && k<n2.length)
+        		{
+        			val += (int)(n1[j]-'0')* (int)(n2[k]-'0');
+        		}
+        	}
+			carry = val/10;
+			re[i] = (char)(val%10 + '0');
+        }
+        if(re[re.length-1] == '0' && carry != 0 ) re[re.length-1] = (char)('0'+carry);
+
+        int i = re.length-1;
+        while(i>=0 && re[i] == '0') i--;
+        if(i<0) return "0";
+        reverse(re, 0, i);
+        return new String(re).substring(0,i+1);
+    
+    }
+}

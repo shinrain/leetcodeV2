@@ -1,0 +1,130 @@
+BinaryTreePostorderTraversal
+
+Given a binary tree, return the postorder traversal of its nodes' values.
+
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [3,2,1]
+---
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    
+	static TreeNode add(TreeNode from, TreeNode to)
+	{
+		TreeNode cur = from;
+		from  = null;
+
+		while(cur!=null)
+		{
+			TreeNode t = cur.right;
+			cur.right = from;
+			from = cur;
+			cur = t;
+		}
+
+		return from;
+	}
+
+
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> re = new ArrayList<Integer>();
+        if(root == null) return re;
+
+        TreeNode tmp = new TreeNode(0), tail = null;
+        tmp.left = root;
+        root = null;
+        TreeNode  cur = tmp;
+
+        while(cur!=null)
+        {
+        	
+        	if(cur.left == null){ cur = cur.right; }
+        	else
+        	{
+        		TreeNode pre = cur.left;
+
+        		while(pre.right!=null && pre.right!= cur) pre = pre.right;
+
+        		
+        		if(pre.right==null)
+        		{
+        			pre.right = cur;
+        			cur = cur.left;
+        		}
+        		else
+        		{
+        			pre.right = null;
+        			TreeNode t = cur.left;
+        			cur.left = null;
+
+        			t = add(t, pre);
+        			if(root == null) root = t; 
+        			else	tail.right = t;
+
+        			tail = root; while(tail.right !=null) tail = tail.right; 
+
+        			cur = cur.right;
+        		}
+    		}
+    	}
+        for(TreeNode cc = root; cc!=null; cc = cc.right)
+        {
+        	re.add(cc.val);
+        }
+        return re;
+    }
+}
+
+---
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> re = new ArrayList<Integer>();
+        if(root == null) return re;
+        
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        s.push(root);
+        TreeNode prev= null;
+        while(!s.isEmpty())
+        {
+            TreeNode nd = s.peek();
+            if(prev == null || prev.left == nd || prev.right == nd)
+            {
+                if(nd.left!=null) s.push(nd.left);
+                else if(nd.right!=null) s.push(nd.right);
+            }
+            else
+            {
+                if(nd.left == prev && nd.right!=null) s.push(nd.right); 
+                else
+                {
+                    re.add(nd.val);
+                    s.pop();
+                }
+            }
+            prev = nd;
+        }
+        return re;
+    }
+}

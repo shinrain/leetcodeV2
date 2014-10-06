@@ -1,0 +1,59 @@
+BinaryTreeMaximumPathSum
+
+Given a binary tree, find the maximum path sum.
+
+The path may start and end at any node in the tree.
+
+For example:
+Given the below binary tree,
+
+       1
+      / \
+     2   3
+Return 6.
+
+---
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+	public int maxDeep(TreeNode root, HashMap<TreeNode, Integer> deep)
+	{
+		if(root == null) return 0;
+		if(deep.containsKey(root)) return deep.get(root);
+
+		int re = root.val;
+
+		if(root.left != null) re = Math.max(re, root.val+maxDeep(root.left,deep));
+		if(root.right != null) re = Math.max(re, root.val+maxDeep(root.right, deep));
+		deep.put(root, re);
+		return re;
+	}
+
+	public int maxPathSum(TreeNode root, HashMap<TreeNode, Integer> deep)
+    {
+    	if(root==null) return Integer.MIN_VALUE;
+    	int leftPath = maxPathSum(root.left, deep);
+    	int rightPath = maxPathSum(root.right, deep);
+    	int path = root.val;
+    	if(root.left!=null) path = Math.max(path, path+deep.get(root.left));
+    	if(root.right!=null) path = Math.max(path, path+deep.get(root.right));
+
+    	return Math.max(path, Math.max(leftPath, rightPath));
+
+    }
+
+	public int maxPathSum(TreeNode root)
+	{
+		if(root == null) return 0;
+		HashMap<TreeNode, Integer> deep = new HashMap<TreeNode, Integer>();
+		maxDeep(root, deep);
+		return maxPathSum(root, deep);
+	}
+}

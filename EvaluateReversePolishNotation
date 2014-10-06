@@ -1,0 +1,68 @@
+EvaluateReversePolishNotation
+
+Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+
+Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+
+Some examples:
+  ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
+  ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
+
+----
+public class Solution {
+    public int evalRPN(String[] tokens) {
+
+    	    int n = tokens.length;
+    	    if(n==0) return 0;
+
+    	    Stack<String> s = new Stack<String>();
+    	    try{
+	    	    for(String t:tokens)
+	    	    {
+	    	    	if(t.equals("+"))
+	    	    	{
+	    	    		if(s.isEmpty()) break;
+	    	    		int a = Integer.parseInt(s.pop());
+	    	    		if(s.isEmpty()) break;
+	    	    		int b = Integer.parseInt(s.pop());
+	    	    		s.push(Integer.toString(a+b));
+	    	    	}
+	    	    	else if(t.equals("-"))
+	    	    	{
+	    	    		if(s.isEmpty()) break;
+	    	    		int a = Integer.parseInt(s.pop());
+	    	    		if(s.isEmpty()) break;
+	    	    		int b = Integer.parseInt(s.pop());
+	    	    		s.push(Integer.toString(b-a));
+	    	    	}
+	    	    	else if(t.equals("*"))
+	    	    	{
+	    	    		if(s.isEmpty()) break;
+	    	    		int a = Integer.parseInt(s.pop());
+	    	    		if(s.isEmpty()) break;
+	    	    		int b = Integer.parseInt(s.pop());
+	    	    		s.push(Integer.toString(a*b));
+	    	    	}
+	    	    	else if(t.equals("/"))
+	    	    	{
+	    	    		if(s.isEmpty()) break;
+	    	    		int a = Integer.parseInt(s.pop());
+	    	    		if(a==0 || s.isEmpty()) break;
+	    	    		int b = Integer.parseInt(s.pop());
+	    	    		s.push(Integer.toString(b/a));
+	    	    	}
+	    	    	else
+	    	    	{
+	    	    		s.push(t);
+	    	    	}
+	    	    }
+    	    }
+    	    catch(Exception o)
+    	    {
+    	    	System.exit(-1);
+    	    }
+    	    if(!s.isEmpty()) return Integer.parseInt(s.pop());
+    	    else return 0;
+    
+    }
+}

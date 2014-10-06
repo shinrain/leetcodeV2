@@ -1,0 +1,43 @@
+N-QueensII
+
+Follow up for N-Queens problem.
+
+Now, instead outputting board configurations, return the total number of distinct solutions.
+
+---
+public class Solution {
+	public boolean valid(int n, int k, int[] re)
+	{
+		int r = re[k];
+		for(int i=0;i<k;i++)
+		{
+			if(re[i] == r || Math.abs(re[i]-r) == k-i) return false;
+		}
+		return true;
+	}
+
+    public int totalNQueens(int n, int k, int[] re)
+    {
+    	if(n==k) return 1;
+
+    	int r = 0;
+    	for(int i=0; i<n;i++)
+    	{
+    		re[k] = i;
+    		if(valid(n,k,re))
+	    		r+=totalNQueens(n,k+1,re);
+    	}
+    	return r;
+    }
+    public int totalNQueens(int n)
+    {
+    	if(n<=1) return n;
+    	int[] re = new int[n];
+    	for(int i=0;i<n;i++)
+    	{
+    		re[i] = -1;
+    	}
+
+    	return totalNQueens(n, 0, re);
+    }
+}

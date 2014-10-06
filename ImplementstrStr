@@ -1,0 +1,54 @@
+ImplementstrStr
+
+Implement strStr().
+
+Returns a pointer to the first occurrence of needle in haystack, or null if needle is not part of haystack.
+
+---
+
+public class Solution {
+    	public static int[] prefix(char[] a)
+	{
+		int n = a.length;
+		if(n==0) return null;
+
+		int[] F = new int[n+1];
+		F[0] = F[1] = 0;
+		for(int i=2; i<=n;i++)
+		{
+			int j = F[i-1];
+			while(true)
+			{
+				if(a[j] == a[i-1]){ F[i] = j+1; break;}
+				if(j==0){ F[i] = 0; break;}
+				j = F[j];
+			}
+		}
+		return F;
+	}
+
+	public String strStr(String haystack, String needle)
+	{
+		char[] ss = haystack.toCharArray();
+		char[] pp = needle.toCharArray();
+		int m = ss.length;
+		int n = pp.length;
+		if(ss.length<pp.length) return null;
+		if(n==0 || haystack.equals(needle)) return haystack;
+
+		int[] F = prefix(pp);
+
+		int i=0, j=0;
+		while(i<m)
+		{
+			if(ss[i] == pp[j])
+			{
+				i++; j++;
+				if(j==n) return haystack.substring(i-n);
+			}
+			else if(j>0) j = F[j];
+			else i++;
+		}
+		return null;
+	}
+}

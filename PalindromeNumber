@@ -1,0 +1,43 @@
+PalindromeNumber
+
+Determine whether an integer is a palindrome. Do this without extra space.
+
+---
+
+public class Solution {
+    public boolean isPalindrome(int x) {
+        
+
+    	if(x==0) return true;
+    	if(x==Integer.MIN_VALUE) return false;
+    	if(x<0) return false;
+
+    	int t = x;
+    	int div = 10;
+    	while(true)
+    	{
+    		if(t/div!=0)
+    		{
+    			if(div< Integer.MAX_VALUE/10)
+    			{
+    				div*=10;	
+    				continue;
+    			}
+    		}
+ 			else div /=10;
+ 			break;
+    	}
+    	int l = 1, r = div;
+    	while(l<=r){
+    		if((x/l%10) != (x/r%10))
+    		{
+    			return false;
+    		}
+    		l*=10;
+    		r/=10;
+    	}
+    	return true;
+    
+    
+    }
+}

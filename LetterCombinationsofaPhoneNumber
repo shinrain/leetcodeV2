@@ -1,0 +1,39 @@
+LetterCombinationsofaPhoneNumber
+
+Input:Digit string "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+---
+
+public class Solution {
+	public void letterCombinations(char[] digits, int i, List<String> re, char[] r, String[] map)
+	{
+		if(i==digits.length)
+		{
+			re.add(new String(r));
+			return;
+		}
+		if(digits[i] <'0' || digits[i] >'9') return;
+		for(char c:map[(int)(digits[i]-'0')-1].toCharArray())
+		{
+			r[i] = c;
+			letterCombinations(digits,i+1,re,r, map);
+		}
+	}
+	public List<String> letterCombinations(String digits)
+	{
+     	String[] map = {"","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+     	List<String> re = new ArrayList<String>();
+     		
+     	int n = digits.length();
+     	if(n==0)
+     	{
+     		re.add("");
+     		return re;
+     	}
+
+     	letterCombinations(digits.toCharArray(), 0, re, new char[n], map);
+     	return re;
+
+    }
+}

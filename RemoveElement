@@ -1,0 +1,26 @@
+RemoveElement
+
+Given an array and a value, remove all instances of that value in place and return the new length.
+
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+
+---
+public class Solution {
+    public int removeElement(int[] A, int elem) {
+
+    	int n=A.length;
+    	if(n==0) return 0;
+    	int i=0, j=0;
+    	while(i<n && A[i]!=elem) i++;
+    	if(i==n) return n;
+
+    	j = i;
+    	for(;j<n;j++)
+    	{
+    		if(A[j]==elem) continue;
+    		A[i++] = A[j];
+    	}
+    	return i;
+    
+    }
+}

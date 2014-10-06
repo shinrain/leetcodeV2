@@ -1,0 +1,31 @@
+RotateImage
+
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+---
+public class Solution {
+    public void rotate(int[][] matrix) {
+
+    	int m=matrix.length;
+    	if(m==0) return;
+    	int n = matrix[0].length;
+    	if(n==0) return;
+
+    	int layer = (Math.min(m,n)+1)/2;
+    	for(int i=0;i<layer;i++)
+    	{
+    		for(int j=i;j<n-i-1;j++)
+    		{
+    			int t = matrix[n-1-j][i];
+    			matrix[n-1-j][i] = matrix[n-i-1][n-1-j];
+    			matrix[n-i-1][n-1-j] = matrix[j][n-i-1];
+    			matrix[j][n-i-1] = matrix[i][j];
+    			matrix[i][j] = t;
+    		}
+    	}
+    	return;
+    
+    }
+}

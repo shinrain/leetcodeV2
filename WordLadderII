@@ -1,0 +1,199 @@
+WordLadderII
+
+Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:
+
+Only one letter can be changed at a time
+Each intermediate word must exist in the dictionary
+For example,
+
+Given:
+start = "hit"
+end = "cog"
+dict = ["hot","dot","dog","lot","log"]
+Return
+  [
+    ["hit","hot","dot","dog","cog"],
+    ["hit","hot","lot","log","cog"]
+  ]
+Note:
+All words have the same length.
+All words contain only lowercase alphabetic characters.
+---
+
+class Word
+{
+    Set<String> dict;
+    ArrayList<HashSet<Character>> letters;
+    HashMap<String, HashSet<String>> map = new HashMap<String, HashSet<String>>();
+
+    Word(Set<String> _dict, ArrayList<HashSet<Character>> _letters, String name)
+    {
+        dict = new HashSet<String>(_dict);
+        dict.remove(name);
+        letters = _letters;
+    }
+
+    public HashSet<String> getList(HashSet<String> list)
+    {
+        HashSet<String> re = new HashSet<String>();
+    
+        for(String w : list)
+        {
+            char[] ss = w.toCharArray();
+
+            for(int i=0;i<ss.length; i++){
+              char tmp = ss[i];
+              for(char c : letters.get(i))
+              {
+                if(c == tmp) continue;
+                ss[i] = c;
+
+                String str = new String(ss);
+
+                if(dict.contains(str))
+                {
+                  re.add(str);
+                  if(map.containsKey(str))
+                  {
+                    HashSet<String> prev = map.get(str);
+                    if(!prev.contains(w)) 
+                    {
+                      prev.add(w);
+                      map.put(str, prev);
+                    }
+                  }else
+                  {
+                    HashSet<String> prev = new HashSet<String>();
+                    prev.add(w);
+                    map.put(str, prev);
+                  }
+                }
+              }
+              ss[i] = tmp;
+            }
+        }
+        for(String ss : re)
+            dict.remove(ss);
+        return re;
+    }
+
+    List<List<String>> getResult(String end, boolean flg)
+    {
+        List<List<String>> re = new ArrayList<List<String>>();
+        if(!map.containsKey(end))
+        {
+            List<String> result = new ArrayList<String>();
+            result.add(end);
+            re.add(result);
+            return re;
+        }
+
+
+        for(String s:map.get(end))
+        {
+            List<List<String>> tmp = getResult(s, flg);
+            Iterator<List<String>> it = tmp.iterator();
+            while(it.hasNext())
+            {
+              re.add(it.next());
+            }
+        }
+        Iterator<List<String>> it = re.iterator();
+        while(it.hasNext())
+        {
+          if(flg) it.next().add(end);
+          else it.next().add(0, end);
+        }
+        return re;
+    }
+}
+
+
+public class Solution {
+
+    public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+        List<List<String>> re = new LinkedList<List<String>>();
+        int n = start.length();
+        if(n!=end.length()) return re;
+
+        dict.add(end);
+        
+        boolean found = false;
+
+        ArrayList<HashSet<Character>> letters = new ArrayList<HashSet<Character>>();
+        for(int i = 0; i<n;i++)
+        {
+          letters.add(new HashSet<Character>()); 
+        }
+
+        for(String s:dict)
+        {
+          if(s.length()!=n) continue;
+
+          for(int i=0;i<n;i++)
+          {
+            if(!letters.get(i).contains(s.charAt(i)))
+              letters.get(i).add(s.charAt(i));
+          }
+        }
+
+        Word forward = new Word(dict, letters, start);
+        Word backward = new Word(dict, letters, end);
+
+        HashSet<String> forward_list = new HashSet<String>();
+        HashSet<String> backward_list = new HashSet<String>();
+
+        HashSet<String> sub_result = new HashSet<String>();
+
+        forward_list.add(start);
+        backward_list.add(end);
+
+        while(!found)
+        {
+            forward_list = forward.getList(forward_list);
+            if(forward_list.isEmpty())
+                break;
+            for(String ss : forward_list)
+            {
+                if(backward_list.contains(ss))
+                {
+                    sub_result.add(ss);
+                    found = true;
+                }
+            }
+            if(found) break;
+            backward_list = backward.getList(backward_list);
+            if(backward_list.isEmpty())
+                break;
+            
+            for(String ss : forward_list)
+            {
+                if(backward_list.contains(ss))
+                {
+                    sub_result.add(ss);
+                    found = true;
+                }
+            }
+        }
+        if(sub_result.isEmpty()) return re;
+
+        for(String s : sub_result)
+        {
+            List<List<String>> first_half = forward.getResult(s,true);
+            List<List<String>> back_half = backward.getResult(s,false);
+
+            for(List<String> l : first_half){
+                for(List<String> ll : back_half)
+                {
+                    ll.remove(s);
+                    List<String> l_tmp = new ArrayList<String>(l);
+                    l_tmp.addAll(ll);
+                    re.add(l_tmp);
+                }
+            }
+        }
+        return re;
+    
+    }
+
+}

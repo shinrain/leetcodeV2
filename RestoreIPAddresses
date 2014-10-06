@@ -1,0 +1,70 @@
+RestoreIPAddresses
+
+Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+
+For example:
+Given "25525511135",
+
+return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+
+---
+
+public class Solution {
+ 	public static boolean valid(String s)
+ 	{
+ 		int n = s.length();
+ 		if(n==0) return false;
+ 		try{
+ 			int re = Integer.parseInt(s);
+ 			if(n>3 || (n !=1 && s.charAt(0)=='0') || re>255 || re<0) return false;
+ 			return true;
+ 		}
+ 		catch(Exception o)
+ 		{
+ 			return false;
+ 		}
+ 	}
+
+ 	public static List<String> restoreIpAddresses(String s, int k, HashMap<Integer, List<String>> map)
+ 	{
+ 		int n = s.length();
+ 		int key = 4*n+k;
+ 		if(map.containsKey(key)) return map.get(key);
+
+ 		List<String> re = new ArrayList<String>();
+ 		if(n==0) return re;
+
+ 		if(k==1)
+ 		{
+ 			if(valid(s))
+ 			{
+ 				re.add(s);
+ 			}
+ 			return re;
+ 		}
+
+ 		for(int i=n-1; i>=n-3;i--)
+ 		{
+ 			if(i<0) break;
+ 			if(valid(s.substring(i)))
+ 			{
+ 				List<String> r = restoreIpAddresses(s.substring(0,i), k-1, map);
+ 				if(r.size() == 0) continue;
+ 				for(String ss:r)
+ 				{
+ 					re.add(ss+"."+s.substring(i));
+ 				}
+ 			}
+ 		}
+ 		map.put(key, re);
+ 		return re;
+ 	}
+
+    public static List<String> restoreIpAddresses(String s) {
+    	List<String> re = new ArrayList<String>();
+
+        int n = s.length();
+        if(n==0) return re;
+        return restoreIpAddresses(s, 4, new HashMap<Integer, List<String>>());
+    }
+}

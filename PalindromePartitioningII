@@ -1,0 +1,74 @@
+PalindromePartitioningII
+
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return the minimum cuts needed for a palindrome partitioning of s.
+
+For example, given s = "aab",
+Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
+---
+public class Solution {
+	public boolean valid(char[] c, int l, int r, int n, int[] m)
+	{
+		int k = l*n+r;
+		if(m[k]!=-1) return m[k] == 1;
+
+		if(l>=r) return true;
+
+		if(c[l] == c[r] && valid(c, l+1, r-1, n, m))
+		{
+			m[k] = 1;
+		}
+		else
+		{
+			m[k] = 0;
+		}
+		return m[k]==1;
+	}
+
+	public int minCut(char[] s, int k, int n, int[] cuts, int[] m)
+	{
+		if(cuts[k]!=-1) return cuts[k];
+
+		int min =  Integer.MAX_VALUE;
+		for(int i=k;i>0;i--)
+		{
+			if(valid(s, i, k, n, m))
+			{
+				int prev = minCut(s, i-1, n, cuts, m);
+				
+				if(prev == -2) continue;
+				if(prev!=-1 && prev<min ) min = prev;
+			}
+		}
+		if(min!=Integer.MAX_VALUE)
+		{
+			cuts[k] = min+1;
+		}
+		else	cuts[k] = -2;
+		
+		return cuts[k];
+	}
+
+    public int minCut(String s)
+    {
+    	int n = s.length();
+    	if(n<=1) return 0;
+    	int[] cuts = new int[n];
+    	for(int i=0;i<n;i++)
+    		cuts[i] = -1;
+    	int[] m = new int[n*n];
+    	for(int i=0;i<n*n;i++)
+    		m[i] = -1;
+    	for(int i =0;i<n;i++)
+		{
+			if( valid(s.toCharArray(),0, i, n, m))
+			{
+
+				cuts[i] = 0;
+			}
+		}
+
+        return minCut(s.toCharArray(),n-1, n,  cuts, m);
+    }
+}

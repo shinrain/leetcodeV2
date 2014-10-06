@@ -1,0 +1,104 @@
+TextJustification
+
+Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
+
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly L characters.
+
+Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+
+For the last line of text, it should be left justified and no extra space is inserted between words.
+
+For example,
+words: ["This", "is", "an", "example", "of", "text", "justification."]
+L: 16.
+
+Return the formatted lines as:
+[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+---
+
+public class Solution {
+    public List<String> fullJustify(String[] words, int L) {
+
+    	List<String> re = new ArrayList<String>();
+    // 	if(L==0 || words.length == 0)
+    // 	{
+    // 		re.add("");
+    // 		return re;
+    // 	}
+
+    	int cur = 0;
+    	int n = words.length;
+    	while(cur<n)
+    	{
+    		int end = cur;
+    		int res = 0;
+    		while(res<L)
+    		{
+    			if( end < n && res + words[end].length() <= L-end+cur)
+    			{
+    				res+=words[end].length();
+    				end++;
+    			}
+    			else
+    			{
+    				break;
+    			}
+    		}
+    		int spaceNum = L-res;
+    		int num = end - cur;
+    		if(num == 0)
+    		{
+    		    re.add("");
+    		    return re;
+    		}
+   			String result = "";
+    		if(num==1)
+    		{
+    			result = words[cur];
+    			for(int i = 0; i<spaceNum; i++)
+    				result +=" ";
+    		}
+    		else
+    		{
+    			String spaceLess = "";
+    			int i = 0;
+
+    			for(;i<spaceNum/(num-1); i++)
+    				spaceLess += " ";
+
+    			int j = cur;
+    			if(end!=n)
+    			{
+	    			for(;j< cur+spaceNum%(num-1); j++)
+	    			{
+	    				result += words[j]+spaceLess+" ";
+	    			}
+	    			for(;j<end-1;j++)
+	    			{
+	    				result += words[j] + spaceLess;
+	    			}
+	    			result += words[j];
+	    		}
+	    		else
+	    		{
+	    			for(;j<end-1;j++)
+	    			{
+	    				result += words[j] + " ";
+	    			}
+	    			result += words[j];
+	    			for(int k=result.length();k<L;k++)
+	    				result+=" ";
+	    		}
+    		}
+    		
+    		re.add(result);
+    		cur = end;
+    	}
+    	return re;
+    
+    }
+}

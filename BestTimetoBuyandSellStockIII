@@ -1,0 +1,48 @@
+BestTimetoBuyandSellStockIII
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+---
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+
+    	int n= prices.length;
+    	if(n<2) return 0;
+    	int[] one = new int[n];
+
+    	int min = prices[0];
+    	for(int i=1;i<n;i++)
+    	{
+    		if(prices[i]<min)
+    		{
+    			one[i] = one[i-1];
+    			min = prices[i];
+    		}
+    		else
+    		{
+    			if(prices[i] - min > one[i-1]) one[i] = prices[i] - min;
+    			else one[i] = one[i-1];
+    		}
+    	}
+
+    	int max = 0;
+    	int re = one[n-1];
+    	for(int i=n-1; i>0; i--)
+    	{
+    		if(prices[i]>max) max = prices[i];
+    		else
+    		{
+    			if(max-prices[i]+one[i-1]>re) re =max-prices[i]+one[i-1];
+    		}
+    	}
+    	return re;
+
+    
+    }
+}

@@ -1,0 +1,59 @@
+MaximalRectangle
+
+Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area
+---
+
+public class Solution {
+ 	public static int maxHis(int[] a)
+ 	{
+ 		int n = a.length;
+ 		if(n==0) return 0;
+ 		if(n==1) return a[0];
+ 		int max = 0;
+ 		Stack<Integer> s = new Stack<Integer>();
+ 		for(int i=0;i<n;i++)
+ 		{
+ 			if(s.isEmpty() || a[i] >= a[s.peek()]) s.push(i);
+ 			else
+ 			{
+
+ 				int tmp = a[s.pop()];
+ 				int local = tmp * (s.isEmpty()?i:i-s.peek()-1);
+ 				if(local > max) max = local;
+ 				i--;
+ 			}
+ 		}
+
+ 		while(!s.isEmpty())
+ 		{
+ 			int tmp = a[s.pop()];
+ 			int local = tmp *(s.isEmpty()?n:n-s.peek()-1);
+ 			if(local > max) max = local;
+ 		}
+ 		return max;
+ 	}
+
+    public int maximalRectangle(char[][] matrix) {
+     	int m = matrix.length;
+     	if(m == 0) return 0;
+     	int n = matrix[0].length;
+     	if(n ==0 ) return 0;
+
+     	int[] cur = new int[n];
+     	for(int i=0;i<n;i++)
+     		cur[i] = (matrix[0][i]-'0');
+     	int max = maxHis(cur);
+
+     	for(int i=1;i<m;i++)
+     	{
+     		for(int j = 0; j<n; j++)
+     		{
+     			if(matrix[i][j] =='0') cur[j] = 0;
+     			else cur[j]++;
+     		}
+     		int local = maxHis(cur);
+     		if(local > max) max = local;
+     	}
+     	return max;
+    }
+}
