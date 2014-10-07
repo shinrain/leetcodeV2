@@ -1,0 +1,390 @@
+电面 1
+国人大哥，应该有点放水
+1) fabanacia，期待o(lgn)解法,但O(n)也行
+2) generate all possible paretheses, leetcode原题，会让分析最优/平均时间，我
+只知道worse case 是O(n^2)
+
+onsite1 
+behavior: 1)有什么跟同事意见冲突的案例，怎么解决 
+2) 以前做过的项目如果现在再做会有什么不同/改进
+3）divide and mod，但不能用/或者%，基本也是leetcode原题了
+
+onsite2
+system desgin: 因为我是kernel背景，让我用mutex,cv实现一个semephor，说先考虑
+单核，然后拓展到多核，但我只写了单核的就没时间了，不知道多核的会有什么不同，
+要求code compilable，MD三哥从一进来就没好脸色，此轮negative
+
+onsite3:
+1) 给你10g文件，1g内存，数总共有多少个不同的数，答案是用bit来记录数字，总共
+4b个interger,最多用0.5gb来记录，follow up是如果只有400m怎么办，答案是把数字
+hash一下或者说scan文件多次，每次取尾数bits不一样的数，不用code
+2) read file up to 4K, 也是老题了
+3) 求平方根，基本也是leetcode原题，但给的数是double，这样如果给的n是小于1的
+数，初始的right就得取1而不是n
+
+onsite4:
+也是kernel组的三哥，先上来问了btree跟bst的区别，btree里放多少个index怎么决定
+，答案是disk block size / 每个index的长度，如果是内存的话就用cache line size除
+还有vm的，我也不大懂，好像是说如何解决内存的fagement问题，如何把多个分开的小
+片段移到一起，用到了madvise这个syscall,还问为什么返回一个新的page之前要清零
+，答案是因为page上可能是别的process的内容
+code题是decode，比如说1 → 1, 2 -- > 01, 3 → 001, 4 → 0001,....，给你一个
+无限的stream，要求输出数字，应该没啥难度，follow up是如何优化，我给的答案是
+map，就是依次取char而不是bit，然后把char的值对应到string上，他说cpu还有一个
+instruction可以直接查询此个char有多少个leading zero
+
+
+=======
+
+bool isPalindrome(string s);
+
+A palindrome is a string that is the same when read backwards or forwards.  
+For example, "aba", "abba", and "racecar" are all palindromes.
+You will implement a method to determine whether a string is a palindrome.
+
+- Palindromes are case insensitive, so "Aba" is a palindrome.
+- Palindromes ignore non a-z characters, so "a0ba" and "a- #&#b*b-a" are 
+palindromes
+- The empty string "" and strings with no letters, e.g. "123" are not 
+palindromes.
+
+====
+
+
+题目以前见过，就是给一些不重叠的interval，然后设计一个数据结构来存储，实现 插入interval和 find一个value 两个函数，前者碰到重叠就return false，后者碰到所在的interval返回。
+
+
+这个我记得就是用BST做的。
+
+有一个bug，就是插入的时候给空指针 n = new Node(c),这么做了，被指出了，还是基
+础不扎实啊，可能以前都是链表或者用递归做的，就从来没发现这个问题。应该说明下
+还可以用递归做的。
+
+中间讨论了一下维护min和max变量是否必要，我说主要是在val超出范围的时候直接判断，他说那其实interval中间也有空当。我就说那就只有两端的时候，会比较有用，而且我这个办法维护min和max每次都要做一次，应该有更好的。对average case是没有用的。
+
+最后问了下time cost，就是O(lgn)和o(n)，分别对应average和worst，他说怎么保证balanced，就说就可以了，我说可以用红黑树或者AVL，或者先找中位数插入（后来一想应该是先排序）
+
+用sorted array行不行，与BST比较优缺点（前者没overhead，但是无法动态插入和删除）。似乎他还挺满意。
+
+让我问问题之后就欢快的结束了。
+
+
+
+[192, 320) [384, 512) [512, 640) [1024, 1152) // 128
+
+// Fixed size, non-overlap
+
+class Interval {
+  /* feel free to add or modify */
+public:
+  int start;
+  int end;
+};
+
+class Store{
+ /* feel free to add or modify */
+public:
+ bool insert(const Interval *c);
+ const Interval * find(int val);
+};
+
+class Node{
+
+public:
+	const Interval intv;
+	Node *left;
+	Node *right;
+    
+	Node(const Interval *c):intv(c->start,c->end){
+    	left = right = NULL;
+	}
+    
+}
+    
+class Store{
+
+public:
+	Node *root;
+	int minv;
+	int maxv;
+    
+	Store(){
+    	root = NULL;
+    	minv = numeric_limit<int>::max();
+    	maxv = numeric_limit<int>::min();
+	}
+    
+	bool insert(const Interval *c){
+    	if(!root){
+        	root = new Node(c);
+        	minv = c->start;
+        	maxv = c->end -1;
+        	return true;
+    	}
+   	 
+    	int start = c->start;
+    	int end = c->end;
+   	 
+    	Node *n = root;
+    	Node *parent = NULL;
+   	 
+    	while(n!= NULL){
+       	 
+        	parent = n;
+       	 
+        	if( start >= n->intv->end)
+            	n = n->right;
+        	else if( end <= n->intv->start )
+            	n = n->left;
+        	else
+            	return false;
+    	}
+   	 
+	//一开始这里没用parent，直接写n = new Node(c)，被指出错误了，其实就是空指针没法去新建一个东西，还是基础不扎实就出现这种错误。应该不用parent的，不过他说没问题。
+
+    	if( start >= parent->intv->end)
+        	parent->right = new Node(c);
+    	else if( end <= parent->intv->start )
+        	parent->left = new Node(c);
+   	 
+    	maxv = max(n->end -1,maxv);
+    	minv = min(n->start,minv);
+    	 
+    	return true;
+	}
+    
+	Interval  find(int val){
+   	 
+    	if( val < minv || val > maxv)
+        	return Interval(-1,-1);
+   	 
+    	Node *n = root;
+   	 
+    	while( n!= NULL){
+        	if( val >= n->start && val < n->end)
+            	return n->intv;
+        	else if ( val < n->start )
+            	n = n->left;
+        	else if( val >= n->end )
+            	n = n->right;
+    	}
+   	 
+    	return Interval(-1,-1); // maybe not necessary;
+   	 
+ 	}
+}
+    
+===
+
+题目是：
+给A，B 2个array，里面都是integer，已经排好序了，由大到小，他们的长度都是N
+
+现在从A和B里各选出一个数，总成一个sum，请返回前N个最大的sum
+
+PriorityQueue<Integer> pq1= new PriorityQueue<Integer>(10, new Comparator<Integer>() {
+public int compare(Integer x, Integer y) {
+if (x < y) return 1;
+if (x > y) return -1;
+return 0;
+}
+
+
+=======
+
+第一题的印象有点模糊了。。大概是给一个数组，然后有一些数是重复的，然后找到重
+复最多的那个数，比如说 int input[]={3,7,4,3,6,1,3,6}，重复最多的数是3，这些3
+的index分别是0 3 6，那么要求程序以相等的概率返回这3个index,
+int computeIndex(int[] input);
+33.3% return 0
+33.3% return 3
+33.3% return 6
+当时因为叙述的比较绕，所以光题目就理解了半天，最后在他的提示下找到答案：先扫
+第一遍，找到出现最多的那个数（比如3），然后写个random函数, 再扫第二遍，每次
+遇到3就调用这个Random函数，若Random返回值大于一个阈值就返回当前的index。比如
+这个函数可以是
+bool ran(int size){
+      if(random()*size<1)
+           return true;
+      return false;
+
+}
+叙述的不好，见谅！有问题请提问~
+
+  
+第二题是leetcode原题，Permutation，我用递归做完之后，又让分析算法复杂度，并
+问了我在输入在多大的时候算法会崩，递归到多深会崩什么的，然后我扯到了操作系统
+的堆栈大小什么的，感觉他不是很满意
+
+
+====
+
+double sqrt(double d)
+
+Given a sequence of distinct integers, your program must remove as few 
+elements as possible in order for the elements which are not removed to 
+appear in ascending order.  If there is more than one way to do this, your 
+program must print one solution, then print the number of all solutions.
+
+Example.
+
+Given   1 2 3 8 10 5 6 7 12 9 11 4 0 
+Remove        8 10       12      4 0 
+Remain  1 2 3      5 6 7    9 11       (ascending)
+
+
+To form an ascending sequence, you must remove at least 5 elements. There is
+  only one way to do it.
+
+Solution: LIS. Should look into it. But nlgn not necessary.
+
+
+
+=====
+
+请教一道设计题：facebook的查找好友功能, 还有假设在一个服务器高峰时间，来的查
+询量很大，你怎么handle?
+
+1. Caching reading query
+2. Kafka + storm
+
+=====
+
+题目很简单, 就是繁琐,career cup上有一道类似的,但是这个比那个更麻烦点
+
+输入一个整数,输出他的英文读法
+1 -> one
+100 -> one hundred
+500234 -> five hundred thousand two hundred thirty four
+1232232 -> 1 million two hundred .....
+
+
+====
+
+1. 给两个类A和B
+class A {
+public void foo (A a) {
+  ...
+}
+}
+class B extends A {
+public void foo (B b) {
+  ...
+}
+}
+问这么写会不会有问题
+
+2. 关于Database的题，假如你执行
+select * from employee
+employee是一个table
+
+但是返回错误说，这个table不存在什么的，但是现在已知存在这个table,问你可能是
+什么原因。
+完全没有思路，就说我也不知道。。。
+
+3. 一种字母游戏这样的
+给定四个位置 _,_,_,_
+然后每个位置可以选5个candidates，然后问这些candidates最多可以组成多少个有效
+的词，字典是给定的。
+
+比如，
+如果字典是 [cake, bike, fake]
+我们可以这样选candidates
+第一个位置可以选 b,c,f,e,d
+第二个位置 i,a,o,p,e
+第三个位置 k,m,w,q,a
+第四个位置 e,g,h,k,l
+那这些可以组成3个有效的词 cake, bike, fake.
+
+但是如果，这样选每个位置的candidates
+第一个位置可以选 z,c,v,b,y
+第二个位置 i,a,o,p,e
+第三个位置 k,m,w,q,a
+第四个位置 e,g,h,k,l
+
+只能组成一个有效的词就是bike.
+这样就是第一种选candidates的方法比较好。
+
+然后问你怎么选每个位置的candidates，最终可以让能组成的词最多。
+
+Solution: 把所有4 letter长的单词建立trie 每个node加上wordCount 和 prefixCount， 每一层
+选的时候以 wordCount+prefixCount为标准，选五个最大的
+
+=======
+
+Clone graph
+onsite
+1. 一个manager 先聊behavior， 然后做了一个小题
+    isOneEditDistance 判断两个string是不是只差一个编辑距离。
+2. 3Sum 变体，每个数字可以重复用。
+3. System design设计手机上读取photo feeds的app。
+    功能： 读取好友的最近图片
+               阅览好友的相册
+    要求： 满足功能的同时减少对手机的能耗。
+4. (1) 一维度向量相乘。每个向量很长，billion个数字。
+    (2) 多线程 reader 跟 writer 的经典问题。
+加面
+1. 求 LCA 两种情况，有parent结点跟没有parent的结点的情况都要回答。
+2. search in rotated sorted array LC原题。
+    decode ways LC原题
+
+======
+
+实现 int Read(int Size, char * buffer) using int Read4(char * buffer)
+
+======
+
+给一堆用户的登陆日志，要求输出各时间段内的在线用户数。
+
+例子：
+user1:
+login_time: 0
+logout_time: 1
+
+user2:
+login_time: 0
+logout_time: 2
+
+user3:
+login_time: 1
+logout_time: 3
+
+输出：
+[0 - 2): 2
+[2 - 3): 1
+[3 - infinite): 0
+
+0 - 1不用输出，因为时间点0有2个在线用户，时间点1也有2个在线用户，在线用户数
+没有变，所以不用输出。在时间点2在线用户数变为1，所以输出0 - 2: 2
+
+完成函数：
+struct Log
+{
+  float login_time;
+  float logout_time;
+};
+void online_user(vector<Log> &logs);
+
+Solution: 
+
+class time
+{
+	int val;
+	char prop; ( start or end )
+}
+
+1. Sort time according to val
+2. scan time, when start: count++; when end: count --
+3. output count when changed.
+
+====
+
+Implement a function char* readLine(); which returns single lines from a 
+buffer. To read the buffer, you can makes use of a function int read(char* 
+buf, int len) which fills buf with upto len chars and returns the actual 
+number of chars filled in. Function readLine can be called as many times as 
+desired. If there is no valid data or newline terminated string available, 
+it must block. In order to block, it can use read function which in turn 
+will block when it doesn't have anything to fill the buf.
+
+
+====

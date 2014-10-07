@@ -1,0 +1,31 @@
+InsertintoaCyclicSortedList
+
+Given a node from a cyclic linked list which has been sorted, write a function to insert a value into the list such that it remains a cyclic sorted list. The given node can be any single node in the list.
+
+--
+
+class Solution
+{
+	public void insert(ListNode node, int x)
+	{
+		if(node == null)
+		{
+			node = new ListNode(x);
+			node.next = node;
+			return;
+		}
+
+		ListNode cur = node, prev = null;
+		do
+		{
+			prev = cur;
+			cur = cur.next;
+			if(x>=prev.val && x<cur.val) break;
+			else if(prev.val >cur.val && (x>prev.val || x<cur.val)) break;
+		}
+		while(cur!=node);
+
+		prev.next = new ListNode(x);
+		prev.next.next = cur;
+	}
+}

@@ -1,0 +1,19 @@
+LowestCommonAncestorofaBinaryTreePartI
+
+Given a binary tree, find the lowest common ancestor of two given nodes in the tree.
+
+===
+
+The solution below is a flaw one, since it hold the assumption that the tree has those two nodes and those nodes are different. This is not true for general case.
+
+node LCA(node root, node p, node q)
+{
+	if(root == null) return null;
+	if(root == p || root == q) return root;
+
+	node l = LCA(root.left, p, q);
+	node r = LCA(root.right, p, q);
+
+	if(l!=null && r!=null) return root;
+	return (l!=null)?l:r;
+}
