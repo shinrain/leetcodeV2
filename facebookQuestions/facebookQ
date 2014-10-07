@@ -388,3 +388,357 @@ will block when it doesn't have anything to fill the buf.
 
 
 ====
+
+第一题是isPalindrome，还稍微简化了下：考虑所有的字符，输入串长度不为0。
+个人用两个"pointer" 做的，犯的第一个错误是在判断字符相等时莫名的加了return 
+true..被指出来了。
+
+第二题是整数除法，不能用/, %, *，简化条件：只考虑正整数，但要求返回string。
+花了些时间，但最后更新dividend时忘了移位，应该是dividend -= (divisor << pos)
+, 自己测的时候小慌，没找出来，最后才补上的。
+
+
+=====
+
+校招面的，只有一轮45分钟。第一题很水，特地问了会不会有border case之类的，面
+试官是个烙印，说他只看正确性。写完后，他也没怎么看，直接就说下一题了。不知道
+这是什么情况。第二题leetcode上得原题，求最大只包括0的子矩形。之前看过，先说
+了个暴力的，然后说了一个比较好的算法，但是写的时候有个地方没想清，没写好，被
+要求先写一个暴力的，写完后他说行了。然后就问我有什么问题问他了。。。是不是没
+希望了。。。？
+
+===
+
+glassdoor
+===================
+edit distance
+
+level traverse tree(高频）
+
+1) Calculate the square root of a double（高频）
+
+2) Given n intervals [si, fi], find the maximum number of overlapping 
+intervals.
+
+3) Print all the paths from root to every leaf in a binary tree.
+
+4) Print the sum of all the numbers at every vertical level in a binary tree
+
+5) Given a set of n jobs with [start time, end time, cost] find a subset so 
+that no 2 jobs overlap and the cost is maximum ?
+
+6) Given 1 trillion messages on fb and each message has at max 10 words, how
+do you build the index table and how many machines do you need on the 
+cluster to store the index table ?
+total data = 1 trillion * 10 words * 6 bytes / word = 60TB = one small 
+NetApp box
+index by hashed userid ; will distribute traffic effectively across servers 
+; cache active users recent messages in memory
+
+mapreduce
+
+return the value of a roman number given in a string
+
+Given two string representations of binary numbers (e.g. "1001", "10") write
+a function that adds them and returns the result as a string as well (e.g. 
+"1011").
+
+a) first, write a function to calculate the hamming distance between two 
+binary numbers
+(b) write a function that takes a list of binary numbers and returns the sum
+of the hamming distances for each pair
+O(n) solution is recore each position how many 1 and how many 0, and 
+multiply them for each position and add together
+
+combination(高频）
+permutation , the k-th permutation 
+
+You are given a string with each english character translated to its 
+alphabetical position (e.g., the string "ABC" --> "123"). Provide a function
+that, when provided the string as an argument, will return the maximum 
+number of strings the encoded string could represent (for example, "123" 
+could represent "ABC", "LC", or "AW").
+kind of like DFS
+
+Database design
+
+FB Check In services
+
+Getting maximum and minimun number was not difficult but getting less than n
+comparison was tricky
+sorted? bucket? radix?
+
+BFS
+
+strstr()
+
+
+The second problem was another classic DP problem. Finding the sum of 1's in
+a submatrix. I went on to describe the recurring relation for the 
+subproblem in the linear case. She didn't want me to do that and she quickly
+said the solution to the 2D case was a generalization of the 1D case.
+seems is find the max sum submatrix, time O(n^3), space O(n^2) 2D version of
+Kadane's
+
+a palindrome for strings with symbols and spaces in them
+
+finding all the anagrams in an array of strings
+
+finding the number of ways a given score could be reached for a game with 3 
+different ways of scoring (e.g. 3, 5 and 10 points). aka leetcode Climbing 
+Stairs
+
+printing a binary tree L-R, (from left to right?? level traversal?
+
+and implementing a comparator function to sort files based on a certain 
+naming convention.
+
+regular_expression_match
+
+graph traversal
+
+Implement a LRU cache in C++.
+
+Given a binary search tree, write an algorithm to find the kth smallest 
+element 
+inorder seach
+
+binary search on a shifted array, find the offset (2) in log n
+find the beginning of the array, if (right - left  <= 1) then return min(
+left,right);
+
+design newsfeed
+
+write a json beautify
+
+Given a vector of Nodes, each of which contain the start and end time of a 
+meeting, find the maximum number of rooms one would have to book for the day
+. 
+seems is the max overlap: 1) sort based on start time 2) scan meeting one by
+one, insert new meeting, and then scan the meetings in linked list, if they
+stil valid for the new start time, then max++, otherwise clear them out
+time should be O(n^2)
+
+How would you query for all the Places near a given coordinate? The focus is
+on how to scale this to a large number of places while keeping response 
+time to within acceptable user expectacions.  
+
+finding anagrams in a string.
+
+Reverse a linked list
+
+Identify if the words in a given sentence are in a built in dictionary.
+===============================================
+
+
+
+mitbbs
+============
+bubble sort
+leetcode 电话号码
+When will java destruct object. (automatic garbage collection for 
+unused object that no reference points to it, finalize() method is called 
+weh it decide to collect it)
+8.    Java stuff: how to avoid other programmer from changing the function. 
+(Final keyword)
+What is the transient keyword.(indicate that a field should not be 
+serialized.aka not persisted )
+How to use stacks to simulate queue(two stacks)
+lowest common ancestor(cc150 P233)
+Given a linked list, say A->B->C, print it in reversed order. Time & 
+space analysis. What if I want the original list not changed?(recursion) How
+about 
+multithreads call this functions simultaneously?(seems ok?)
+怎么判断两个linkedlist meet(make the first linkedlist tail point to the head
+of the second linkedlist, then become the find cycle problem, if just 判断
+then loop two list then if the last element is the same then it will meet.)
+有个矩阵，里面都是0和1，找最大的cluster，相邻或对角(BFS, search 1, then BFS
+it, market visited point to #, get the areas, at the end revert # to 1)
+longest increasing subsequence:
+
+revert linkedlist(recussion and non-recussion)
+leetcode sort color
+两个list相加，优化代码
+regular expression
+given an array, find out the max sum of a set that each elements are non-
+: ajacent.动态规划很简单，刚开始用了数组来存，发现两个变量滚动赋值就可以了
+设计题，地图搜索，怎样设计index
+
+====
+
+Given a number N, write a program that returns all possible combinations of 
+numbers that add up to N, as lists. (Exclude the N+0=N) 
+
+For example, if N=4 return {{1,1,1,1},{1,1,2},{2,2},{1,3}}
+
+===
+
+如何不用recuisive的方法preorder遍历一个tree（tree 有多个不同的孩子）
+
+===
+
+Fb 设计题： timeline
+
+====
+
+
+implement linux command tail.
+
+We will focus only on "-n" and "-f" options.
+
+tail FILE 是显示打印文件最后10行。tail -n 5表示打印文件最后五行。
+
+The -f option causes tail to not stop when end of file is
+             reached, but rather to wait for additional data to be appended 
+to
+             the input. 
+
+有两个concern，
+
+文件可能很大，所以不能全部读入，问怎么解决。
+文件可能大得超过了内存，问怎么读。
+
+(2) Two cases for value of N (A) N is small to fit in memory (B) N is large 
+to fit in memory
+
+Please email your code and clear instructions to execute your program.
+
+=======
+
+前一周电面，电面的题目挺简单，第一题忘了，第二题是two sum，然后写3sum
+我写了一个O(n^2)的3sum，然后面试官问我怎么能写到NlogN，但是想了很久都没有想
+出来方法，然后面试结束后去wiki一查发现NlogN的方法不存在，应该是面试官记错了
+
+一轮电面之后之后让去onsite
+onsite是3轮面试，2轮coding加一轮的experience
+coding的题目都很简单，第一个人先是问了我怎么做test，然后出了两题，第一题比较
+两个string，返回一个int来表示第一个string大还是第二个string大，只要返回任意
+的正数或者负数就行。比如a，ab，就返回一个负数，因为第二个string比第一个
+string大
+第二题是有这么一个class Contact，里面有一个String的name，和一个List<String>
+装着email address，是这个Contact有的address，用一个list装着是因为一个人有可
+能有多个email，现在给你an array of Contact，比如
+#1 John [john@gmail.com]
+#2 Mary [mary@gmail.com]
+#3 John [john@yahoo.com]
+#4 John [john@gmail.com, john@yahoo.com, john@hotmail.com]
+#5 Bob [bob@gmail.com]
+现在我们知道如果email address相同的话，那么就说明是同一个人，现在要做的是根
+据这些email address，把同一个contact给group起来，生成一个List<List<Contact>>
+，比如我们就可以知道#1，#3，#4是同一个人。注意不能根据名字来group，因为有可
+能有相同名字的人，或者同一个人有可能有不同的名字来注册之类的。我给出了一个类
+似graph的解法。时间不够，就没有写code，只是把逻辑解释了一遍。
+第二个人也是出了两道题目，第一题是给两个string，判断其中一个string能否对其中
+的一个字符通过一次的insertion或者一次deletion或者一次replacement变成另外一个
+string，比如
+cat cast True #第一个string通过一次insertion可以变成第二个string
+cat at True #deletion
+cat cot True #replacement
+cat dog False
+cat cat False #因为这两个string相同，不需要任何的操作，要返回false
+第二题是找出factorial(n)中有多少个0，我跟他说我做过
+第三个人大部分时间都是问的experience，问为什么Facebook，对Facebook的哪个
+feature最喜欢，为什么喜欢，然后这个feature还有什么不足。之后让给他一个非常
+specific的例子说当你和同事出现技术上的冲突的时候，应该怎么解决，问的特别细，
+特别深入。之后让写一道题，是leetcode上的，linux里面的cd命令那题，就是给定你
+当前的系统路径比如/a/b，然后你要cd到另外一个目录，给你cd的输入比如cd ../pq/.
+/r，那么最后的路径应该就是/a/pq/r，要求输出最后这个路径
+
+facebook总体都不难，我觉得最多是leetcode中等难度的题，但是我也听说不同的人的
+难度会差别很大。做的时候前两个人还比较顺，但是最后一个人我都没有怎么用过太多
+的facebook，也就在那里瞎扯，写code的时候还被指出了一个非常低级的bug，听说F对
+bugfree的要求特别高，所以求bless啊求bless啊
+--
+
+====
+
+两个tree,比较leaf nodes 是否相同。 如果完全一样，return true, 否则 false
+
+
+===
+
+刚结束不久的F家电面，跪的很干脆。
+本人在国内工作6年，11月中旬决定尝试下US的机会，主要觉得30之前想出去看看，多
+点可能性。于是开始找大神refer，刷leetcode，刷本版。
+本来打算1月份开始面试，但F家的recruiter的动作很快，电话沟通后说就安排在这周
+吧，否则放假了。这必须赞一个，同样是内推，其他家基本你不催，都没反应，当然也
+明白一个只有国内经验且教育背景很弱的候选人，换做我也会没什么热情的。
+
+早上9点电面，第一次电面非常紧张，刚开始就遇到问题，带了耳麦后对方声音特别小
+，还好对方是native speaker，如果是三哥就哭了（recruiter，之前电话里不是说好
+，会安排国人同胞的嘛。。。）
+
+接着开始标准流程，面试官自我介绍，是做支付相关的。接着我介绍简历上的一个项目
+，和他的工作有点相关，表达了兴趣。然后问了motivation，感觉不满意我的回答，最
+后他说any way，开始coding吧。此时已经过了10min。
+
+接着悲剧开始了，题目挺简单，最后理解了就是给一堆区间，找到距离原点最近的k个
+区间。但开始没看懂题目，反复确认了几个例子后，确定这是top K。接着脑子开始抽
+了，想如果start是负数，感觉没法用partition选top k start。就说对正负区间分别
+排序，然后merge tow sorted list。反馈是排序开销太高了之类。
+接着我还纠结在负数的问题，想了很长时间，说要不对正负区间分别做parition,然后
+merge。。。反馈距离和正负无关啊，我才弄明白。
+结果光给思路就用了快15min，更加紧张，脑子完全空拍了，在边界条件上卡了很久，
+code又花了15min。。。
+做完给他解释code，解释到一半，我自己发现一个边界条件的bug，赶紧说sorry然后
+fix。他提了一个comments关于抽取函数以方便复用，当时只想着写完代码，确实没考
+虑。
+问曰怎么选比较的轴更好，我写的是开头结尾相加除2，问开头结尾一样怎么办？那选
+前中后。问如果还一样？囧，我说那就选中位数或者min+max然后除2吧。他说OK。
+最后他自言自语了一会，应该是在检查边界，然后说没问题。但是此时已经过了40min
+了。。。就直接进入我提问环节了，问了支付系统安全性保障和在依赖第三方支付系统
+需要注意的地方，他回答的挺认真，balabla了快10min。最后结束。
+
+总结，跪的非常干脆。第一次海外电面确实非常紧张，和刷题时的感觉差别巨大。本来
+联系了国内MS，想先刷个电面经验，结果fb安排的更快。Any way，还是自己准备不充
+分，其他家电面在安排，估计1月，抓紧时间准备，用版上的话说，move on！
+
+
+===
+
+两道题目：
+1. copy graph，coding完问复杂度，时间复杂度开始没答对。教训是刷题时一定要明
+白复杂度等相关原理，不然很囧。
+
+2. 假设在embed system上编程，不能malloc。给定一个int array，问如何实现
+Linkedlist。
+这题主要时间都花在讨论上，逐步明白她的要求是：实现insert,delete，且时空复杂
+度都是O(1)
+我回答为每个node申请3个数组元素，分别存储：data, next index,pre index。然后
+使用free list维护空闲元素列表即可。由于交流问题，折腾了快20分钟。
+最后时间不够，只让实现了insert。她觉得我假设做的太多，不满意。
+
+
+====
+
+
+题目都常规，具体如下
+1) 两个有序数组，长度分别为2n, n，将第二个数组并入第一个
+2) 一个无序数组，打印和为零的三元组
+
+第一题是leetcode原题，也follow类似的解法，从后向前insert
+第二题找出两个数和为target的变种，应该可以用sort做。不过当时给的是用map的解
+法，把array value, array index存入map用于查询。
+
+===
+
+一个字符串找另一个字符串是否在内，不要求KMP;
+求所有subsets;
+copy graph，所有node都提供给你，不是leetcode的连通图copy；
+还有个题说起来比较复杂但是做起来也很简单。
+
+===
+总共电面一轮，onsite3轮……半轮问resume和project，2.5轮问代码……算上电面，
+总共面了9道，其中5道是leetcode原题，这里就不说了，刷好leetcode是关键吖……说
+说剩下的4道吧……
+
+1. median of integer stream. 没写代码，讲了下思路和数据结构……这题版上有讨
+论过，非常感谢！ http://www.ardendertat.com/2011/11/03/programming-interview-que
+2. 在一个x轴上，有很多矩阵，这些矩阵下面的那条横线跟x轴是重叠的……矩阵之间
+可以部分重叠或者一个矩阵被另一个矩阵完全覆盖……要求输出最后图像的轮廓……不
+知道描述清楚了没有…这题没写代码，讲了下思路……
+3. 给了一堆开会时间, (si, ei), 开始时间和结束时间……判断是否可以只用一个会
+议室满足所有会议.注意，(4,5), (5,6)……这个输入返回true……
+4. 同样的一堆会议时间，返回最少需要多少间会议室.
+
+===
