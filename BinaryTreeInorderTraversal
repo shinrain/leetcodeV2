@@ -59,3 +59,46 @@ public class Solution {
     
     }
 }
+
+
+===
+
+class Solution
+{
+	public List<Integer> inorderTraversal(TreeNode root)
+	{
+		List<Integer> re = new ArrayList<Integer>();
+
+		if(root == null) return re;
+
+		TreeNode cur = root, prev = null;
+
+		while(cur!=null)
+		{
+			if(cur.left==null)
+			{
+				re.add(cur.val);
+				cur = cur.right;
+			}
+			else
+			{
+				prev = cur.left;
+				while(prev.right != cur && prev.right!=null) prev = prev.right;
+				if(prev.right == null)
+				{
+					prev.right = cur;
+					cur = cur.left;
+				}
+				else
+				{
+					re.add(cur.val);
+					prev.right = null;
+					cur = cur.right;
+				}
+			}
+		}
+		return re;
+	}
+}
+
+
