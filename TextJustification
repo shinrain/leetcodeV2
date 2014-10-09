@@ -24,11 +24,6 @@ public class Solution {
     public List<String> fullJustify(String[] words, int L) {
 
     	List<String> re = new ArrayList<String>();
-    // 	if(L==0 || words.length == 0)
-    // 	{
-    // 		re.add("");
-    // 		return re;
-    // 	}
 
     	int cur = 0;
     	int n = words.length;
