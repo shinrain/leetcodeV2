@@ -94,3 +94,72 @@ public class Solution {
     
     }
 }
+
+
+====
+
+Using function to do reverse, cleaner:
+
+	public ListNode reverse(ListNode head)
+	{
+		if(head == null || head.next == null) return head;
+		ListNode cur = head, newHead = null;
+
+		while(cur!=null)
+		{
+			ListNode t = cur.next;
+			cur.next = newHead;
+			newHead = cur;
+			cur = t;
+		}
+		return newHead;
+	}
+
+	public ListNode reverseKGroup(ListNode head, int k)
+	{
+		if(k<=1) return head;
+		ListNode start = head, tail = null;
+		head = null;
+
+		while(start!=null)
+		{
+			ListNode cur = start;
+			int count = 1;
+			while(cur.next!=null && count <k)
+			{
+				count++;
+				cur = cur.next;
+			}
+			if(count <k)
+			{
+				if(tail == null)
+				{
+					head = start;
+				}
+				else
+				{
+					tail.next = start;
+				}
+				break;
+			}
+			else
+			{
+				ListNode t = cur.next;
+				cur.next = null;
+				ListNode rev = reverse(start);
+				if(tail == null)
+				{
+					head = rev; tail = start;
+				}
+				else
+				{
+					tail.next = rev;
+					tail = start;
+				}
+				start = t;
+			}
+		}
+		return head;
+	}
+
+
