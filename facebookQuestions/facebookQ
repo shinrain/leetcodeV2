@@ -742,3 +742,68 @@ copy graph，所有node都提供给你，不是leetcode的连通图copy；
 4. 同样的一堆会议时间，返回最少需要多少间会议室.
 
 ===
+
+
+Round 1: 
+1) 给一棵树，tree node里面增加定义一项 vector<TreeNode*> afterIt,也就是保存
+这一层中此节点之后（右侧）的所有节点指针。求如何实现这个vector。
+
+2) 着色，给定一个矩阵，内部某区间被1以不规则形状封闭包围起来，其它位置都是0
+，要求在该被包围区间内任何一点点击，把整个被包围的空间里0全部改成数字1。
+
+Round 2:
+1)  给定无限integer流，找Top K大；如果不是流而是数组，如何优化。
+
+2）给一组interval区间，[Ai, Aj]， 其中Ai表示人员A进入会场时间，Aj表示人员A离
+开会场时间。要求，有没有任何时间点上会场一个人都没有。
+
+Manager面聊了聊，他说需要Hadoop experience，但是说不是那种会在Hadoop上建应用
+而是实际会
+manipulate Hadoop那种，问了不少细节，他说实际更加靠近Distributed System的感
+觉。
+
+
+
+
+
+Phone Intervew：
+1. Palindrome String (LeetCode)
+2. Sum3 (LeetCode)
+3. Letter Combinations of a Phone Number (LeetCode)
+
+因为都是熟题，电面非常顺利，Sum3还给了排序和HashTable两种解法，当天就通知了
+Onsite。
+
+Onsite Interview：
+一共三轮，每轮45分钟，因为是Master所以没有System Design：
+1. 半轮Culture Fit的问题，另外一道Coding，Sort List (LeetCode)，要求In Place
+，递归的解法要用到Call Stack，讨论了一下没想到更优化的方法，就写了递归Merge
+的解法。
+2. 两道Coding题目，一道可以化为普通的Binary Search，另外一道是Anagrams (
+LeetCode)，都很快搞定，之后剩下将近20分钟就让我提问题了，随便聊了一下感觉还
+挺愉快。
+3. 先详细的问了本科的一个项目，之后一道Coding，要求将Binary Tree以Inorder的
+顺序转化为Circular Doubly Linked List，在递归Inorder Traverse的基础上做了些
+修改，处理Corner Case的时候稍微花了点时间，感觉上可能栽在这一轮。
+
+结束Onsite之后，第二周HR发信要了Reference List，当时还以为是Positive Sign，
+结果第三周等来了据信 :( 无奈只能Move On。
+
+
+
+电面
+1.判断一个树是bst
+2.给一个含有节点的数组，每个节点指向数组其他节点，或者数组外的节点，判断这个
+数组中的节点所构成的树是tree
+
+Onsite
+1.介绍background，各种讨论
+2.一个有序数组被rotate过，判断rotate的距离。考虑无重复和有重复
+3.设计题。设计一个shorten url的service。讨论包括design，scale，各方各面
+4.N个数中拿出K个数的组合并打印出来
+5.二叉树的Deserializing
+
+
+Write a function that calculates input strings with operators +,-,*,/ eg. "5
++5*6" should output 35"。
+

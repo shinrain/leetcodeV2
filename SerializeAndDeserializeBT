@@ -1,0 +1,38 @@
+SerializeAndDeserializeBT
+
+pre-order
+
+======
+class Node
+{
+	String str;
+	Node(String _str){ str = _str;}
+}
+
+class Solution
+{
+
+	public String serialize(TreeNode p)
+	{
+		if(p == null) return "#";
+		String re = Integer.toString(p.val);
+		re+=serialize(p.left);
+		re+=serialize(p.right);
+		return re;
+	}
+
+	public TreeNode deserialize(Node s)
+	{
+		if(s.str.length() == 0) return null;
+		if(s.str.charAt(0)=='#')
+		{
+			s.str = s.str.substring(1);
+			return null;
+		}
+		TreeNode root = new TreeNode((int)(s.str.charAt(0)-'0'));
+		s.str=s.str.substring(1);
+		root.left = deserialize(s);
+		root.right = deserialize(s);
+		return root;
+	}
+}

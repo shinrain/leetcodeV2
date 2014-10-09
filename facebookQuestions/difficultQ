@@ -10,4 +10,447 @@
 4. Serialize BT
 
 
- 
+
+L phone interview:
+1. Implement Linked list.
+2. nested integer list, 求weighted sum. weight 就是嵌套的层数。
+3. Find a number in rotated sorted array, leet code 原题
+
+L onsite:
+1. Senior manager 谈PhD 项目，出了个关于ads monetize 的粗浅问题。聊的很愉快.
+2. Senior software engineer 谈之前工作中得项目和系统。考察communiation, 水过。
+3. Design question, tiny url service. 
+4. Coding: text justification. 考查Implementation, leetcode 原题。不难，就是
+繁琐。
+5. Coding: same tree, calculate product of an array without the number 
+itself, sort
+
+G onsite:
+1. printing a tree structure with giving collection of pairs of <parent, 
+child> relation. Need to first find the root, and validate wether the given 
+relations is a valid tree, and then printing. 
+2. LRU 实现
+3. 记不清楚了，比较少见的一道题，0, 1开头byte，判断最后一个字符是一个byte还
+是两个byte的问题。
+4. Design a system to fast retrieve Fibonacci number.
+
+提都不难，L基本就是题库里的题。G大意了，悲剧原因是coding 不fluent。感觉G更看
+重coding, 还是得多多练习。
+
+ Google:
+电面：
+remove duplicate lines of a file(what if the file is very large which could 
+not be held in the main memory)
+开关灯问题
+Trapping Rain Water(leetcode)
+sometimes a program works, sometimes it does not. Possible reasons
+
+onsite:
+1. clone directed graph(recursive, non-recursive)
+   longest common suffix of two linked list
+   data structure design
+2. how many (m, n) pairs such that m*m+n*n<N
+   线索化二叉树
+3. 判断一个点是否在一个凸多边形内, O(n), O(logn)
+4. group items(BFS)
+   MapReduce(filter a collection of documents, the words which occur more 
+than 5000 times)
+
+
+inkedin
+电面1：
+第一题：给一个words list, 输入两个单词，找出这两个单词在list中的最近距离(先
+写了一个没有预处理的，又写了一个预处理建index的)
+['green', 'blue', 'orange', 'purple', 'green']  f.distance(list, 'blue', '
+green') # output 1
+第二题：类似binary search的一题，要注意boundary case
+
+电面2：
+binary tree level order traversal, 写了三种方法。。。(BFS用arraylist，类似
+DFS，BFS用queue)
+
+onsite:
+1. romanToInt, intToRoman, 
+   N points, m nearst ones
+2. 双向链表，每个node可能都有父节点和子节点，每个父子节点又是一个链表。把它
+拍扁，顺序随意，O(1)空间复杂度
+   edit distance
+3. system deisign: design amazon product page
+4. project presentation
+5. group fit
+.
+
+问了1) 研究, 2) 多线程程序设计, 3) 任意无穷字符串流, 内存有限, 找出唯一一对
+重复字符串, 这个我说了哈希表和外部排序, 但是面试人说有更好的办法(后来想也许
+是bloom filter), 然后追问外部排序的细节到结束. 估计要挂 :(
+
+总结: 面试既是技术活, 又是运气活.
+
+无论如何, 把我的准备工作放下面, 攒点rp, 希望对大家有所帮助.
+
+Interview Qs
+
+Data Structures
+
+   1. Integer
+      - find number of 1s
+      - next largest smaller
+      - smallest larger number
+      - determine if is palindrom
+      - itoa, atoi
+      - add 2 numbers w/o using + or arithmetic operators
+      - implement *, -, / using only +
+      - find max of two numbers w/o comparison
+      - swap two numbers with +/-
+      - swap two numbers with ^
+      - given an integer, find the closest number that is palindrome
+      - implement putlong() by putchar()
+   2. Bit array
+   3. Linked list
+      - find cycle,
+      - find position of cycle starts
+      - reverse LL
+      - delete a node in middle
+      - each node contains a value pointer pointing to a node, 
+        duplicate LL.
+      - remove duplicates from sorted/un-sorted LL.
+      - find n-th to last node to end
+      - number is represented by LL, add 2 numbers
+   4. Array
+      - Longest common substring (LCSubstr)
+      - Longest common subsequence (LCS).
+      - Longest increasing subsequence (LIS).
+      - Longest palingdrome in string.
+      - array, elements are +/-, find subsequence of max sum
+      - circular array, elements are +/-, find subsequence of max sum
+      - find all pairs of integers add up to a sum
+      - find all pairs of integers add up to a sum, 
+        integers are +/- and sorted
+      - find one missing number in N numbers in range [0, N]
+      - find two missing number in N numbers in range [0, N].
+      - binary search circular array
+      - Given {a1, a2, a3, ..}, {b1, b2, b3, ...}, 
+        get {a1, b1, a2, b2, ...}
+      - Given 2 arrays A and B, A large enough to hold both, 
+        merge B into A.
+   5. String
+      - KMP, Rabin-Karp, Boyer Moore
+      - reverse string
+      - reverse words in string  
+      - strcpy, strcmp, strstr, atoi, itoa, strdup
+      - remove duplicate characters in O(1) space
+      - Given dictionary, transform one word to another of same length.
+      - Given large text, find min cover distance of n words.
+      - find longest word made of other words
+      - find first non-repeated char
+      - remove specified char from a string
+   6. Matrix
+      - matrix elements are +/-, find submatrix of max sum
+      - rotate a matrix by 90 degrees
+      - each cell is black/white, find max subsquare with black border.
+      - binary matrix, find largest square matrix with 1s
+      - binary matrix, find largest rectangle matrix with 1s 
+   7. Stack
+      - implement stack by queue.
+      - augmented stack with O(1) push, pop, min
+      - use single array to implement 3 stacks
+      - sort a stack in ascending order using only 
+        push/pop/top/isEmpty/isFull
+   8. Queue
+      - implement queue by 2 stacks
+   9. Priority Queue
+  10. Heap
+      - create heap on array
+  11. Young Tableau
+      - find element
+      - get k-th element
+  12. BST
+      - pre/in/post-order traversal, recursive and iterative
+      - pre/in/post-order traversal, recursive and iterative, 
+        with parent pointer
+      - find height
+      - determine IsBST
+      - find "next" node of a given node in inorder sequence
+      - find k-th inorder element
+      - find range of elements
+      - find diameter
+      - find all path adding to a sum
+      - Check if a tree is balanced
+      - Convert sorted array into balanced BST
+      - Find first common ancestor of two nodes in a BT or BST
+      - Link each node to its right sibling
+      - Print by level (BFS)
+      - Print by level (BFS) in reverse order
+      - Determine if 2 BSTs have the same structure
+      - Create a mirror BT of a BT
+      - Replicate a linked structure
+  13. 2-3-4 Tree
+  14. Red-Black Tree
+  15. Splay Tree
+  16. AVL Tree
+  17. Trie
+  18. Suffix Array
+  19. Suffix Tree  
+      - LCSubstr (longest common substring)
+      - Longest repeated substring
+      - longest palindrome
+      - substring search
+      - data compression
+  20. B-Tree
+  21. KD Tree
+  22. Range Tree
+  23. Hash Table
+  24. Bloom filter
+  25. Disjoint set
+  26. Graph
+      - DFS, BFS
+      - find path existence between two nodes
+      - Min vertice set covering all edges
+      - shortest path
+      - minimum spanning tree
+      - min edge coverage by vertex 
+
+Sorting
+
+   1. Bubble sort
+   2. Insertion sort
+   3. Selection sort
+   4. Shell sort
+   5. Heap sort
+   6. Quick sort 
+   7. Merge sort 
+   8. N-way merge sort (external sort)
+   9. Counting sort
+  10. Bucket sort
+
+Search
+
+   1. Linear search
+   2. Binary search
+      - Binary search, iterative/recursive 
+      - find missing number is sorted array 
+      - search in circular sorted array 
+   3. Quick Select 
+
+Dynamic programming
+
+   1. BST
+   2. COV 
+   3. ILP 
+   4. KS 
+   5. LCS 
+   6. LSP 
+   7. MCM 
+   8. ODP 
+   9. SCP 
+  10. SPA
+  11. SPC
+  12. TSP 
+  13. Given array a[], when i < j, get max(a[i] - a[j]).
+  14. levenshtein edit distance
+  15. Coin Change problem. 
+
+Large-scale system
+
+   1. Bloom filter
+   2. Bit-array/bit-map
+   3. Heap
+   4. Hash table
+      - d-left hashing
+   5. Sub-division
+   6. Database indexing
+   7. Inverted index
+   8. External sort
+   9. Map-reduce
+
+Discrete math, Probability and Statistics, Numerical Computation
+
+   1. Permutation
+      - 3 colors, how many ways to color a cube?
+      - robot, ways to go to diagonal corner on NxN matrix?
+      - print all combinations of valid n-pairs of parentheses
+      - print all subsets of a set
+   2. Combination
+   3. Sampling
+   4. Random number generator
+      - What's a good random number generator?
+      - Given random generator [1, 2, 3, 4, 5], 
+        generate random in [1..7].
+   5. Reservoir sampling
+   6. Find median in stream
+   7. Card shuffling
+   8. Primality testing
+   9. Find prime numbers: naive, sieve of Eratosthenes, sieve of Atkin
+  10. Randomized primality testing, what's good random generator
+  11. Fibonacci sequence 
+  12. Factorial numbers
+  13. Frobenous numbers
+  14. Newton-Ralphson algorithm
+  15. Bayes theorem
+
+Computational algebra
+
+   1. Convex-hull
+   2. Closest pairs
+
+Computational theory
+
+   1. Automata theory
+   2. DFA
+   3. NFA
+   4. Regular language
+   5. Pumping lemma
+   6. Turing machine
+   7. NP-completeness
+         1. TSP
+         2. Vertex-cover problem
+         3. Set-covering problem.
+         4. Subset-sum problem.
+
+OS
+
+   1. Process and thread
+   2. Semaphore, mutex, monitor
+   3. Function call/call frame
+   4. Context switch
+   5. Multi-threading
+   6. Multi-process
+   7. Thread safety
+   8. Big/Little-endian
+   9. Heap/stack
+  10. Malloc/free
+  11. Virtual memory, page fault, thrashing
+  12. DMA (Direct Memory Access)
+
+Networking
+
+   1. 7-layer OSI model
+   2. 4-layer TCP/UDP model
+   3. TCP/UDP
+   4. TCP 3-way handshake (ACK machanism), 
+      flow control, congestion control
+   5. Things happen after entering url
+   6. Routing protocols: BGP, OSPF, RIP
+   7. Subnet mask, packet routing on same/different network.
+   8. Performance
+
+Database
+
+   1. Normalization
+   2. External sorting
+   3. B-tree, B+-tree.
+   4. Relational algebra
+
+Compiler
+
+   1. LL, SLR, LALR, LR, GLR
+   2. recursive precedence
+   3. Operator precedence
+   4. Postfix evaluation of arithmetic expression
+      - implement a calculator
+
+C/C++/Java
+
+   1. const char *, char * const, const char * const
+   2. static
+   3. volatile
+   4. explicit
+   5. Object/class
+   6. Inheritance
+   7. Encapsulation
+   8. Polymorphism
+   9. operator overloading
+  10. Composition/inheritance
+  11. Interface, abstract class
+  12. Struct/class
+  13. 4 default methods of a C++ struct/class
+  14. deep copy/shallow copy
+  15. C++ name hiding
+  16. C++ smart pointer
+  17. friend function/class
+  18. Multiple inheritance
+  19. Virtual inheritance
+  20. Constructor
+  21. Copy/assignment constructor
+  22. Virtual destructor
+  23. Virtual function, vtable
+  24. Pure virtual function
+  25. Macro, typedef, inline
+  26. C, C++, Java comparison
+  27. Garbage collection
+  28. Dangling pointer, free null pointer, memory leak
+  29. New/Delete
+  30. Malloc/free/realloc/calloc
+  31. Lock
+  32. Dead lock's four conditions
+  33. #pragma directive
+  34. Exception handling
+  35. try/catch/finally
+  36. final, finally, finalize
+  37. Java object reflection
+  38. C++ templates, java generics
+  39. Effect of keeping constructor private
+  40. Pass by Value, reference, pointer
+  41. Reference v.s. pointer
+  42. In-memory file system data structures and algorithms?
+  43. Implement singleton
+  44. Implement singleton w/o static/global variable
+  45. Thread programming possible problems
+  46. sizeof operator.
+  47. Java: vector v.s. ArrayList
+  48. int (a*)[10]
+  49. Implement a lock.
+  50. Implement a buffer for DataOutputStream.
+  51. awk, tr, uniq, grep 
+
+Other problems
+
+   1. 2 eggs, 100 floors, find floor that breaks egg 
+      minimizing number of drops.
+   2. 5 quart jug and 3 quart jug, measure 4 quarts of water.
+   3. 100 lockers, open every other i-th locker (i = 1, 2, ..., 100). 
+      Final open?
+   4. Men on island, can see hat on others only. N men, C hats, 
+      days to remove?
+   5. 8/12 balls, find the one lighter/heavier
+   6. 8/12 balls, find one weighs different
+   7. 2 fuses each burns in 1 hour, measure 45 minutes
+   8. Bridge crossing, 1, 2, 5, 10. Minual number to pass bridge
+   9. Orange, apple, orange and apple, all labeled wrong. Find out.
+  10. 3 light switches, only one can be on at a time. Find it out.
+  11. Find the biggest, 2 biggest, biggest & smallest
+  12. n*m*k cube, how many are on the surface?
+  13. Test a pen, ATM machine, webpage, vending machine, program crash?
+  14. Given phone #, print all word representations on phone pad.
+  15. Find overlap of rectangles
+  16. Find median of two sorted arrays.
+  17. N computers each hold N numbers. Find median of these N*N numbers.
+  18. Recontruct a BT from pre/in/post-order traversal
+  19. Recontruct a BST from pre/in/post-order traversal
+  20. Find longest prefix common to all strings
+  21. Implement LRU cache system, O(1) find and update
+  22. Shifted sorted array, rotate.
+  23. Histogram, find max internal rectangle.
+  24. Tournament problem
+  25. N people, 1 celebrity, find celebrity in O(n) time.
+  26. 4 jars, 1 polluted so pills weigh +1, find out which jar
+  27. 25 horses, 5 horses maximal each match. Find the fastest 3
+  28. Mirror, why left/right reversed, not up/down?
+  29. How is next_permutation() in STL implemented?
+  30. N line segments on number axis, calculate common coverage
+  31. wild card match on patterns * (0-n) and ? (1). 
+  32. Find number of trailing zeros in n!
+  33. Print square matrix in a spiral inwardly.
+  34. Find one's phone number given resume only
+  35. N stairs, each time can go up 1 or 2. How many ways to go up?
+  36. Find majority element in an array.
+  37. Two cubes as a calendar
+  38. Coin change problem
+  39. Josephus Circle, last survivor?
+  40. Pick marbles, strategy to win?
+  41. Get sequence 1, 11, 21, 1211, ...
+  42. C program that prints itself
+  43. Print week given date
+  44. enter code, allow one miss
+  45. Check equality of two number sets
+

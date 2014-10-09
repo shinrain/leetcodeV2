@@ -1,0 +1,32 @@
+Given a rotated array, find the number of rotation
+
+======
+
+
+	public int findTotate(int[] a)
+	{
+		int n = a.length;
+		if(n<=1) return 0;
+
+		int l = 0, r = n-1;
+		int re = -1;
+		while(l<r)
+		{
+			int mid = l+(r-l)/2;
+			if(a[mid]>a[l])
+			{
+				re = mid;
+				l = mid;
+			}else if(a[mid]<a[l])
+			{
+				re=mid;
+				r = mid;
+			}
+			else
+			{
+				l++;
+			}
+		}
+		if(re > 0 && re<n-1) return (a[re-1]>a[re] || a[re]>a[re+1])?re:0;
+		return re+1;
+ 	}

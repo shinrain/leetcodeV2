@@ -1,0 +1,46 @@
+Replace all occurrence of the given pattern to ‘X’.
+For example, given that the pattern=”abc”, replace 
+“abcdeffdfegabcabc” with “XdeffdfegX”. Note that multiple
+occurrences of abc’s that are contiguous will be replaced
+with only one ‘X’
+
+===
+
+class Solution
+{
+	public boolean validate(String s, String p)
+	{
+		int m = s.length(), n = p.length();
+		if(m<n) return false;
+
+		int i=0;
+		for(char c: p.toCharArray())
+		{
+			if(c!=s.charAt(i++)) return false;
+		}
+		return true;
+	}
+
+	public String replace(String s, String p)
+	{
+		int m = s.length(), n = p.length();
+		if(m<n) return s;
+
+		char[] a = s.toCharArray(), b = p.toCharArray();
+
+		int i=0, j=0;
+
+		while(j<m)
+		{
+			if(j+n<=m &&  validate(s.substring(j,j+n), p) )
+			{
+				a[i++] = 'X';
+				j+=n;
+			}
+			else
+				a[i++] = a[j++];
+		}
+		return new String(a).substring(0, i);
+	}
+
+}
