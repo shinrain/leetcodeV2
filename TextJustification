@@ -50,7 +50,7 @@ public class Solution {
     		    re.add("");
     		    return re;
     		}
-   			String result = "";
+   		String result = "";
     		if(num==1)
     		{
     			result = words[cur];

@@ -65,3 +65,48 @@ public class Solution {
         }
   }
 }
+
+
+=====
+
+Better solution, linear:
+
+//Node is a wrapper class, since java does not support reference. 
+//Head can not move forward by passing in ListNode.
+
+
+class Node
+{
+    ListNode head;
+    Node(ListNode _head)
+    {
+        head = _head;
+    }
+}
+
+public class Solution {
+    public TreeNode helper(Node head, int start, int end)
+    {
+        if(start>end) return null;
+        int mid = start+(end-start)/2;
+        TreeNode left = helper(head, start, mid-1);
+        TreeNode cur = new TreeNode(head.head.val);
+        cur.left = left;
+        head.head = head.head.next;
+        cur.right = helper(head, mid+1, end);
+        return cur;
+    }
+    public TreeNode sortedListToBST(ListNode head)
+    {
+        if(head == null) return null;
+        
+        int count = 0;
+        ListNode cur = head;
+        while(cur.next !=null)
+        {
+            count++;
+            cur = cur.next;
+        }
+        return helper(new Node(head), 0 ,count);
+    }
+}
