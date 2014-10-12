@@ -81,8 +81,8 @@ NextPermutation
 PalindromePartitioning
 *PalindromePartitioningII
 *PartitionList
-Pascal'sTriangle
-*Pascal'sTriangleII
+PascalsTriangle
+*PascalsTriangleII
 *PathSum
 PermutationSequence
 Permutations
