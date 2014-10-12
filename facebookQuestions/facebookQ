@@ -807,3 +807,51 @@ Onsite
 Write a function that calculates input strings with operators +,-,*,/ eg. "5
 +5*6" should output 35"。
 
+====
+
+1. 3sum
+Given an array of integers
+
+[1, 2, -3, 4, 0]
+
+To find any 3 numbers in array such that they sum to zero.
+
+
+
+
+eg: 
+
+1) 1 , 2, -3
+
+2) 0, 0, 0
+
+2. Q2: Given set of points in 2d grid space. Find a grid point such that sum
+of distance from all the points to this common point is minimum.
+
+eg: p1: [0, 0] p2: [3, 0] p3: [0, 3]
+
+ans: r: [0,0] 
+
+sum: 0 + 3 + 3 = 6
+
+for every other point sum to this ans greater than 6.  
+
+===
+
+题目就是设计一个tour的app，没给其他条件，需要自己clarify，中间用到了一个找最
+短路径的算法。顺便求个bless
+
+Open question?
+Number of points in the tour? Is the number fixed or dynamic?
+Start point? End point?
+Can we express the question as optimized path from any two points in a map?
+
+Beside algorithm puzzles, here come design questions.
+who use the app? How many users?
+How big is the map?
+Do you want to recommend best/favor paths to user?
+Do you suggest different paths to different users?
+
+If the question is simply "设计一个tour的app", then the interviewer might be
+looking for sth more than algorithm. Just my two cents.
+

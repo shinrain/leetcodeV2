@@ -1,0 +1,191 @@
+Given an array of numbers, nums, return an array of numbers products, where 
+products[i] is the product of all nums[j], j != i.
+
+Input : [1, 2, 3, 4, 5]
+Output: [(2*3*4*5), (1*3*4*5), (1*2*4*5), (1*2*3*5), (1*2*3*4)]
+      = [120, 60, 40, 30, 24]
+You must do this in O(N) without using division.
+
+=======
+
+Find the node with given value in binary tree in in-order way,and return it;
+PS: the binary tree may include two nodes with the same value.
+
+
+===
+
+1.1 gas station
+1.2 一个数组，找出一个solution使得1st《2nd， 2nd》3rd。。比如15462就是数组1
+，2，4，5，6的一个solution。大牛指点下这个怎么弄？
+2. most frequent character in a huge string (10works 1master)， 如果一个big
+文件在一个机子上怎么弄，如果多个小文件在多个机子上怎么弄？
+3.1. return random node of a list, what if it can be modified concurrently
+3.2. 1k Ads, how to make it only appear once across all servers, no master 
+server
+
+Consistent hashing
+
+
+4.check generalized tree, follow up:return all generalized tree of its 
+children， 比如
+    1
+2      3
+4     5 6
+
+这种情况下，2，4，5，6是valid的节点。
+
+5.how to design general cache
+
+
+===
+
+今天看到一道Google的面试题，想了半天不知道自己的解法对不对，上来跟大家讨论一
+下。
+
+题目是装载问题的变种：要把n个箱子装到m个船上，每个箱子的重量是Wi, 每个船的载
+重是Cj，问怎么样装才能把这m个船尽可能装满？即所有船的剩余空间之和最小。
+
+
+Solution: should be greedy way. Sort Bucket and boxes.
+
+===
+
+投的职位Linkedin Test Engineer(Mobile&Web)
+
+背景：cs master +一年test engineer工作经验；
+
+电面一轮+onsite5轮；
+
+电面：什么是singleton，两道算法，printTreeByLevel，字符串含数字求数字和。
+
+Onsite，第一轮manager面（女阿三），基本都是 behavior questions， 聊下文化和
+做的项目；第二轮（国女）问的都是用selenium解决一些实际问题（automation），比
+如在google search然后返回search结果的数目，怎么判断页面加载完毕等；第三轮吃
+饭；第四轮（国男+印女），test strategy 给一个linkedin的feature，写一个完整的
+test plan。最后一轮俩阿三，一男一女，问了一下做的项目，然后两道coding，这轮
+答得不好，题目很简单，但是阿三表述一直不太清楚，感觉花了很久才明白到底问什么
+；一个leetcode原题（fibonacci 数列的一个），还有一个实现stack的push和pop，但
+要求每次返回middle number，主要是考察一些基本data structure。因为linkedin主
+要是test在web和mobile，用的工具是selenium和appium，所以面试官也比较喜欢问这
+方面。
+
+
+How to implement a stack which will support following operations in O(1) time complexity?
+1) push() which adds an element to the top of stack.
+2) pop() which removes an element from top of stack.
+3) findMiddle() which will return middle element of the stack.
+4) deleteMiddle() which will delete the middle element.
+Push and pop are standard stack operations.
+
+The important question is, whether to use a linked list or array for implementation of stack?
+
+Please note that, we need to find and delete middle element. Deleting an element from middle is not O(1) for array. Also, we may need to move the middle pointer up when we push an element and move down when we pop(). In singly linked list, moving middle pointer in both directions is not possible.
+
+The idea is to use Doubly Linked List (DLL). We can delete middle element in O(1) time by maintaining mid pointer. We can move mid pointer in both directions using previous and next pointers
+
+===
+
+发个L家面经
+发信站: BBS 未名空间站 (Fri Oct 10 02:23:04 2014, 美东)
+
+phone 1:
+1. Search for a Range (leetcode)
+2. Decide whether a target is covered by a list of intervals (类似merge 
+intervals)
+第二题答的不好，感谢国人大哥大姐放水！
+
+phone 2:
+1. permutations (leetcode)
+2. permutations II (leetcode)
+3. 设计一个iterator class处理文件line by line
+
+
+===
+发个G家面经
+发信站: BBS 未名空间站 (Fri Oct 10 19:19:53 2014, 美东)
+
+设计一个类来限制query，如1000qps，或者说每秒钟只能发10封邮件
+给定的API，now()返回当前milliseconds
+实现类的函数allowRequest()，如果当前还有request剩余true,否则返回false
+
+
+Reference:
+
+boolean allowRequest() {
+   int minInterval = 1000/N; // N is the max rate
+   
+   int current = now();
+   int diff = current-last;
+   last = current; //last would be a class private member
+   if(diff < minInterval) 
+      return false;
+   else
+      return true;
+}
+
+--
+
+LinkedIn 电面面经（第一轮），攒人品
+发信站: BBS 未名空间站 (Fri Oct 10 14:57:25 2014, 美东)
+
+intern 两个leetcode题目：
+Maximum Subarray
+Maximum Product Subarray
+攒攒人品，希望能进下一轮
+
+===
+
+Linkedin的一道电面
+发信站: BBS 未名空间站 (Mon Sep 29 02:04:18 2014, 美东)
+
+请问这道电面题Find the distance between two words in a list. The words can 
+repeat.
+
+===
+
+上周onsite的，昨天刚接到电话，悲剧了~~ ，还是有些失落，上来为以后面试求求
+bless，顺便说下经过， 签了nda，题目不太好多说，一共5轮：
+
+第一轮：2道coding，问复杂度， 1道design，coding不难
+第二轮：1道有关图的题，我给了个解，然后要降低复杂度，又给了一个，然后没时间
+，就没写code，面试官说，that should work
+第三轮：给了用数组表示的树的题，2问，第一问答得可以，第二问脑袋发晕，程序木
+有写完。。。。
+第四轮:  一个dp题，中间一个corner case没有考虑，给了个hint，后来做出来
+第五轮：聊了点简历，然后做题，我给了个答案，对方让降低复杂度，想到了heap，但
+是没完全想通
+
+
+===
+
+其他都比较常规，有一道图的题目，一个 n*n 矩阵，每个房间可能是封闭的房间，可
+能是警察，可能是开的房间，封闭的房间不能过，返回一个 n*n矩阵， 每一个元素是
+最近的警察到这个房间的最短距离。
+
+BFS from each house.
+
+===
+
+面试之前在这里看了很多面经。非常感谢大家。现在贡献一下我的。顺便求一下bless
+，希望能拿到心仪的offer。
+
+new grad full time position. 一个白人小哥面的。
+
+上来先讲了讲research。感觉就没答好。他问了一个我简历里research的一个linear 
+programming的细节，但是我其实只是用了一点皮毛，对深层的原理不是很理解。结果
+花了很多时间在这块还没答到重点。教训就是，不是特别在行的东西千万别放简历上。
+
+然后就是coding，一共三题，这时候离结束就只有40分钟了，时间不怎么够。
+1. 去除string中的空白
+2. largest rectangle in histogram
+3. 把regular expression tree 转换成表达式string
+最后一题没写完就到只剩下五分钟了。小哥让我停下来跟我介绍了他的组，并且问问我
+有什么问题之类。然后就结束了。题目都没答完肯定是没戏了。move on准备下一场。
+祝各位找工作的都顺利！
+
+忘了说了，电话打来晚了七分钟。有了这七分钟我最后一题肯定能写完的。郁闷！
+
+update：
+居然通知进onsite了，给大家对Google电面的bar提供一个参考。谢谢大家bless。等我
+onsite完了再来update。
+原帖里贴代码的同学，对不住你们了, 点修改选项不知道怎么点到删除上去了.

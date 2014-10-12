@@ -47,3 +47,42 @@ public class Solution {
     
     }
 }
+
+====
+
+CLeaner solution:
+
+    public String nextSolution(String s)
+    {
+        int n = s.length();
+        if(n<=0) return "";
+
+        char val = s.charAt(0);
+        int count = 1;
+        String re = "";
+        for(int i=1;i<n;i++)
+        {
+            char c = s.charAt(i);
+            if(c!=val)
+            {
+                re+=Integer.toString(count)+Integer.toString((int)(val-'0'));
+                val = c; count = 1;
+            }else
+            {
+                count++;
+            }
+        }
+        re+=Integer.toString(count)+Integer.toString((int)(val-'0'));
+        return re;
+    }
+    public String countAndSay(int n)
+    {
+        if(n<=0) return "";
+        String s = "1";
+
+        for(int i=1;i<n;i++)
+        {
+            s = nextSolution(s);
+        }
+        return s;
+    }
