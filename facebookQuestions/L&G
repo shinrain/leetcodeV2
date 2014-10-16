@@ -50,6 +50,151 @@ Solution: should be greedy way. Sort Bucket and boxes.
 
 ===
 
+1. 国男
+2sum
+数字有重复，比如如果sum是10，{2,2,2,8,8}里面算两个(2,8)pair。求pair总数。
+Merge interval
+对我的最后solution表示很满意。
+2. 国男
+stream of strings like this
+"1 34 5 6"
+"3 4 5 6 3"
+"4 5 6 3 3"
+...
+每行是一个包含数字的string。去除所有数字完全重复的strings.比如这里的第二和第
+三行数字完全相同，可以合并成一个。要求合并所有数字完全重复的strings。
+最后表示对我的优化结果不满意。
+3. 有点像东南亚或者拉美后裔，英文无口音
+Reverse linkedlist
+不断要求优化。
+4. 欧洲人
+写一个小游戏。MxN 的格子上有一条蛇，蛇头可以向前，左，右移动，撞到自己身体任
+何部位或者撞到边界就算死。
+5. 阿三
+有N个node,每个都不停的向外发送timestamps,具体发送哪些timestamp是每个node决定
+的,从其他node来说是随机的.现在要收集这些node发送的所有timestamp.如果某个
+timestamp被发现从超过99%的node上发送出来,记录下来.需要怎么做?这些timestamp很
+多,是不能完全放进去内存里面的.如果node非常多,怎么scale?
+我给的方案是用HashMap<Timestamp, count>,分布存到多台机器上面。阿三表示数据很
+多，每台机器的内存都存不下，让我优化。我的进一步方案是再设定一个时限T，过期
+的数据可以丢掉。阿三要求进一步优化。我的再进一步方案是对于这个对于这个时限T
+再分割成n个小格。这个n需要通过实验根据具体实际情况来确定。如果在T／n时间里面
+，某些Timestamp的count小于某个设定值，比如0.01N，认为这个timestamp被收集到0.
+99N的可能性已经趋近于0，可以忽略了，从HashMap里面删除。最后阿三还是表示不满
+意，不能完全理解我的方案。
+
+已挂，感觉比较大可能是挂在国男2和那个阿三手上了，当然不排除其他人表面表示满
+意，实际有保留。不管怎样，下面接着投简历，接着面。Offer总会来的，祝版上所有
+人都拿到理想的offer。
+
+===
+
+
+输入是一个自然数T， 输出是(a_1,a_2,...,a_k)
+使得a_1^2+a_2^2+...+a_k^=T， 并且k尽可能小
+--
+
+====
+
+
+1. 层序打印 binary tree
+2. 实现 BlockingQueue 的 take() 和 put()
+public interface BlockingQueue<T>
+{
+    /** Retrieve and remove the head of the queue, waiting if no elements 
+are present. */
+    T take();
+
+    /** Add the given element to the end of the queue, waiting if necessary 
+for space to become available. */
+    void put (T obj);
+}
+
+3. 实现一共 TwoSum interface
+public interface TwoSum {
+    /**
+     * Stores @param input in an internal data structure.
+     */
+    void store(int input);
+
+    /**
+     * Returns true if there is any pair of numbers in the internal data 
+structure which
+     * have sum @param val, and false otherwise.
+     * For example, if the numbers 1, -2, 3, and 6 had been stored,
+     * the method should return true for 4, -1, and 9, but false for 10, 5, 
+and 0
+     */
+    boolean test(int val);
+}
+
+====
+
+L家电面（最新） 攒RP 求bless
+发信站: BBS 未名空间站 (Tue Oct 14 19:58:05 2014, 美东)
+
+运气不好，碰到老印三哥三姐，悲剧了。电话进来Late了。然后讨论简历。。。
+上题，头有点晕。。。把题弄错了。一开始思路不对，就悲剧了。
+
+Given a list of child->parent relationships, build a binary tree out of it. 
+All the element Ids inside the tree are unique. 
+
+Example:
+
+Given the following relationships:
+
+Child   Parent  IsLeft
+15      20      true
+19      80      true
+17      20      false
+16      80      false
+80      50      false
+50      null    false
+20      50      true
+
+
+You should return the following tree:
+    50
+   /  
+  20   80
+/    / 
+15 17 19 16
+
+Function Signature
+    
+/**
+* Represents a pair relation between one parent node and one child node 
+inside a binary tree
+* If the _parent is null, it represents the ROOT node
+*/
+public class Relation {
+    public Integer _parent;
+    public Integer _child;
+    public boolean _isLeft;
+}
+
+
+/**
+* Represents a single Node inside a binary tree
+*/
+public class Node {
+    public Integer _id;
+    public Node _left;
+    public Node _right;
+}
+
+/**
+* Implement a method to build a tree from a list of parent-child 
+relationships
+* And return the root Node of the tree
+*/
+public Node buildTree (List<Relation> data)
+{
+//TODO
+}
+
+
+
 投的职位Linkedin Test Engineer(Mobile&Web)
 
 背景：cs master +一年test engineer工作经验；
@@ -882,5 +1027,231 @@ anyway move on。
 
 ==
 
+given a string ,return the longest substring that contains at most two 
+characters.
 
+
+===
+
+google面经
+发信站: BBS 未名空间站 (Sat Aug  2 17:36:57 2014, 美东)
+
+LZ在GOOGLE面试过两次， 第一次是大学毕业。 为了追CHICAGO的一个女孩子， 申请了
+GOOGLE CHICAGO的位子。第一轮CAMPUS面试通过， 第二轮NEW YORK后， 收到CHICAGO
+的EMAIL问我availability说要为我订机票第三轮面试， 三天后却收到NEW YORK的电话
+说我申请的位子取消了， 我没被录用。后来我在NEW YORK找了一份IT的工作。 三年后
+， 我决定跳槽其他的IT工作， GOOGLE刚巧邀请我去面试， 所以我第二次去GOOGLE面
+试。 这次拿到了offer， 但是也拿到了更好的HFT的offer。虽然没去GOOGLE工作， 但
+是我很喜欢GOOGLE的面试， 觉得每次都有收获。在此分享一下我被问过的问题。我也
+很希望看到其他朋友们的面试问题， 我会当兴趣爱好来试解答。
+
+Behavior Questions:
+
+1. In java, a method declared as private restrict access to within the class
+. For example, a private void doHeartbeat() method within Heartbeat class 
+can only be called within the Heartbeat class. However, it doesn't prevent 
+the Heartbeat class to access the method of a different Heartbeat object. 
+For example, a private void forceHeartbeat(Heartbeat other) method is 
+allowed to call other.doHeartbeat(). Java doesn't provide a way to limit 
+access to a per object level. Why not?
+
+2. Given set amount of memory and ram, how do you implement a process that 
+takes the longest amount of time to finish? The process has to finish, it 
+can not be an infinite loop. (Of all of the questions I got asked from 
+Google, I'm not sure I know the right answer to this one to this day)
+
+Coding Questions:
+
+1. Bar chart island. Given a two dimensional island that looks like a bar 
+chart represented by an int array. Calculate the amount of water it can 
+collect when it rains on the island. For example, [1,2,3] collects no water,
+[2,1,3] collects 1 unit of water, [3,2,1,4] collects 3 units of water, [3,2
+,4,1,5] collects 4 units of water. 
+
+2. Ancestor. You are ancestry.com, you have a graph of related ancestors. 
+One ancestor node contains the following fields: Node mother, Node father, 
+Node[] children. Write a method that checks if two Nodes are blood related. 
+For example, you and your half brother is blood related, your father and 
+your mother are (hopefully but not guaranteed to be ) not blood related. 
+Please note that information might be incomplete meaning mother, father or 
+children can all be null.
+
+3. Eviction Hash Map. Write a hash map that can store at most N key value 
+pairs. If more than N key value pairs are associated, the least recently 
+accessed key value pair is removed from the map. For example, for a map of 
+capacity 3. put(1,1), put(2,2), put(3,3), put(4,4) will cause key 1 to be 
+removed. However, put(1,1), put(2,2), put(3,3), get(1), put(4,4) will cause 
+key 2 to be removed, put(5,5) will cause key 3 to be removed. 
+
+4. Meeting place. You have a city with streets running parallel both 
+horizonally and vetically creating a giant grid. The dimension of each grid 
+is 1 X 1. All street corners in the city can be represented by a coordinate 
+(int x, int y). Given an array of people represented by their closest street
+corner, calculate a street corner to meet where their combined traveling 
+distance is the shortest. Assume everyone can only travel on road. For 
+example, the traveling distance from [1,1] to [2,2] is 2. 
+
+5. Nth largest from tree. Given a binary search tree where the left node is 
+smaller and the right node is larger. Calculate the Nth largest number in 
+the tree throwing exception when there is less than N elements in the tree.
+
+6. Anagram solver. An anagram is two words that contains the same letters 
+the same amount of times. For example, angle and angel are anagrams. Given a
+dictionary, perform some preprocessing for a anagram solver. The anagram 
+solver takes a string as input and prints out a list of all anagrams 
+contained in the dictionary.
+
+7. Next tree sibling. Given a tree where each node has left and right 
+pointers
+, implement a function that sets the next pointer. Next pointer will point 
+to a node in the same level immediately to the right. For example, if a node
+has both left and right children, next pointer of the left child will point
+to the right child. The next pointer of the right child will point to 
+parent's sibling's left child. The fact that left child and right child can 
+both be null make things complicated.
+
+
+====
+
+电面：
+第一次：印男，implement string matching and replacing
+第二次：国男，producer consumer,谢谢中国小弟弟出了这个我非常熟悉的题
+
+onsite:
+
+第一轮：hiring manager，主要就是谈project，我讲了我最近在做的一个OO design的
+东西，因为和面的组没啥关系，看得出来hiring manager是耐着性子听我说完的 :-P
+
+第二轮：印男加国男，given a stream of data and a sliding window, implement 
+put(), getAverage(),和另外一个function（忘了是啥了）。考虑multithreading的情况
+
+第三轮: 吃饭
+
+第四轮：最坑爹的一轮，recruiter告诉我也是跪在了这一轮，所以多说两句。来的是
+个中年老印加一个中年国男，国男shadow。老印一出现就是一幅超鄙夷超不屑的臭脸。
+出了一个inverted index的题，就是有一大堆doc，对doc里出现的word建inverted 
+index，doc很多所以是distribute在很多machine上的，问怎么实现这个inverted 
+index。我听了题目暗爽，这种题我准备的很充分啊！因为这题有很多解法，我就从差
+到好一一说来，每个都说了为啥不好，然后引出我认为最好的那一个。可是我每说一个
+老印就急吼吼的跳起来反驳我。搞了两回，我意识到可能老印就是想听最佳答案，我就
+解释说我只是想list一下所有的option，我也问他你是不是prefer直接告诉你最佳答案
+？他说是。我就直接给了我认为的最佳答案。
+
+接下来还有几个相关的小问题我都忘了，有一个是关于map reduce的。最后一个，是找
+出前K个最常用的word。我说用min heap找出每个machine的K个最常见word，再用一个
+min heap merge这些list。奇葩的事情就出现了，老印跳出来说，不对，你用min heap
+是不对的，应该用max heap！这时国男也一脸诚恳的“提醒”我说：是的，你用min 
+heap找出来的是最不常用的K个word哦！我我我，我当场就愣了！不会吧，俩linkedin
+的老员工了，好歹是个面试官啊，居然连min heap和max heap是啥都不知道？愣了两秒
+，我就给他们讲了一遍啥是min heap啥是max heap，和为啥找K个最常用的word要用min
+heap而不是max heap。一遍讲我一边想：我这是来面试的还是来给linkedin的员工培
+训基本data structure的？最后俩人还是将信将疑，又问了一个有关于thread的小问题
+就结束了。
+
+第五轮：小印女加小印男，也是问了一个类似在stream里找k个最大数的题，我还是用
+了min heap，还好俩人都知道啥是min heap，也比较认同我的做法。然后大部分的时间
+都在讨论multi threading的实现，我提到了read write lock，和三种fairness 
+policy，不过他俩都是一脸茫然，好像他们只知道read write lock，但不知道
+fairness这回事，挺奇怪的。（另：刚又想起，这一轮还问了max point on a line一
+题，leetcode上有，只要求pseudo code，我做了个square的，问小印男还有没有更快
+的，他说就他所知没有了）。
+
+第六轮：亚裔男（不是国男）加印男，问了romanToInt和intToRoman的题，intToRoman
+和leetcode一样，但romanToInt要考虑很多corner case。这些corner case在leetcode
+和EPI上都没有提到过。另外，好像EPI上的解法很多错误，我没看几道题就已经找出很
+多错了，有的错的很离谱，大家得注意一下。
+
+第七轮：白男加国女，问了一个design的题，design monitoring system，自我感觉是
+发挥的最好的一轮。
+
+面完以后我就觉得，成败就在第四轮，最后果然就跪在了这一轮。不过我是一点遗憾都
+没有，要是给了我offer，让我去和对我天生有敌意的老印，还有分不清min heap和max
+heap的人一起共事，其实也不是什么好事。还有我觉得好几个问道我multithreading
+问题的人，本身对multithreading也不是很熟，像那个read write lock fairness 
+policy的问题，还有lock free algo的ABA问题，他们好像都不知道，那他们平时是咋
+把multithreading的程序写对的啊？
+
+所以我现在挺疑惑的：是不是我特别倒霉，碰上的都是linkedin里水平比较低的一些人
+，还是linkedin的员工水平并不像原本我想的那么高？
+
+
+===
+
+
+<Coding Interviews: Questions, Analysis & Solutions>的第75道例题。
+
+只能被2, 3, 5整除的数字被称之为丑数Ugly Number。下面的代码是求出按大小顺序第
+index个丑数。稍作改动就能打印出前n个丑数，因为之前的丑数都存在数组uglyNums里。
+
+下面是参考代码：
+
+int GetUglyNumber_Solution2(int index) { 
+    if (index <= 0) 
+        return 0;
+  
+    int[] uglyNums = new int[index]; 
+    uglyNums[0] = 1; 
+    int nextUglyIndex = 1;  
+    int index2 = 0; 
+    int index3 = 0; 
+    int index5 = 0;  
+    while (nextUglyIndex < index) { 
+        int min = Math.Min(uglyNums[index2] * 2, uglyNums[index3] * 3); 
+        min = Math.Min(min, uglyNums[index5] * 5);  
+        uglyNums[nextUglyIndex] = min;  
+        while (uglyNums[index2] * 2 <= uglyNums[nextUglyIndex]) 
+            ++index2; 
+        while (uglyNums[index3] * 3 <= uglyNums[nextUglyIndex]) 
+            ++index3; 
+        while (uglyNums[index5] * 5 <= uglyNums[nextUglyIndex]) 
+            ++index5;  
+        ++nextUglyIndex; 
+    }  
+    int ugly = uglyNums[nextUglyIndex - 1]; 
+    return ugly;
+} 
+
+===
+
+发个L家面经，攒rp
+发信站: BBS 未名空间站 (Wed Oct 15 00:40:01 2014, 美东)
+
+发个第一轮电面的面经，为第二轮攒rp了
+两道题
+打印一个数的所有乘数组合，从大到小，不要有重复
+merge interval
+--
+
+
+24=2*2*2*3
+  =2*3*4
+  =2*12
+  =3*8
+  =4*6
+
+List<List<Integer>> factorCombination(int n) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        dfs(n, 2, result, new ArrayList<Integer>());
+        return result;
+    }
+    void dfs(int n, int start, List<List<Integer>> result, List<Integer> sub
+) {
+        if(n == 1) { 
+            result.add(new ArrayList<Integer>(sub));
+            return;
+        }
+        
+        for(int i = start; i <= n; i++) {
+            if(n % i != 0) continue;
+            if(i == n && sub.isEmpty()) continue;
+            sub.add(i);
+            dfs(n / i, i, result, sub);
+            sub.remove(sub.size() - 1);
+        }
+    }
+
+
+
+
+====
 
