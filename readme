@@ -83,7 +83,8 @@ PalindromePartitioning
 *PartitionList
 PascalsTriangle
 *PascalsTriangleII
-*PathSum
+PathSum
+*PathSumII
 PermutationSequence
 Permutations
 *PermutationsII

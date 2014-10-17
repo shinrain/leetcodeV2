@@ -36,3 +36,34 @@ public class Solution {
     
     }
 }
+
+====
+
+Another solution:
+
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> re = new ArrayList<Integer>();
+        int n = rowIndex;
+        if(n<0) return re;
+        if(n==0)
+        {
+            re.add(1);
+            return re;
+        }
+        
+        List<Integer> prev = new ArrayList<Integer>();
+        prev.add(1);
+        for(int i=0;i<n;i++)
+        {
+            re = new ArrayList<Integer>();
+            int carry = 0;
+            for(int in:prev)
+            {
+                re.add(carry+in);
+                carry = in;
+            }
+            re.add(1);
+            prev =re;
+        }
+        return re;
+    }
