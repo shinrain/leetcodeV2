@@ -62,3 +62,36 @@ public class Solution {
         return true;
     }
 }
+
+==
+
+char valid(char c)
+{
+    if( c>='0' && c<='9') return c;
+
+    if(c>='a' && c<='z') return c;
+    
+    if(c>='A' && c<='Z') return (char)(c+'a'-'A');
+    
+    return '.';
+}
+
+public boolean isPalindrome(String s)
+{
+    int l=0, r = s.length()-1;
+    while(l<r)
+    {
+        char c1 = valid(s.charAt(l));
+        char c2 = valid(s.charAt(r));
+        if(c1 == '.') l++;
+        
+        if(c2=='.') r--;
+        
+        if(c1!='.' && c2!='.')
+        {
+            if(c1!=c2) return false;
+            l++; r--;
+        }
+    }
+    return true;
+}
