@@ -1,26 +1,12 @@
 Find Minimum in Rotated Sorted Array
 
-Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+public int findMin(int[] num) {}
 
-(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
-
-Find the minimum element.
-
-You may assume no duplicate exists in the array.
-
-public class Solution {
-    public int findMin(int[] num) {}
-}
 
 ===
 
 
 Maximum Product Subarray
-
-Find the contiguous subarray within an array (containing at least one number) which has the largest product.
-
-For example, given the array [2,3,-2,4],
-the contiguous subarray [2,3] has the largest product = 6.
 
 public int maxProduct(int[] A)
 
@@ -28,25 +14,11 @@ public int maxProduct(int[] A)
 
 Reverse Words in a String
 
-Given an input string, reverse the string word by word.
-
-For example,
-Given s = "the sky is blue",
-return "blue is sky the".
-
 public String reverseWords(String s)
 
 ===
 
 Evaluate Reverse Polish Notation
-
-Evaluate the value of an arithmetic expression in Reverse Polish Notation.
-
-Valid operators are +, -, *, /. Each operand may be an integer or another expression.
-
-Some examples:
-  ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9
-  ["4", "13", "5", "/", "+"] -> (4 + (13 / 5)) -> 6
 
 public int evalRPN(String[] tokens)
 
@@ -372,6 +344,590 @@ public boolean isSameTree(TreeNode p, TreeNode q)
 
 ===
 
+Recover Binary Search Tree
+
+public void recoverTree(TreeNode root)
+
+===
+
+Validate Binary Search Tree
+
+public boolean isValidBST(TreeNode root)
+
+===
+
+Interleaving String
+
+public boolean isInterleave(String s1, String s2, String s3)
 
 
+===
+
+Unique Binary Search Trees II
+
+public List<TreeNode> generateTrees(int n)
+
+===
+
+Unique Binary Search Trees
+
+public int numTrees(int n)
+
+===
+
+Binary Tree Inorder Traversal
+
+public List<Integer> inorderTraversal(TreeNode root)
+
+===
+
+Restore IP Addresses
+
+public List<String> restoreIpAddresses(String s)
+
+===
+
+Reverse Linked List II  
+
+public ListNode reverseBetween(ListNode head, int m, int n)
+
+===
+
+Subsets II 
+
+public List<List<Integer>> subsetsWithDup(int[] S)
+
+===
+
+Decode Ways
+
+public int numDecodings(String s)
+
+===
+
+Gray Code
+
+public List<Integer> grayCode(int n)
+
+===
+
+Merge Sorted Array
+
+public void merge(int A[], int m, int B[], int n)
+
+===
+
+Scramble String
+
+public boolean isScramble(String s1, String s2)
+
+===
+
+Partition List
+
+public ListNode partition(ListNode head, int x)
+
+===
+
+Maximal Rectangle
+
+public int maximalRectangle(char[][] matrix)
+
+===
+
+Largest Rectangle in Histogram
+
+public int largestRectangleArea(int[] height)
+
+===
+
+Remove Duplicates from Sorted List II 
+
+public ListNode deleteDuplicates(ListNode head)
+
+===
+
+Remove Duplicates from Sorted List 
+
+public ListNode deleteDuplicates(ListNode head)
+
+===
+
+Search in Rotated Sorted Array II 
+
+public boolean search(int[] A, int target)
+
+===
+
+Remove Duplicates from Sorted Array II  (count == 2)
+
+public int removeDuplicates(int[] A) 
+
+===
+
+Word Search
+
+public boolean exist(char[][] board, String word)
+
+===
+
+Subsets
+
+public List<List<Integer>> subsets(int[] S)
+
+===
+
+Combinations
+
+public List<List<Integer>> combine(int n, int k)
+
+===
+
+Minimum Window Substring
+
+public String minWindow(String S, String T)
+
+===
+
+Sort Colors
+
+public void sortColors(int[] A)
+
+===
+
+Search a 2D Matrix
+
+public boolean searchMatrix(int[][] matrix, int target)
+
+===
+
+Set Matrix Zeroes
+
+public void setZeroes(int[][] matrix)
+
+===
+
+Edit Distance
+
+public int minDistance(String word1, String word2)
+
+===
+
+Simplify Path
+
+public String simplifyPath(String path)
+
+===
+
+Climbing Stairs
+
+public int climbStairs(int n)
+
+===
+
+Sqrt(x) 
+
+public int sqrt(int x)
+
+===
+
+Text Justification
+
+public List<String> fullJustify(String[] words, int L)
+
+===
+
+Plus One
+
+public int[] plusOne(int[] digits)
+
+===
+
+Valid Number
+
+public boolean isNumber(String s)
+
+===
+
+Add Binary
+
+public String addBinary(String a, String b)
+
+===
+
+Merge Two Sorted Lists
+
+public ListNode mergeTwoLists(ListNode l1, ListNode l2)
+
+===
+
+Minimum Path Sum
+
+public int minPathSum(int[][] grid)
+
+===
+
+Unique Paths II 
+
+public int uniquePathsWithObstacles(int[][] obstacleGrid)
+
+===
+
+Unique Paths
+
+public int uniquePaths(int m, int n)
+
+===
+
+Rotate List
+
+public ListNode rotateRight(ListNode head, int n)
+
+===
+
+Permutation Sequence
+
+public String getPermutation(int n, int k)
+
+===
+
+Spiral Matrix II 
+
+public int[][] generateMatrix(int n)
+
+===
+
+Length of Last Word
+
+public int lengthOfLastWord(String s)
+
+===
+
+Insert Interval
+
+public List<Interval> insert(List<Interval> intervals, Interval newInterval)
+
+===
+
+Merge Intervals
+
+public List<Interval> merge(List<Interval> intervals)
+
+===
+
+Jump Game
+
+public boolean canJump(int[] A)
+
+===
+
+Spiral Matrix
+
+public List<Integer> spiralOrder(int[][] matrix)
+
+===
+
+Maximum Subarray
+
+public int maxSubArray(int[] A)
+
+===
+
+N-Queens II
+
+public int totalNQueens(int n)
+
+===
+
+N-Queens 
+
+public List<String[]> solveNQueens(int n)
+
+===
+
+Pow(x, n) 
+
+public double pow(double x, int n)
+
+===
+
+Anagrams
+
+public List<String> anagrams(String[] strs)
+
+===
+
+Rotate Image
+
+public void rotate(int[][] matrix)
+
+===
+
+Permutations II 
+
+public List<List<Integer>> permuteUnique(int[] num)
+
+===
+
+Permutations
+
+public List<List<Integer>> permute(int[] num)
+
+===
+
+Jump Game II 
+
+public int jump(int[] A)
+
+===
+
+Wildcard Matching
+
+public boolean isMatch(String s, String p)
+
+===
+
+Multiply Strings
+
+public String multiply(String num1, String num2)
+
+===
+
+Trapping Rain Water
+
+public int trap(int[] A)
+
+===
+
+First Missing Positive
+
+public int firstMissingPositive(int[] A)
+
+===
+
+Combination Sum II 
+
+public  ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target)
+
+===
+
+Combination Sum
+
+public List<List<Integer>> combinationSum(int[] candidates, int target)
+
+===
+
+Count and Say
+
+public String countAndSay(int n)
+
+===
+
+Sudoku Solver
+
+public void solveSudoku(char[][] board)
+
+===
+
+Valid Sudoku
+
+public boolean isValidSudoku(char[][] board)
+
+===
+
+Search Insert Position
+
+public int searchInsert(int[] A, int target)
+
+===
+
+Search for a Range
+
+public int[] searchRange(int[] A, int target)
+
+===
+
+Search in Rotated Sorted Array
+
+public int search(int[] A, int target)
+
+===
+
+Longest Valid Parentheses
+
+public int longestValidParentheses(String s)
+
+===
+
+Next Permutation
+
+public void nextPermutation(int[] num)
+
+===
+
+Substring with Concatenation of All Words
+
+public List<Integer> findSubstring(String S, String[] L)
+
+===
+
+Divide Two Integers
+
+public int divide(int dividend, int divisor)
+
+===
+
+Implement strStr() 
+
+public String strStr(String haystack, String needle)
+
+===
+
+Remove Element
+
+public int removeElement(int[] A, int elem)
+
+===
+
+Remove Duplicates from Sorted Array
+
+public int removeDuplicates(int[] A)
+
+===
+
+Reverse Nodes in k-Group
+
+public ListNode reverseKGroup(ListNode head, int k)
+
+===
+
+Swap Nodes in Pairs
+
+public ListNode swapPairs(ListNode head)
+
+===
+
+Merge k Sorted Lists
+
+public ListNode mergeKLists(List<ListNode> lists)
+
+===
+
+Generate Parentheses
+
+public List<String> generateParenthesis(int n)
+
+===
+
+Valid Parentheses
+
+public boolean isValid(String s)
+
+===
+
+Remove Nth Node From End of List
+
+public ListNode removeNthFromEnd(ListNode head, int n)
+
+===
+
+Letter Combinations of a Phone Number
+
+public List<String> letterCombinations(String digits)
+
+===
+
+4Sum
+
+public List<List<Integer>> fourSum(int[] num, int target)
+
+===
+
+3Sum Closest
+
+public int threeSumClosest(int[] num, int target)
+
+===
+
+3Sum
+
+public List<List<Integer>> threeSum(int[] num)
+
+===
+
+Longest Common Prefix
+
+public String longestCommonPrefix(String[] strs)
+
+===
+
+Roman to Integer
+
+public int romanToInt(String s)
+
+===
+
+Integer to Roman
+
+public String intToRoman(int num)
+
+===
+
+Container With Most Water
+
+public int maxArea(int[] height)
+
+===
+
+Regular Expression Matching
+
+static boolean isMatch(String s, String p)
+
+===
+
+Palindrome Number
+
+public boolean isPalindrome(int x)
+
+===
+
+String to Integer (atoi) 
+
+===
+
+Reverse Integer
+
+public int reverse(int x)
+
+===
+
+Longest Palindromic Substring
+
+public String longestPalindrome(String s)
+
+===
+
+Add Two Numbers
+
+public ListNode addTwoNumbers(ListNode l1, ListNode l2)
+
+===
+
+Longest Substring Without Repeating Characters
+
+public int lengthOfLongestSubstring(String s)
+
+===
+
+Median of Two Sorted Arrays
+
+public static double findMedianSortedArrays(int A[], int B[]) 
+
+===
+
+Two Sum 
+
+public int[] twoSum(int[] numbers, int target)
+
+====
 
