@@ -4,7 +4,35 @@ import java.lang.*;
 
 class Solution {
 
+  public TreeNode rotate(TreeNode root)
+  {
+      if(root == null) return null;
+
+      if(root.left == null && root.right == null) return root;
+
+      TreeNode newRoot =  rotate(root.left);
+      root.left.left = root.right;
+      root.left.right = root;
+      root.left = null;
+      root.right = null;
+      return newRoot;
+  }
 	
+  public static void main(String[] args) {
+    TreeNode a1 = new TreeNode(1);
+    TreeNode a2 = new TreeNode(2);
+    TreeNode a3 = new TreeNode(3);
+    TreeNode a4 = new TreeNode(4);
+    TreeNode a5 = new TreeNode(5);
+    TreeNode a6 = new TreeNode(6);
+    TreeNode a7 = new TreeNode(7);
+
+    a1.left = a2; a1.right = a3;
+    a2.left = a4; a2.right = a5;
+    a4.left = a6; a4.right = a7;
+    System.out.println(a1);
+    System.out.println(new Solution().rotate(a1));
+  }
 }
 
 
