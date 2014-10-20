@@ -57,9 +57,9 @@ Merge interval
 对我的最后solution表示很满意。
 2. 国男
 stream of strings like this
-"1 34 5 6"
-"3 4 5 6 3"
-"4 5 6 3 3"
+1 34 5 6
+3 4 5 6 3
+4 5 6 3 3
 ...
 每行是一个包含数字的string。去除所有数字完全重复的strings.比如这里的第二和第
 三行数字完全相同，可以合并成一个。要求合并所有数字完全重复的strings。
@@ -119,11 +119,11 @@ public interface TwoSum {
 
     /**
      * Returns true if there is any pair of numbers in the internal data 
-structure which
+     * structure which
      * have sum @param val, and false otherwise.
      * For example, if the numbers 1, -2, 3, and 6 had been stored,
      * the method should return true for 4, -1, and 9, but false for 10, 5, 
-and 0
+     * and 0
      */
     boolean test(int val);
 }
@@ -164,7 +164,7 @@ Function Signature
     
 /**
 * Represents a pair relation between one parent node and one child node 
-inside a binary tree
+* inside a binary tree
 * If the _parent is null, it represents the ROOT node
 */
 public class Relation {
@@ -185,7 +185,7 @@ public class Node {
 
 /**
 * Implement a method to build a tree from a list of parent-child 
-relationships
+* relationships
 * And return the root Node of the tree
 */
 public Node buildTree (List<Relation> data)
@@ -413,10 +413,10 @@ bug，但是说得不明显
 1。查找2个单词的距离
 /*
 * Example:
-*   WordDistanceFinder finder = new WordDistanceFinder(Arrays.asList("the",
-"quick", "brown", "fox", "quick"));
-*   assert(finder.distance("fox","the") == 3);
-*   assert(finder.distance("quick", "fox") == 1);
+*   WordDistanceFinder finder = new WordDistanceFinder(Arrays.asList(the,
+quick, brown, fox, quick));
+*   assert(finder.distance(fox,the) == 3);
+*   assert(finder.distance(quick, fox) == 1);
 */
 
 2. 洗牌 要求in-place
@@ -427,7 +427,7 @@ bug，但是说得不明显
 
 * Return the smallest character that is strictly larger than the search 
 character, 
-* ['c', 'f', 'j', 'p', 'v'], 'a' => 'c'
+* [c, f, j, p, v], a => c
 
 ===
 
@@ -438,7 +438,7 @@ character,
 想到。面试官一个烙印，一个老中，中国女面试官主考。以下是面的两道题：
 
 1. valid number. LeetCode 原题，但是没写过，讨论了半天edge case，结果还是没
-考虑"-."的情况，最后经过提示算是勉强写出来了，但是code不是很clean。
+考虑-.的情况，最后经过提示算是勉强写出来了，但是code不是很clean。
 
 2. Nested integer weighted sum. 一个list, 元素可能是list，也可能是Integer，
 但是每个元素都包装在NestedInteger类里面了，求weighted sum. 例子是{2, {4, {6}
@@ -537,7 +537,7 @@ apple, [“plain”, “amber”, “blade”] -> [[0,1,0],[0,0,0],[0,0,0],[0,0,
 对于复杂问题，没有一个row全0的话，就要用BFS，逐个logic_and组合，得到全0的row
 。组合时
 可以把全1的row全部踢掉，因为没帮助。
-比如 "aabadaa"，["aabaxaa","aaxadaa"] -> [[1,1],[1,1],[1,0],[1,1],[0,1],[1,1
+比如 aabadaa，[aabaxaa,aaxadaa] -> [[1,1],[1,1],[1,0],[1,1],[0,1],[1,1
 ],[1,1]] -> 第3位[1,0] & 第5位[0,1] -> 2b1d2
 
 
@@ -568,8 +568,8 @@ abbr了。但是具体怎么弄还没想清楚。
 发信站: BBS 未名空间站 (Mon Sep  1 11:06:18 2014, 美东)
 
 问了一个就是dictionary的题：
-给一个dictionary：“hello","world","opt","pot";
-一个target： "pto",找出dictionary中的"opt" 和"pot"
+给一个dictionary：“hello,world,opt,pot;
+一个target： pto,找出dictionary中的opt 和pot
 
 ===
 
@@ -702,13 +702,13 @@ within the board
 ===
 
 Today I had my third-round interview with this company. Got some pretty 
-tough questions (from my standard). I won't regret that I failed this one, 
+tough questions (from my standard). I wont regret that I failed this one, 
 because some questions are really beyond my ability.
 
 1. n boxes, k balls, expected number of empty boxes. 
 
-2. an array with 0's and 1's, find in O(n) time and O(1) space the longest 
-sequence with equal number of 1's and 0's.
+2. an array with 0s and 1s, find in O(n) time and O(1) space the longest 
+sequence with equal number of 1s and 0s.
 
 can do it with O(n) time and O(n) space. How to do O(1) space.
 
@@ -940,7 +940,7 @@ L:
 
 问答题
 Write-through cache vs write-back cache 
-what's memory mapped file
+whats memory mapped file
 
 算法题，都是老题
 1) 给一个nested的int array， 返回sum of int weight by its depth
@@ -1049,16 +1049,16 @@ Behavior Questions:
 
 1. In java, a method declared as private restrict access to within the class
 . For example, a private void doHeartbeat() method within Heartbeat class 
-can only be called within the Heartbeat class. However, it doesn't prevent 
+can only be called within the Heartbeat class. However, it doesnt prevent 
 the Heartbeat class to access the method of a different Heartbeat object. 
 For example, a private void forceHeartbeat(Heartbeat other) method is 
-allowed to call other.doHeartbeat(). Java doesn't provide a way to limit 
+allowed to call other.doHeartbeat(). Java doesnt provide a way to limit 
 access to a per object level. Why not?
 
 2. Given set amount of memory and ram, how do you implement a process that 
 takes the longest amount of time to finish? The process has to finish, it 
 can not be an infinite loop. (Of all of the questions I got asked from 
-Google, I'm not sure I know the right answer to this one to this day)
+Google, Im not sure I know the right answer to this one to this day)
 
 Coding Questions:
 
@@ -1107,7 +1107,7 @@ pointers
 to a node in the same level immediately to the right. For example, if a node
 has both left and right children, next pointer of the left child will point
 to the right child. The next pointer of the right child will point to 
-parent's sibling's left child. The fact that left child and right child can 
+parents siblings left child. The fact that left child and right child can 
 both be null make things complicated.
 
 
@@ -1265,20 +1265,20 @@ L:
 ===
 
   
-Implement double pow(double a, int b) without using any already built-in functions (aka, don't use an already defined pow function).   View Answers (4)
+Implement double pow(double a, int b) without using any already built-in functions (aka, dont use an already defined pow function).   View Answers (4)
 Given two (dictionary) words as Strings, determine if they are isomorphic. Two words are called isomorphic if the letters in one word can be remapped to get the second word. Remapping a letter means replacing all occurrences of it with another letter while the ordering of the letters remains unchanged. No two letters may map to the same letter, but a letter may map to itself.
 
 Example:
-Given "foo", "app"; returns true
-   we can map 'f' -> 'a' and 'o' -> 'p'
-Given "bar", "foo"; returns false
-   we can't map both 'a' and 'r' to 'o'
+Given foo, app; returns true
+   we can map f -> a and o -> p
+Given bar, foo; returns false
+   we cant map both a and r to o
 
-Given "turtle", "tletur"; returns true
-   we can map 't' -> 't', 'u' -> 'l', 'r' -> 'e', 'l' -> 'u', 'e' -'r'
+Given turtle, tletur; returns true
+   we can map t -> t, u -> l, r -> e, l -> u, e -r
 
-Given "ab", "ca"; returns true
-   we can map 'a' -> 'c', 'b'
+Given ab, ca; returns true
+   we can map a -> c, b
 
 ===
 Design web calendar
@@ -1304,11 +1304,11 @@ return n closest points on a plane
 ===
 
 Details 
-1st call - Phone call with the Recruiter just to talk about what you've done and what currently interests you. Basically to directly communicate with you to see if you'd be a good fit for the company to want to go through the interview process with you
+1st call - Phone call with the Recruiter just to talk about what youve done and what currently interests you. Basically to directly communicate with you to see if youd be a good fit for the company to want to go through the interview process with you
 
 2nd call - Technical phone interview #1 using Collabedit. Given two questions to solve in one hour. First question was to find the lowest common ancestor given two nodes and the second question was to determine if two strings are isomorphic (there exact question can be found on this site)
 
-3rd call - Technical phone interview #2 also using Collabedit. Given two questions to solve in one hour as well. First question was find the largest subsequence given an array that yields the largest sum. The second question was a modification of the first that required me to find the largest subsequence of the given array that yields the largest PRODUCT. Didn't complete the code for the second question in time.
+3rd call - Technical phone interview #2 also using Collabedit. Given two questions to solve in one hour as well. First question was find the largest subsequence given an array that yields the largest sum. The second question was a modification of the first that required me to find the largest subsequence of the given array that yields the largest PRODUCT. Didnt complete the code for the second question in time.
 
 ===
 
@@ -1322,7 +1322,7 @@ Rest system design. Amazon website design. Read/Write locking. Generate all fact
 
 Print binary tree level by level
 * Find distance between words in a string
-  eg: String => "I am a good girl" distance between "I" and "good" is 3  
+  eg: String => I am a good girl distance between I and good is 3  
 
 ===
 
@@ -1338,7 +1338,7 @@ write out all the combination of factors of one number. another was about implem
 
 ===
 
-Write a function to realise a's power of b.
+Write a function to realise as power of b.
 
 ===
 
@@ -1413,8 +1413,8 @@ Maximum product subset with negative and positive integers
 Question1
 /**
  * Given a nested list of integers, returns the sum of all integers in the list weighted by their depth
- * For example, given the list {{1,1},2,{1,1}} the function should return 10 (four 1's at depth 2, one 2 at depth 1)
- * Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3)
+ * For example, given the list {{1,1},2,{1,1}} the function should return 10 (four 1s at depth 2, one 2 at depth 1)
+ * Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3)*/
 
  How would you design a URL shortener
 
@@ -1424,11 +1424,11 @@ Question1
 2nd skype:
 - Lets say you have to build an activity (screen) which has a drop-down & once you select an item in the drop-down, it loads an image corresponding to that on the screen below.
 - How will handle cases where user is very rapidly changing his selection from the drop down   View Answer
-3rdSkype (he allowed checking online android api's guide)
+3rdSkype (he allowed checking online android apis guide)
 1- Write an activity which displays device build number, imei.
 2- Implement a scrolable list to show ints from 1 to 10.   Answer Question
 4th skype (design round):
-- How will you design an app (client) & server to implement a word guess game. For e.g. app will ask user to guess the word (it will show blank spaces first equal to size of the word) one character one time. He will have 'n' chances to guess correct word. Based on the result, he will win or loose money (prize).
+- How will you design an app (client) & server to implement a word guess game. For e.g. app will ask user to guess the word (it will show blank spaces first equal to size of the word) one character one time. He will have n chances to guess correct word. Based on the result, he will win or loose money (prize).
 
 Assume you have well defined payment & user registration system. Assume external systems required for this game already present. Just concentrate on designing the above core requirement   View Answer
 5th skype:
@@ -1452,7 +1452,7 @@ At each time we are allowed only one character change.
 d) Design an Hangman. { They expect MVC architecture. } 
 
 
-One was given 2 Nodes in a binary tree, find the closest ancestor and the other one was given a 2D array of people who follow one another, determine who's an influencer(followed by everyone, follows no one). Example: If A[i][j] is true, then person i follows person j.
+One was given 2 Nodes in a binary tree, find the closest ancestor and the other one was given a 2D array of people who follow one another, determine whos an influencer(followed by everyone, follows no one). Example: If A[i][j] is true, then person i follows person j.
 
 public interface PointsOnAPlane {
 
@@ -1462,7 +1462,7 @@ public interface PointsOnAPlane {
     void addPoint(Point point);
 
     /**
-     * For given 'center' point returns a subset of 'm' stored points that are
+     * For given center point returns a subset of m stored points that are
      * closer to the center than others.
      *
      * E.g. Stored: (0, 1) (0, 2) (0, 3) (0, 4) (0, 5)
@@ -1500,11 +1500,11 @@ One of them involved searching in a matrix sorted row wise. The other one involv
 For the first technical phone screen, the questions involved permutations (Scramble an array with an equal chance for every value. Return a list of all permutations of an array.).   
 
 
-Consider an X x Y array of 1's and 0s. The X axis represents "influences" meaning that X influences Y. So, for example, if $array[3,7] is 1 that means that 3 influences 7.
+Consider an X x Y array of 1s and 0s. The X axis represents influences meaning that X influences Y. So, for example, if $array[3,7] is 1 that means that 3 influences 7.
 
-An "influencer" is someone who influences every other person, but is not influenced by any other member.
+An influencer is someone who influences every other person, but is not influenced by any other member.
 
-Given such an array, write a function to determine whether or not an "influencer" exists in the array. 
+Given such an array, write a function to determine whether or not an influencer exists in the array. 
 
 
 Code a non blocking thread safe queue

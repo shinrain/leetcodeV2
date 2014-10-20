@@ -6,7 +6,8 @@
 
 3Sum
 
-Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? 
+Find all unique triplets in the array which gives the sum of zero.
 
 Note:
 Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
@@ -17,45 +18,6 @@ The solution set must not contain duplicate triplets.
     (-1, 0, 1)
     (-1, -1, 2)
 ---
-
-public class Solution {
-    public List<List<Integer>> threeSum(int[] num) {
-        List<List<Integer>> re = new ArrayList<List<Integer>>();
-        int n = num.length;
-        if(n<3) return re;
-        
-        Arrays.sort(num);
-        for(int i=0;i<n-2;i++)
-        {
-            while(i!=0 && i<n-2 && num[i] == num[i-1]) i++;
-            if(i==n-2) break;
-            
-            int j = i+1, k = n-1;
-            while(j<k)
-            {
-                while(j!=i+1 && j<k && num[j]==num[j-1]) j++;
-                if(j==k) break;
-                while(k!=n-1 && j<k && num[k]==num[k+1]) k--;
-                if(j==k) break;
-                
-                int sum = num[i]+num[j]+num[k];
-                if(sum == 0)
-                {
-                    List<Integer> r = new ArrayList<Integer>();
-                    r.add(num[i]); r.add(num[j]); r.add(num[k]);
-                    re.add(r);
-                    j++; k--;
-                }
-                else if(sum<0)  j++;
-                else k--;
-            }
-        }
-        return re;
-    }
-}
-
----
-CLeaner solution:
 
 class Solution
 {
@@ -108,7 +70,9 @@ class Solution
 
 3SumClosest
 
-Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+Given an array S of n integers, find three integers in S such that the sum is closest to a given
+ number, target. Return the sum of the three integers. You may assume that each input would have 
+ exactly one solution.
 
     For example, given array S = {-1 2 1 -4}, and target = 1.
 
@@ -172,7 +136,8 @@ public class Solution {
 
 4Sum
 
-Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+Given an array S of n integers, are there elements a, b, c, and d in S such that 
+a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
 
 Note:
 Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)
@@ -185,60 +150,6 @@ The solution set must not contain duplicate quadruplets.
     (-2,  0, 0, 2)
 
 ----
-
-
-public class Solution {
-    public List<List<Integer>> fourSum(int[] num, int target) {
-
-		List<List<Integer>> re = new ArrayList<List<Integer>>();
-		int n = num.length;
-		if(n<4) return re;
-
-		Arrays.sort(num);
-		for(int i=0;i<n;i++)
-		{
-			if(i!=0 && num[i-1]==num[i]) continue;
-
-			for(int j=i+1; j<n;j++)
-			{
-				if(j!=i+1 && num[j-1]==num[j]) continue;
-
-				int k = j+1, v =n-1;
-				while(k<v)
-				{
-					int res = num[i] + num[j] + num[k]+num[v];
-					if(res==target)
-					{
-						List<Integer> list = new ArrayList<Integer>();
-						list.add(num[i]); list.add(num[j]); list.add(num[k]); list.add(num[v]);
-						re.add(list);
-						k++; v--;
-						while(k<v && num[k]==num[k-1]) k++;
-						if(k==v) break;
-						while(k<v && num[v]==num[v+1]) v--;
-						if(k==v) break;
-					}
-					else if(res>target)
-					{
-						v--;
-						while(k<v && num[v]==num[v+1]) v--;
-						if(k==v) break;
-					}else
-					{
-						k++;
-						while(k<v && num[k]==num[k-1]) k++;
-						if(k==v) break;
-					}
-				}
-			}
-		}
-		return re;
-    }
-}
-
----
-CLeaner solution
-
 public class Solution {
     public List<List<Integer>> fourSum(int[] num, int target) {
 
@@ -346,7 +257,9 @@ public class Solution {
 
 AddTwoNumbers
 
-You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+You are given two linked lists representing two non-negative numbers. The digits are stored in 
+reverse order and each of their nodes contain a single digit. Add the two numbers and return it as 
+a linked list.
 
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 0 -> 8
@@ -470,7 +383,8 @@ BalancedBinaryTree
 
 Given a binary tree, determine if it is height-balanced.
 
-For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth 
+of the two subtrees of every node never differ by more than 1.
 
 ---
 
@@ -512,7 +426,8 @@ BestTimetoBuyandSellStock
 
 Say you have an array for which the ith element is the price of a given stock on day i.
 
-If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+If you were only permitted to complete at most one transaction (ie, buy one and sell one share 
+    of the stock), design an algorithm to find the maximum profit.
 
 ---
 public class Solution {
@@ -546,7 +461,9 @@ BestTimetoBuyandSellStockII
 
 Say you have an array for which the ith element is the price of a given stock on day i.
 
-Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like
+ (ie, buy one and sell one share of the stock multiple times). However, you may not engage in 
+ multiple transactions at the same time (ie, you must sell the stock before you buy again).
 --
 public class Solution {
     public int maxProfit(int[] prices) {
@@ -578,7 +495,8 @@ Say you have an array for which the ith element is the price of a given stock on
 Design an algorithm to find the maximum profit. You may complete at most two transactions.
 
 Note:
-You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy 
+    again).
 
 ---
 
@@ -640,57 +558,6 @@ Given binary tree {1,#,2,3},
 return [1,3,2].
 
 ---
-/**
- * Definition for binary tree
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-public class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
-
-
-    	List<Integer> re = new ArrayList<Integer>();
-    	if(root == null) return re;
-
-    	TreeNode cur = root, tail = null, pre = null;
-    	root = null;
-    	while(cur!=null)
-    	{
-    		if(cur.left==null)
-    		{
-    			if(root == null) { root = cur; tail = cur; cur = cur.right; tail.right = null; }
-    			else
-    			{
-    				tail.right = cur;
-    				cur = cur.right;
-    				tail = tail.right;
-    				tail.right = null;
-    				tail.left = null;
-    			}
-    		}
-    		else
-    		{
-    			pre = cur.left;
-    			while(pre.right!=null && pre.right!=cur) pre = pre.right;
-    			if(pre.right == null){ pre.right = cur; cur = cur.left; pre.right.left = null; }
-    			else cur.left = null;
-    		}
-    	}
-    	cur = root;
-    	while(cur!=null) { re.add(cur.val); cur = cur.right; }
-    	return re;
-    
-    
-    }
-}
-
-
-===
-
 class Solution
 {
 	public List<Integer> inorderTraversal(TreeNode root)
@@ -740,7 +607,8 @@ class Solution
 
 BinaryTreeLevelOrderTraversal
 
-Given a binary tree, return the level order traversal of its nodes values. (ie, from left to right, level by level).
+Given a binary tree, return the level order traversal of its nodes values. (ie, from left to right, 
+    level by level).
 
 For example:
 Given binary tree {3,9,20,#,#,15,7},
@@ -801,7 +669,8 @@ public class Solution {
 
 BinaryTreeLevelOrderTraversalII
 
-Given a binary tree, return the bottom-up level order traversal of its nodes values. (ie, from left to right, level by level from leaf to root).
+Given a binary tree, return the bottom-up level order traversal of its nodes values. (ie, from 
+    left to right, level by level from leaf to root).
 
 For example:
 Given binary tree {3,9,20,#,#,15,7},
@@ -1129,7 +998,8 @@ public class Solution {
 
 BinaryTreeZigzagLevelOrderTraversal
 
-Given a binary tree, return the zigzag level order traversal of its nodes values. (ie, from left to right, then right to left for the next level and alternate between).
+Given a binary tree, return the zigzag level order traversal of its nodes values. (ie, from left to 
+    right, then right to left for the next level and alternate between).
 
 For example:
 Given binary tree {3,9,20,#,#,15,7},
@@ -1465,7 +1335,8 @@ public class Solution {
 
 CombinationSum
 
-Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C 
+where the candidate numbers sums to T.
 
 The same repeated number may be chosen from C unlimited number of times.
 
@@ -1532,7 +1403,8 @@ public class Solution {
 
 CombinationSumII
 
-Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C 
+where the candidate numbers sums to T.
 
 Each number in C may only be used once in the combination.
 
@@ -1615,7 +1487,10 @@ public class Solution {
 	public TreeNode buildTree(int[] inorder, int inLeft, int inRight, int[] postorder, int postLeft, 
 		int postRight)
 	{
-		if(inLeft <0 || inRight >= inorder.length || postLeft <0 || inLeft > inRight || (inRight- inLeft != postRight -postLeft)) return null;
+		if(inLeft <0 || inRight >= inorder.length || postLeft <0 || inLeft > inRight 
+            || (inRight- inLeft != postRight -postLeft)) 
+
+            return null;
 
 		int val = postorder[postRight];
 		int i = inLeft;
@@ -1700,7 +1575,9 @@ public class Solution {
 
 ContainerWithMostWater
 
-Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). 
+n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two 
+lines, which together with x-axis forms a container, such that the container contains the most water.
 
 Note: You may not slant the container.
 
@@ -1793,56 +1670,6 @@ Given a singly linked list where elements are sorted in ascending order, convert
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
-    public TreeNode sortedListToBST(ListNode head) {
-
-        if(head == null) return null;
-        if(head.next == null) return new TreeNode(head.val);
-
-        ListNode first = head, second = head, prev = null;
-        int count = 0;
-
-        while(first.next !=null)
-        {
-        	count++;
-        	first = first.next;
-        	if(count%2 ==0){
-        		prev = second;
-        		second = second.next;
-        	}
-        }
-        if(count%2 == 0)
-        {
-        	if(prev == null)
-        	{
-        		TreeNode root = new TreeNode(first.val);
-        		root.left = new TreeNode(second.val);
-        		return root;
-        	}
-        	prev.next = null;
-        	TreeNode root = new TreeNode(second.val);
-        	root.left	= sortedListToBST(head);
-        	ListNode t = second.next;
-        	second.next = null;
-        	root.right = sortedListToBST(t);
-        	return root;
-        }
-        else
-        {
-        	ListNode t = second.next;
-        	second.next = null;
-        	TreeNode root = new TreeNode(t.val);
-        	root.left = sortedListToBST(head);
-        	root.right = sortedListToBST(t.next);
-        	return root;
-        }
-  }
-}
-
-
-=====
-
-Better solution, linear:
 
 //Node is a wrapper class, since java does not support reference. 
 //Head can not move forward by passing in ListNode.
@@ -1892,7 +1719,8 @@ public class Solution {
 
 CopyListwithRandomPointer
 
-A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+A linked list is given such that each node contains an additional random pointer which could point to 
+any node in the list or null.
 
 Return a deep copy of the list.
 
@@ -2001,7 +1829,7 @@ public class Solution {
 
 ====
 
-CLeaner solution:
+Recursion solution:
 
     public String nextSolution(String s)
     {
@@ -2104,234 +1932,6 @@ public class Solution {
 
 
 ========================================
-/Users/linxie/Documents/github/leetcodeV2/code/design
-========================================
-
-
-稍微总结一下
-
-1. 入门级的news feed
-http://www.quora.com/What-are-best-practices-for-building-somet
-http://www.infoq.com/presentations/Scale-at-Facebook
-http://www.infoq.com/presentations/Facebook-Software-Stack
-一般的followup question是估算需要多少server
-另外这个帖子有讨论
-http://www.mitbbs.ca/article_t/JobHunting/32463885.html
-这篇文章稍微提到要怎么approach这种题，可以稍微看看
-http://book.douban.com/reading/23757677/
-
-2. facebook chat,这个也算是挺常问的
-http://www.erlang-factory.com/upload/presentations/31/EugeneLet
-
-https://www.facebook.com/note.php?note_id=14218138919
-
-http://www.cnblogs.com/piaoger/archive/2012/08/19/2646530.html
-http://essay.utwente.nl/59204/1/scriptie_J_Schipers.pdf
-
-3. typeahead search/search suggestion，这个也常见
-
-https://www.facebook.com/video/video.php?v=432864835468
-
-问题在这个帖子里被讨论到，基本上每个问题，在视频里都有回答
-http://www.mitbbs.com/article_t/JobHunting/32438927.html
-
-5. 任给一个手机的位置信号(经纬度)，需要返回附近5mile 的POI
-这个这里有讨论，这题貌似nyc很爱考…
-http://www.mitbbs.ca/article0/JobHunting/32476139_0.html
-
-6. Implement second/minute/hour/day counters
-这题真不觉得是system design，但万一问道，还是要有准备，貌似在总部面试会被问
-道….
-这个帖子有讨论
-http://www.mitbbs.com/article_t/JobHunting/32458451.html
-
-7. facebook photo storage，这个不太会被问起，但是知道也不错
-
-https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Beaver.pdf
-
-https://www.facebook.com/note.php?note_id=76191543919
-
-8. facebook timeline,这个也不太是个考题，看看就行了
-
-https://www.facebook.com/note.php?note_id=10150468255628920
-
-http://highscalability.com/blog/2012/1/23/facebook-timeline-bro
-
-除了这些，准备一下这些题目
-implement memcache
-http://www.adayinthelifeof.nl/2011/02/06/memcache-internals/
-
-implement tinyurl（以及distribute across multiple servers)
-http://stackoverflow.com/questions/742013/how-to-code-a-url-sho
-
-determine trending topics(twitter)
-http://www.americanscientist.org/issues/pub/the-britney-spears-
-http://www.michael-noll.com/blog/2013/01/18/implementing-real-t
-
-copy one file to multiple servers
-http://vimeo.com/11280885
-
-稍微知道一下dynamo key value store，以及google的gfs和big table
-
-其他家的
-http://www.quora.com/What-are-the-top-startup-engineering-blogs
-
-==================================================================
-在说说怎么准备这样的面试
-首先如果你连availability/scalability/consistency/partition之类的都不是太有概
-念的话，我建议先去wikipedia或者找一个某个大学讲这门课的网站稍微看一下，别一
-点都不知道
-这个链接也不错
-http://www.aosabook.org/en/distsys.html
-
-如果你这些基本的东西都还知道，那么我觉得你就和大部分毫无实际经验的人差不多一
-个水平…
-能做的就是一点一点去准备，如果你还有充足的时间的话，建议从你面试的那家公司的
-engineering blog看起，把人家用的technology stack/product都搞清楚，然后在把能
-找到的面试题都做一遍呗….我们做coding题说白了不也是题海战术…而且你如果坚
-持看下去，真的会看出心得，你会发现很多地方都有相同之处，看多了就也能照葫芦画
-瓢了…
-
-再有就是面试的时候应该怎么去approach这种题，我说说我的做法
-1. product spec/usage scenario 和面试者confirm这个东西到底是做什么的
-可以先列出来几个major functionality，然后有时间的话，再补充一些不重要的
-把你想的都写下来
-
-2. define some major components
-就是画几个圈圈框框的，每个发表一番您的高见….然后讲他们之间怎么interact
-
-以上是question specific的东西，
-这个讲完了，我们可以讲一些每道题都是用的，比如说
-怎么scale/怎么partition/怎么实现consistency，这些东西，可以套用到任何题上
-
-当然了，我们遇到的题和解题的方法可能都有些出入，不见得每道题有一个路数下来，
-最重要的是，讲题的时候要有条理，画图要清楚，保持和面试官的交流，随时问一下人
-家的意见。
-
-我能想到的就这么多，欢迎大家交流，希望大家都能找到理想的工作.
-
-
-
-
-关于面试流程
-社招的话
-电面1-2轮，一般就是coding
-onsite一般是4轮，2轮coding，1轮design，1轮behavior+coding
-校招的话，那轮design也变成coding了
-
-
-
-关于准备
-1) algo/coding
-建议大家刷一下leetcode，基本上cover到了大多数常见面试题，而且有可能碰到原题
-。需要注意的是，仅仅解出来，做到bug free可能是不够的。代码的质量和速度也非常
-重要。网上有一些别人给出的答案可以参考，尽量做到代码简洁清晰。速度上leetcode
-上所有题都做到10分钟以内写完。
-
-
-2) design
-解这种题是个*交流*的过程，或者说是给出方案然后获取反馈的不断循环的过程。
-一般的流程：
-首先你要问清楚requirement；
-然后可以讲一下high level architecture，就是分成哪几个component，互相之间如果
-interact，在白板上画一画；
-之后面试官可能会让你深入某个component detail讨论；
-也有可能变换requirement让你重新设计
-
-另外，f家还喜欢让你估算机器之类的，做一些back-of-envelopme calculation。所以
-最好对一些计算机相关的基本常数，fb的用户量等等有个大概的了解。
-
-准备的时候建议看看fb的design高频题。一方面有可能面试的时候刚好碰到这几个
-topic，另一方面其实很多design都是相通的。
-之前有个帖子讲这个，原帖已经被删了，这儿有个备份http://blog.csdn.net/sigh1988/article/details/9790337
-
-另外补充一点我收集的材料
-
-a) 首先你可以从整体上了解一下facebook的architecture
-http://www.quora.com/Facebook-Engineering/What-is-Facebooks-arc
-http://www.ece.lsu.edu/hpca-18/files/HPCA2012_Facebook_Keynote.
-http://www.quora.com/Facebook-Engineering/What-have-been-Facebo
-除了下面给出的一些资料，fb engineering page里还有很多不错的内容
-https://www.facebook.com/Engineering
-
-b) news feed
-这里有个talk
-http://www.infoq.com/presentations/Facebook-News-Feed
-对应的slides
-http://readme.skplanet.com/wp-content/uploads/2012/11/0-3_Faceb
-还有一些quora上的讨论
-http://www.quora.com/Activity-Streams/What-are-the-scaling-issu
-http://www.quora.com/What-are-best-practices-for-building-somet
-http://www.quora.com/What-is-the-best-storage-solution-for-buil
-
-c) facebook chat
-这里有两个notes，其中第二个里面还有相应的tech talk links
-https://www.facebook.com/notes/facebook-engineering/facebook-chat/
-14218138919
-https://www.facebook.com/notes/facebook-engineering/chat-stability-and-
-scalability/51412338919
-
-d) typeahead search & graph search
-关于typeahead search的tech talk和notes
-https://www.facebook.com/video/video.php?v=432864835468
-https://www.facebook.com/note.php?note_id=365915113919
-https://www.facebook.com/note.php?note_id=389105248919
-
-关于graph search的paper, tech talk, notes。其中paper很值得一看。
-http://db.disi.unitn.eu/pages/VLDBProgram/pdf/industry/p871-cur
-https://newsroom.fb.com/Photos-and-B-Roll/4362/Graph-Search-Whiteboard
-https://www.facebook.com/note.php?note_id=10151240856103920
-https://www.facebook.com/note.php?note_id=10151347573598920
-https://www.facebook.com/note.php?note_id=10151361720763920
-https://www.facebook.com/note.php?note_id=10151432733048920
-https://www.facebook.com/note.php?note_id=10151755593228920
-
-e) facebook messages
-两个tech talks
-http://www.youtube.com/watch?v=XAuwAHWpzPc
-http://www.infoq.com/presentations/HBase-at-Facebook
-以及eng notes
-https://www.facebook.com/note.php?note_id=10150148835363920
-https://www.facebook.com/note.php?note_id=10150162742108920
-
-f) photo storage
-相关的papers和notes
-https://www.usenix.org/conference/osdi10/finding-needle-haystack-facebooks-
-photo-storage
-https://www.usenix.org/legacy/events/osdi10/tech/full_papers/Beaver.pdf
-https://www.usenix.org/legacy/events/osdi10/tech/slides/beaver.pdf
-https://www.facebook.com/note.php?note_id=76191543919
-
-g) social graph data store
-相关的note, video, paper
-https://www.facebook.com/notes/facebook-engineering/tao-the-power-of-the-
-graph/10151525983993920
-https://www.usenix.org/conference/atc13/technical-sessions/presentation/
-bronson
-http://www.cs.cmu.edu/~pavlo/courses/fall2013/static/papers/117
-
-h) tiny URL
-这里有一些讨论
-http://n00tc0d3r.blogspot.com/2013/09/big-data-tinyurl.html
-http://stackoverflow.com/questions/742013/how-to-code-a-url-sho
-http://stackoverflow.com/questions/3376163/what-are-the-things-
-
-i) POI
-参考这里
-http://www.slideshare.net/mmalone/scaling-gis-data-in-nonrelati
-http://www.mitbbs.ca/article_t/JobHunting/32476139.html
-
-
-3) behavior，建议大家了解一下fb的culture，准备一下常见的behavior questions，
-面试之前rehearsal一下。
-
-最后面试临近的时候，可以再刷刷面经，找找感觉。像glassdoor, mitbbs/jobhunting
-, careercup，这些上面就有很多。
-
-
-
-
-========================================
 /Users/linxie/Documents/github/leetcodeV2/code/DistinctSubsequences
 ========================================
 
@@ -2340,7 +1940,9 @@ DistinctSubsequences
 
 Given a string S and a string T, count the number of distinct subsequences of T in S.
 
-A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+A subsequence of a string is a new string which is formed from the original string by deleting some 
+(can be none) of the characters without disturbing the relative positions of the remaining characters. 
+(ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
 
 Here is an example:
 S = "rabbbit", T = "rabbit"
@@ -2421,7 +2023,8 @@ public class Solution {
 
 EditDistance
 
-Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. 
+(each operation is counted as 1 step.)
 
 You have the following 3 operations permitted on a word:
 
@@ -2900,7 +2503,8 @@ GrayCode
 
 The gray code is a binary numeral system where two successive values differ in only one bit.
 
-Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
+Given a non-negative integer n representing the total number of bits in the code, print the sequence 
+of gray code. A gray code sequence must begin with 0.
 
 For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
 
@@ -2938,7 +2542,7 @@ Returns a pointer to the first occurrence of needle in haystack, or null if need
 ---
 
 public class Solution {
-    	public static int[] prefix(char[] a)
+	public static int[] prefix(char[] a)
 	{
 		int n = a.length;
 		if(n==0) return null;
@@ -3167,7 +2771,8 @@ lgn solution:
 
 InsertintoaCyclicSortedList
 
-Given a node from a cyclic linked list which has been sorted, write a function to insert a value into the list such that it remains a cyclic sorted list. The given node can be any single node in the list.
+Given a node from a cyclic linked list which has been sorted, write a function to insert a value into
+ the list such that it remains a cyclic sorted list. The given node can be any single node in the list.
 
 --
 
@@ -3337,63 +2942,6 @@ When s3 = "aadbbcbcac", return true.
 When s3 = "aadbbbaccc", return false.
 
 ---
-public class Solution {
-    public int isInterleave(String s1, String s2, String s3, int[][] map)
-    {
-
-    	int m=s1.length();
-    	int n=s2.length();
-
-    	if(map[m][n] !=0) return map[m][n];
-
-    	if(m+n!=s3.length())
-    	{
-    		map[m][n] = -1;
-    	}
-    	else
-    	{
-    		int re = -1;
-    		if(m==0)	re = (s2.equals(s3))?1:-1;
-    		else if(n==0)	re = (s1.equals(s3))?1:-1;
-    		else
-    		{
-    			int r1 = 0, r2 = 0;
-    			if(s1.charAt(m-1) == s3.charAt(m+n-1))
-    			{
-    				if(m==1) r1=isInterleave("", s2, s3.substring(0,m+n-1), map);
-    				else r1 = isInterleave(s1.substring(0,m-1), s2, s3.substring(0,m+n-1), map);
-    			}
-    			if(s2.charAt(n-1) == s3.charAt(m+n-1))
-    			{
-    				if(n==1) r2=isInterleave(s1, "", s3.substring(0,m+n-1), map);
-    				else r2 = isInterleave(s1,s2.substring(0,n-1), s3.substring(0,m+n-1), map);
-    			}
-    			if(r1==1 || r2==1)
-    				re = 1;
-    			else
-    				re = -1;
-    		}
-    		map[m][n] = re;
-    	}
-    	return map[m][n];
-    }
-
-    public boolean isInterleave(String s1, String s2, String s3)
-    {
-    	int m = s1.length();
-    	int n=s2.length();
-    	if(m==0) return s2.equals(s3);
-    	if(n==0) return s1.equals(s3);
-    	int[][] map = new int[m+1][n+1];
-    	int re = isInterleave(s1, s2, s3, map);
-    	return  re== 1;
-    }
-}
-
-====
-
-linear space solution
-
   public boolean isInterleave(String s1, String s2, String s3)
   {
     char[] a = s1.toCharArray(), b = s2.toCharArray(), c = s3.toCharArray();
@@ -3487,7 +3035,8 @@ Your goal is to reach the last index in the minimum number of jumps.
 For example:
 Given array A = [2,3,1,1,4]
 
-The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps 
+    to the last index.)
 
 ---
 
@@ -3583,7 +3132,8 @@ class Solution
 
 	TreeNode findLargestBST(TreeNode root)
 	{
-		returnType re =  helper(root, Integer.MIN_VALUE, Integer.MAX_VALUE, new returnType(0, Integer.MIN_VALUE, null, null));
+		returnType re =  helper(root, Integer.MIN_VALUE, Integer.MAX_VALUE, 
+                                new returnType(0, Integer.MIN_VALUE, null, null));
 		return re.largestBST;
 	}
 
@@ -3598,7 +3148,8 @@ class Solution
 
 LargestRectangleinHistogram
 
-Given n non-negative integers representing the histograms bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+Given n non-negative integers representing the histograms bar height where the width of each bar is 1, 
+find the area of largest rectangle in the histogram.
 
 
 Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
@@ -3650,7 +3201,8 @@ public class Solution {
 
 LengthofLastWord
 
-Given a string s consists of upper/lower-case alphabets and empty space characters  , return the length of last word in the string.
+Given a string s consists of upper/lower-case alphabets and empty space characters  , return the length
+ of last word in the string.
 
 If the last word does not exist, return 0.
 
@@ -3915,7 +3467,8 @@ public class Solution {
 
 LongestPalindromicSubstring
 
-Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+Given a string S, find the longest palindromic substring in S. You may assume that the maximum length 
+of S is 1000, and there exists one unique longest palindromic substring.
 
 ---
 
@@ -3957,7 +3510,9 @@ public class Solution {
 
 LongestSubstringWithoutRepeatingCharacters
 
-Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. For "bbbbb" the longest substring is "b", with the length of 1.
+Given a string, find the length of the longest substring without repeating characters. For example, 
+the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. 
+For "bbbbb" the longest substring is "b", with the length of 1.
 
 ---
 
@@ -4002,11 +3557,13 @@ public class Solution {
 
 LongestValidParentheses
 
-Given a string containing just the characters ( and ), find the length of the longest valid (well-formed) parentheses substring.
+Given a string containing just the characters ( and ), find the length of the longest valid 
+(well-formed) parentheses substring.
 
 For "(()", the longest valid parentheses substring is "()", which has length = 2.
 
-Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
+Another example is ")()())", where the longest valid parentheses substring is "()()", which has 
+length = 4.
 
 ---
 
@@ -4059,7 +3616,8 @@ Given a binary tree, find the lowest common ancestor of two given nodes in the t
 
 ===
 
-The solution below is a flaw one, since it hold the assumption that the tree has those two nodes and those nodes are different. This is not true for general case.
+The solution below is a flaw one, since it hold the assumption that the tree has those two nodes 
+and those nodes are different. This is not true for general case.
 
 node LCA(node root, node p, node q)
 {
@@ -4081,10 +3639,13 @@ node LCA(node root, node p, node q)
 
 LRUCache
 
-Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the 
+following operations: get and set.
 
-get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
-set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise 
+return -1.
+set(key, value) - Set or insert the value if the key is not already present. When the cache reached its 
+capacity, it should invalidate the least recently used item before inserting a new item.
 ----
 
 class mem
@@ -4198,7 +3759,8 @@ public class LRUCache {
 
 MaximalRectangle
 
-Given a 2D binary matrix filled with 0s and 1s, find the largest rectangle containing all ones and return its area
+Given a 2D binary matrix filled with 0s and 1s, find the largest rectangle containing all ones and 
+return its area
 ---
 
 public class Solution {
@@ -4266,7 +3828,8 @@ MaximumDepthofBinaryTree
 
 Given a binary tree, find its maximum depth.
 
-The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+The maximum depth is the number of nodes along the longest path from the root node down to the 
+farthest leaf node.
 --
 /**
  * Definition for binary tree
@@ -4294,7 +3857,8 @@ public class Solution {
 
 MaximumProductSubarray
 
-Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+Find the contiguous subarray within an array (containing at least one number) which has the 
+largest product.
 
 For example, given the array [2,3,-2,4],
 the contiguous subarray [2,3] has the largest product = 6.
@@ -4467,7 +4031,8 @@ public class Solution {
 
 MedianofTwoSortedArrays
 
-There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted 
+arrays. The overall run time complexity should be O(log (m+n)).
 
 ---
 
@@ -4695,7 +4260,8 @@ MergeSortedArray
 Given two sorted integer arrays A and B, merge B into A as one sorted array.
 
 Note:
-You may assume that A has enough space (size that is greater or equal to m + n) to hold additional elements from B. The number of elements initialized in A and B are m and n respectively.
+You may assume that A has enough space (size that is greater or equal to m + n) to hold additional 
+elements from B. The number of elements initialized in A and B are m and n respectively.
 
 ---
 
@@ -4732,7 +4298,8 @@ public class Solution {
 
 MergeTwoSortedLists
 
-Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing
+ together the nodes of the first two lists.
 
 ---
 /**
@@ -4804,7 +4371,8 @@ MinimumDepthofBinaryTree
 
 Given a binary tree, find its minimum depth.
 
-The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest
+ leaf node.
 
 ---
 /**
@@ -4835,7 +4403,8 @@ public class Solution {
 
 MinimumPathSum
 
-Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right 
+which minimizes the sum of all numbers along its path.
 
 Note: You can only move either down or right at any point in time.
 
@@ -4871,7 +4440,8 @@ public class Solution {
 
 MinimumWindowSubstring
 
-Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+Given a string S and a string T, find the minimum window in S which will contain all the characters 
+in T in complexity O(n).
 
 For example,
 S = "ADOBECODEBANC"
@@ -4881,7 +4451,8 @@ Minimum window is "BANC".
 Note:
 If there is no such window in S that covers all characters in T, return the emtpy string "".
 
-If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum 
+window in S.
 
 ---
 
@@ -5028,7 +4599,8 @@ N-Queens
 
 Given an integer n, return all distinct solutions to the n-queens puzzle.
 
-Each solution contains a distinct board configuration of the n-queens placement, where Q and . both indicate a queen and an empty space respectively.
+Each solution contains a distinct board configuration of the n-queens placement, where Q and . 
+both indicate a queen and an empty space respectively.
 
 For example,
 There exist two distinct solutions to the 4-queens puzzle:
@@ -5173,13 +4745,16 @@ public class Solution {
 
 NextPermutation
 
-Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+Implement next permutation, which rearranges numbers into the lexicographically next greater 
+permutation of numbers.
 
-If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted
+ in ascending order).
 
 The replacement must be in-place, do not allocate extra memory.
 
-Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the
+ right-hand column.
 1,2,3 → 1,3,2
 3,2,1 → 1,2,3
 1,1,5 → 1,5,1
@@ -5234,46 +4809,6 @@ PalindromeNumber
 Determine whether an integer is a palindrome. Do this without extra space.
 
 ---
-
-public class Solution {
-    public boolean isPalindrome(int x) {
-        
-
-    	if(x==0) return true;
-    	if(x==Integer.MIN_VALUE) return false;
-    	if(x<0) return false;
-
-    	int t = x;
-    	int div = 10;
-    	while(true)
-    	{
-    		if(t/div!=0)
-    		{
-    			if(div< Integer.MAX_VALUE/10)
-    			{
-    				div*=10;	
-    				continue;
-    			}
-    		}
- 			else div /=10;
- 			break;
-    	}
-    	int l = 1, r = div;
-    	while(l<=r){
-    		if((x/l%10) != (x/r%10))
-    		{
-    			return false;
-    		}
-    		l*=10;
-    		r/=10;
-    	}
-    	return true;
-    
-    
-    }
-}
-
------
 public class Solution {
     public boolean isPalindrome(int x) {
 
@@ -5458,7 +4993,8 @@ public class Solution {
 
 PartitionList
 
-Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+Given a linked list and a value x, partition it such that all nodes less than x come before nodes 
+greater than or equal to x.
 
 You should preserve the original relative order of the nodes in each of the two partitions.
 
@@ -5655,7 +5191,8 @@ Another solution:
 
 PathSum
 
-Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all 
+the values along the path equals the given sum.
 
 For example:
 Given the below binary tree and sum = 22,
@@ -6007,14 +5544,16 @@ Given a binary tree
       TreeLinkNode *right;
       TreeLinkNode *next;
     }
-Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Populate each next pointer to point to its next right node. If there is no next right node, the next 
+pointer should be set to NULL.
 
 Initially, all next pointers are set to NULL.
 
 Note:
 
 You may only use constant extra space.
-You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every 
+    parent has two children).
 For example,
 Given the following perfect binary tree,
          1
@@ -6364,7 +5903,8 @@ public class Solution {
 
 RemoveDuplicatesfromSortedArray
 
-Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+Given a sorted array, remove the duplicates in place such that each element appear only once 
+and return the new length.
 
 Do not allocate extra space for another array, you must do this in place with constant memory.
 
@@ -6516,7 +6056,8 @@ public class Solution {
 
 RemoveDuplicatesfromSortedListII
 
-Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only 
+distinct numbers from the original list.
 
 For example,
 Given 1->2->3->3->4->4->5, return 1->2->5.
@@ -7138,77 +6679,6 @@ For k = 3, you should return: 3->2->1->4->5
  *     }
  * }
  */
-public class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-
-    	if(k<=1) return head;
-        if(head == null) return head;
-    	ListNode start = head;
-
-    	head = null;
-    	ListNode tail = null;
-
-    	while(true)
-    	{
-    		ListNode cur = start;
-    		int count = 1;
-    		while(cur.next != null && count<k)
-    		{
-    			count++; cur = cur.next;
-    		}
-    		if(count<k)
-    		{
-    			if(tail == null)
-    			{
-    				head = start;
-    				break;
-    			}
-    			else
-    			{
-    				tail.next = start;
-    				tail = cur;
-    				start = cur.next;
-    				tail.next = null;
-    			}
-    		}
-    		else
-    		{
-    			ListNode newStart = cur.next;
-    			ListNode prev = null;
-    			cur.next = null;
-    			cur = start;
-    			start = null;
-    			while(cur!=null)
-    			{
-    				if(start == null) prev = cur;
-    				ListNode t = cur.next;
-    				cur.next = start;
-    				start = cur;
-    				cur = t;
-    			}
-    			if(tail == null)
-    			{
-    				head = start;
-    				tail = prev;
-    			}
-    			else
-    			{
-    				tail.next = start;
-    				tail = prev;
-    			}
-    			start = newStart;
-    		}
-    		if(start==null) break;
-    	}
-    	return head;
-    
-    }
-}
-
-
-====
-
-Using function to do reverse, cleaner:
 
 	public ListNode reverse(ListNode head)
 	{
@@ -7576,8 +7046,10 @@ public class Solution {
         
         for(int i=1; i< n; i++)
         {
-            if(( isScramble(s1.substring(0, i), s2.substring(0,i), map) && isScramble(s1.substring(i), s2.substring(i), map) ) 
-                || ( isScramble(s1.substring(0, i), s2.substring(n-i), map) && isScramble(s1.substring(i), s2.substring(0, n-i), map)) )
+            if(( isScramble(s1.substring(0, i), s2.substring(0,i), map) && 
+                isScramble(s1.substring(i), s2.substring(i), map) ) 
+                || ( isScramble(s1.substring(0, i), s2.substring(n-i), map) && 
+                    isScramble(s1.substring(i), s2.substring(0, n-i), map)) )
             {
                 map.put(p,true);
                 return true;
@@ -7600,7 +7072,8 @@ public class Solution {
 
 Searcha2DMatrix
 
-Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has 
+the following properties:
 
 Integers in each row are sorted from left to right.
 The first integer of each row is greater than the last integer of the previous row.
@@ -7835,7 +7308,8 @@ public class Solution {
 
 SearchInsertPosition
 
-Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+Given a sorted array and a target value, return the index if the target is found. If not, 
+return the index where it would be if it were inserted in order.
 
 You may assume no duplicates in the array.
 
@@ -8091,7 +7565,8 @@ public class Solution {
 
 SortColors
 
-Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+Given an array with n objects colored red, white or blue, sort them so that objects of the same
+ color are adjacent, with the colors in the order red, white and blue.
 
 Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
 ---
@@ -8399,9 +7874,11 @@ StringtoInteger
 
 Implement atoi to convert a string to an integer.
 
-Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below 
+and ask yourself what are the possible input cases.
 
-Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are 
+responsible to gather all the input requirements up front
 --
 
 public class Solution {
@@ -8581,7 +8058,9 @@ public class Solution {
 
 SubstringwithConcatenationofAllWords
 
-You are given a string, S, and a list of words, L, that are all of the same length. Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters.
+You are given a string, S, and a list of words, L, that are all of the same length. Find all starting 
+indices of substring(s) in S that is a concatenation of each word in L exactly once and without any 
+intervening characters.
 
 For example, given:
 S: "barfoothefoobarman"
@@ -8858,7 +8337,8 @@ Given a linked list, swap every two adjacent nodes and return its head.
 For example,
 Given 1->2->3->4, you should return the list as 2->1->4->3.
 
-Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+Your algorithm should use only constant space. You may not modify the values in the list, only 
+nodes itself can be changed.
 
 ---
 
@@ -8970,11 +8450,15 @@ public class Solution {
 
 TextJustification
 
-Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
+Given an array of words and a length L, format the text such that each line has exactly L characters
+ and is fully (left and right) justified.
 
-You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces   when necessary so that each line has exactly L characters.
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line.
+ Pad extra spaces   when necessary so that each line has exactly L characters.
 
-Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a 
+line do not divide evenly between words, the empty slots on the left will be assigned more spaces than
+ the slots on the right.
 
 For the last line of text, it should be left justified and no extra space is inserted between words.
 
@@ -9077,7 +8561,8 @@ public class Solution {
 
 TrappingRainWater
 
-Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute 
+how much water it is able to trap after raining.
 
 For example, 
 Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
@@ -9117,7 +8602,8 @@ public class Solution {
 
 Triangle
 
-Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent 
+numbers on the row below.
 
 For example, given the following triangle
 [
@@ -9129,7 +8615,8 @@ For example, given the following triangle
 The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 
 Note:
-Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+Bonus point if you are able to do this using only O(n) extra space, where n is the total number of 
+rows in the triangle.
 
 --
 
@@ -9171,7 +8658,9 @@ TwoSum
 
 Given an array of integers, find two numbers such that they add up to a specific target number.
 
-The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+The function twoSum should return indices of the two numbers such that they add up to the target,
+ where index1 must be less than index2. Please note that your returned answers (both index1 and 
+    index2) are not zero-based.
 
 You may assume that each input would have exactly one solution.
 
@@ -9375,7 +8864,8 @@ UniquePaths
 
 A robot is located at the top-left corner of a m x n grid (marked Start in the diagram below).
 
-The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked Finish in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach 
+the bottom-right corner of the grid (marked Finish in the diagram below).
 
 How many possible unique paths are there?
 
@@ -9494,7 +8984,8 @@ public class Solution {
     public static boolean isValidBST(TreeNode root)
     {
     	if(root == null) return true;
-    	return isValidBST(root.left, Integer.MIN_VALUE, root.val) && isValidBST(root.right, root.val, Integer.MAX_VALUE);
+    	return isValidBST(root.left, Integer.MIN_VALUE, root.val) && 
+                isValidBST(root.right, root.val, Integer.MAX_VALUE);
     }
 }
 
@@ -9573,7 +9064,8 @@ public class Solution {
 
 ValidPalindrome
 
-Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+Given a string, determine if it is a palindrome, considering only alphanumeric characters 
+and ignoring cases.
 
 For example,
 "A man, a plan, a canal: Panama" is a palindrome.
@@ -9849,7 +9341,8 @@ public class Solution {
 
 WordBreak
 
-Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+Given a string s and a dictionary of words dict, determine if s can be segmented into
+ a space-separated sequence of one or more dictionary words.
 
 For example, given
 s = "leetcode",
@@ -9895,7 +9388,8 @@ public class Solution {
 
 WordBreakII
 
-Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+Given a string s and a dictionary of words dict, add spaces in s to construct a sentence
+ where each word is a valid dictionary word.
 
 Return all such possible sentences.
 
@@ -9946,7 +9440,8 @@ public class Solution {
 
 WordLadder
 
-Given two words (start and end), and a dictionary, find the length of shortest transformation sequence from start to end, such that:
+Given two words (start and end), and a dictionary, find the length of shortest transformation
+ sequence from start to end, such that:
 
 Only one letter can be changed at a time
 Each intermediate word must exist in the dictionary
@@ -10016,7 +9511,8 @@ public class Solution {
 
 WordLadderII
 
-Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that:
+Given two words (start and end), and a dictionary, find all shortest transformation 
+sequence(s) from start to end, such that:
 
 Only one letter can be changed at a time
 Each intermediate word must exist in the dictionary
@@ -10224,7 +9720,8 @@ WordSearch
 
 Given a 2D board and a word, find if the word exists in the grid.
 
-The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells
+ are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
 
 For example,
 Given board =
