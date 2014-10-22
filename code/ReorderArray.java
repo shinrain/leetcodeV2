@@ -2,6 +2,57 @@ Reorder array, so that a[i-1]<a[i]>a[i+1]
 
 
 ===
+Print all results:
+
+	boolean valid(int[] r, int k)
+	{
+		if(k==0 || k-1==0) return true;
+		if(r[k]<r[k-1]) return r[k-1]>r[k-2];
+		if(r[k]>r[k-1]) return r[k-1]<r[k-2];
+		return false;
+	}
+
+
+	void helper(int[] a, int k,List<List<Integer>> re,  int[] r, boolean[] used)
+	{
+		int n = a.length;
+		if(n==k)
+		{
+				List<Integer> rr = new ArrayList<Integer>();
+				for(int i:r) rr.add(i);
+				re.add(rr);
+			return;
+		}
+
+		for(int i=0;i<n;i++)
+		{
+			if(!used[i])
+			{
+				used[i] = true;
+				r[k] = a[i];
+				if(valid(r,k))
+				{
+					
+					helper(a,k+1,re, r, used);
+				}
+				used[i] = false;
+			}
+		}
+		return;
+	}
+
+	List<List<Integer>> reOrder(int[] a)
+	{
+		List<List<Integer>> re = new ArrayList<List<Integer>>();
+		int n = a.length;
+		if(n==0) return re;
+
+		helper(a, 0, re, new int[n], new boolean[n]);
+		return re;
+	}
+
+
+---
 
 	public void selection(int[] a, int k, int l, int r)
 	{

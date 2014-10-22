@@ -6,24 +6,220 @@ Output: [(2*3*4*5), (1*3*4*5), (1*2*4*5), (1*2*3*5), (1*2*3*4)]
       = [120, 60, 40, 30, 24]
 You must do this in O(N) without using division.
 
+---
+
+  int[] helper(int[] A)
+  {
+    int n = A.length;
+    if(n==0) return  null;
+
+    if(n==1)
+    {
+      int[] re = new int[1];
+      re[0] = 1;
+      return re;
+    }
+    else
+    {
+      int[] re = new int[n];
+      int prod = 1;
+      re[0] = prod;
+      for(int i=1;i<n;i++)
+      {
+        prod*=A[i-1];
+        re[i] = prod;
+      }
+
+      prod = 1;
+      for(int i=n-2;i>=0;i--)
+      {
+        prod*=A[i+1];
+        re[i] *=prod;
+      }
+      return re;
+    }
+  }
 =======
 
 Find the node with given value in binary tree in in-order way,and return it;
 PS: the binary tree may include two nodes with the same value.
 
 
+  void helper(TreeNode root, int val, List<TreeNode> re)
+  {
+    if(root == null) return;
+    if(root.val == val) re.add(root);
+    helper(root.left,re);
+    helper(root.right,re);
+  }
+
+  List<TreeNode> findVal(TreeNode root, int val)
+  {
+    List<TreeNode> re = new ArrayList<TreeNode>();
+    helper(root, val, re);
+    return re;
+  }
+
 ===
 
 1.1 gas station
+
+---
+  public int canCompleteCircuit(int[] gas, int[] cost) {
+    int n = gas.length;
+    if(n!=cost.length) return -1;
+
+    int min = Integer.MAX_VALUE;
+    int sum = 0;
+
+    int[] G = new int[n];
+    for(int i=0;i<n;i++)
+      G[i] = gas[i] - cost[i];
+
+    for(int i = 0; i<n;i++)
+    {
+      sum+=G[i];
+      if(sum<min) min=sum;
+    }
+
+    if(min>=0) return 0;
+
+    for(int i=1;i<n;i++)
+    {
+      min = Math.min(sum, min-G[i-1]);
+      if(min>=0) return i;
+    }
+    return -1;
+  }
+
+
 1.2 一个数组，找出一个solution使得1st《2nd， 2nd》3rd。。比如15462就是数组1
 ，2，4，5，6的一个solution。大牛指点下这个怎么弄？
+
+====
+
+  void reverse(int[] a, int l, int r)
+  {
+    if(l>=r || l<0 || r>=a.length) return;
+
+    while(l<r)
+    {
+      int t = a[l]; a[l] = a[r]; a[r] = t;
+      l++; r--;
+    }
+  }
+
+  void reOrder(int[] a, int l, int r)
+  {
+    int n = r-l+1;
+    if(n<=2) return;
+
+    int mid = l+(r-l)/2;
+    int left = l+(mid-l)/2;
+    int len = left-l+1;
+
+    System.out.println(mid+" "+left+" "+len);
+    reverse(a, mid+1, mid+len);
+    reverse(a, left+1,mid);
+    reverse(a, left+1, mid+len);
+    reOrder(a, l, l+2*len-1);
+  }
+
+    boolean valid(int[] r, int k)
+  {
+    if(k==0 || k-1==0) return true;
+    if(r[k]<r[k-1]) return r[k-1]>r[k-2];
+    if(r[k]>r[k-1]) return r[k-1]<r[k-2];
+    return false;
+  }
+
+
+  void helper(int[] a, int k,List<List<Integer>> re,  int[] r, boolean[] used)
+  {
+    int n = a.length;
+    if(n==k)
+    {
+        List<Integer> rr = new ArrayList<Integer>();
+        for(int i:r) rr.add(i);
+        re.add(rr);
+      return;
+    }
+
+    for(int i=0;i<n;i++)
+    {
+      if(!used[i])
+      {
+        used[i] = true;
+        r[k] = a[i];
+        if(valid(r,k))
+        {
+          
+          helper(a,k+1,re, r, used);
+        }
+        used[i] = false;
+      }
+    }
+    return;
+  }
+
+  List<List<Integer>> reOrder(int[] a)
+  {
+    List<List<Integer>> re = new ArrayList<List<Integer>>();
+    int n = a.length;
+    if(n==0) return re;
+
+    helper(a, 0, re, new int[n], new boolean[n]);
+    return re;
+  }
+
 2. most frequent character in a huge string (10works 1master)， 如果一个big
 文件在一个机子上怎么弄，如果多个小文件在多个机子上怎么弄？
+
+
 3.1. return random node of a list, what if it can be modified concurrently
+
+用hash可以，每个node一个lock也行
+
+Reservior sampling. For i, getRandom(0,i)==> if rand == 0; replace the node with current one
+      ==> and lock 
+
+
 3.2. 1k Ads, how to make it only appear once across all servers, no master 
 server
 
-Consistent hashing
+1K % numberOfMachine => index of machine to save the Ads.
+
+每个机器上同时 maintain 一份(AdsIndex, machineIndex)的hashtable. 
+这个需要做syncrhonization的. 
+
+
+First of all， 是onsite，被5人轮虐。。。好在lunch哥们比较腼腆，没问问题，就
+扯扯淡。
+    
+    @beefcurtain5
+    5.不好意思没说清楚，generialezed cahce只是design方法的signature，比如get
+(K), put(K,V)，这个我也是乱答，感觉出了get，put，clear之类不需要别的。。
+    3.2 我答的也是consistent hashing
+    3.1 这个题分之前需要做hash吗，不用话貌似得check所有的文件每一行，做了的
+话貌似只看每个最大就可以。
+    
+    @Jc2013
+    不是找最长。。就是找一个符合要求的序列就行，要求所有数组元素都在。
+    
+    @bladehaze
+    这么多解法，眼花缭乱啊，不过方法4怎么感觉不是O（n），数组swap貌似代价粉
+大。。用堆的想法不错，学习了，呵呵。
+    
+    @xiaofenglu
+    1.2 分析过程很清晰！赞一个！
+    3.1 这个不要用lock。。。用了就掉进陷阱。。。就try catch一下，如果
+exception继续取一次就好。
+    3.2 万一某个server挂了，如何让他负责的Ad继续由别的server发？你那个
+hashtable维护起来很tricky的。。。所以我觉得consisten hashing应该是对的。
+    
+    @Icn
+    1.2 上代码就比谈想法更进一步，呵呵，interviewer自己说的。。。
+
 
 
 4.check generalized tree, follow up:return all generalized tree of its 
@@ -57,19 +253,39 @@ Merge interval
 对我的最后solution表示很满意。
 2. 国男
 stream of strings like this
-1 34 5 6
+1 3 4 5 6
 3 4 5 6 3
 4 5 6 3 3
 ...
 每行是一个包含数字的string。去除所有数字完全重复的strings.比如这里的第二和第
 三行数字完全相同，可以合并成一个。要求合并所有数字完全重复的strings。
 最后表示对我的优化结果不满意。
+
+----
+
+There are only 10 digits since they are in string. So should assign prime number to 
+each digit and compute the product.
+
+If the string is very long, compute prod%(magic) and summation
+
+
+
+===
 3. 有点像东南亚或者拉美后裔，英文无口音
 Reverse linkedlist
 不断要求优化。
+
+---
+
+
+====
 4. 欧洲人
 写一个小游戏。MxN 的格子上有一条蛇，蛇头可以向前，左，右移动，撞到自己身体任
 何部位或者撞到边界就算死。
+---
+use HashSet<position> pos.
+
+====
 5. 阿三
 有N个node,每个都不停的向外发送timestamps,具体发送哪些timestamp是每个node决定
 的,从其他node来说是随机的.现在要收集这些node发送的所有timestamp.如果某个
@@ -82,10 +298,9 @@ timestamp被发现从超过99%的node上发送出来,记录下来.需要怎么�
 ，某些Timestamp的count小于某个设定值，比如0.01N，认为这个timestamp被收集到0.
 99N的可能性已经趋近于0，可以忽略了，从HashMap里面删除。最后阿三还是表示不满
 意，不能完全理解我的方案。
+---
 
-已挂，感觉比较大可能是挂在国男2和那个阿三手上了，当然不排除其他人表面表示满
-意，实际有保留。不管怎样，下面接着投简历，接着面。Offer总会来的，祝版上所有
-人都拿到理想的offer。
+
 
 ===
 
