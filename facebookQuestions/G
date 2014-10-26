@@ -1403,13 +1403,226 @@ hey asked me to design a scalable tracing engine, for which the design was the m
 
 ===
 
+generation random number not in list
+
+===
+
+wo bit strings， we have two operation, one changes prefix m*k*i bits to 0s or 1s, the other changes any substrings whose 
+lengths are k bits to be 0s or 1s. Minimize the operation times
+
+===
+Two algorithm problems, one is given 4 digits array, like 0,0,0,0, plus 1 into this array and print. Ex. 8,8,8,8 to 8,8,8,9
+
+===
+
+Write a probability formula to tell how many bits will be changed when 1 is added to a 32 bit binary number
+
+===
+
+Describe an implementation for a hash table. Explain how the data structure changes as more items are added and sketch a 
+proof for the amortized complexity of operations
+
+===
+
+Maximum rectangular area under a histogram
+
+===
+
+General OS stuff about locks/threads. Asked about how to implement a lock at the kernel level. Also asked some questions 
+related to Java synchronized.   Answer Question
+
+Given an n x m grid and a robot starting in the top left corner, how many ways can it get to the bottom right corner, if it 
+can only go down or to the right? Can you come up with a closed form solution?   View Answers (3)
+
+Describe how you improve the performance of a service for a region where there is a dial-up connection.   Answer Question
+Given a binary tree, determine if it is a valid binary search tree.   View Answers (2)
+
+Compute the h-index of a list of papers, given their citation count. Can you do it in linear time? How about a distributed 
+algorithm for the task?   View Answer
+
+===
+
+Two phone interviews. Does a given file name match a single-star pattern?
+index.html matches *.html
+foo.txt does not match *.html
+
+matches(“index.html”, “*html”) returns true
+matches(“foo.txt”, “*html”) returns false
+matches(“cat”, “c*t”) returns true
+
+Can abstract class have a constructor
+
+Yes: initilize before subclass
+
+====
+
+A soda water machine,press button A can generate 300-310ml, button B can generate 400-420ml and button C can generate 
+500-515ml, then given a number range [min, max], tell if all the numers of water in the range can be generated. 
+
+range DP.??
+
+public static boolean isBuidable(int low, int high, int min, int max) {
+    
+    if(low <= min && max <= high)
+      return true;
+    
+    if(low > min) 
+      return false;
+    
+    return isBuidable(low+300, high+310, min, max) ||
+         isBuidable(low+400, high+420, min, max) ||
+         isBuidable(low+500, high+515, min, max);
+  }
+
+
+===
+Test line-of-sight in a game that accounts for obstacles to determine if the bad guy can see you or not.
+
+===
+
+finding words from a dictionary using a given set of tiles.
+
+===
+
+Given a document, output the 10 most frequent words with their frequencies in descending order
+
+===
+
+Round 1:
+
+Compare whether two trees are the same.
+
+Round 2:
+1. Bag-of-words model. Write the process of search based on inverted index. The follow up is given some 
+attributes(an array), how to filter the search result.
+
+2. Given the radius, generate a random point inside a circle
+
+===
+
+the input was a string and I was supposed to output the longest sub string with only 2 distinct chars in the sub string
+
+To code.
+
+===
+
+give you a set of problems that depends on each other. it asks you to print out the order of the problem so that later 
+problems only depend on problems before
+
+Topsort
+
+===
+
+
+Systems Design - What happens during and after a query is being typed (autocomplete) in a search box whether the user is 
+trying to go to a website or asking a question etc, and how do servers complete the request and what is the best (parallel) 
+structure for the request to go through. DFS and how servers are located for proximity
+
+What is the best data structure for a threaded email system? Linked List. Connecting and disconnecting links to update which
+ email arrives in order by date and time
+
+If you have data coming in rapid succession what is the best way of dealing with redundant data? A queue and a hashmap
+
+I forgot this exactly but - If you had a binary tree and only two functions getNumChildren() and getNthChild( n ) how ....(
+  get duplicates or a certain node maybe) - The main point is to use recursion. Then was asked spatial and memory efficiency (Big O)
+
+Last one I forget but it had to do with if I had a large group of text how do I find data and shuda used a hashmap. You 
+could probably reason a binary tree works because of space efficiency.
 
 
 
+===
+
+How to sort unlimited number of ordered lists? What data structure will you use to represent the lists or the list of lists?
+
+===
+
+1. A rotated sorted array and find the begin of the array(smallest).
+2. given a pattern array and a search array. if the pattern appears in the search array in order than return true
+3. given infinitely numbers, for every number compute the average of the former k numbers.
+
+===
+
+Give a string of words. Find anagram words and put them into the same list, then output the list of anagram words lists.
+input: [add, dad, care, race]
+output: [[add, dad], [care, race]] 
+
+===
+
+Interview 1:
+
+Question 1: The interviewer was really kind. The asked me to write a function to find all the Ramanujan numbers. He helped
+ me when I got stuck at any point and was giving me polite hints.
+
+ 1729 = 1^3 + 12^3 = 9^3 + 10^3
+
+a. sort. b. scan from two ends to find first pair, then find another in the middle
 
 
+Question 2: He asked me to implement a queue using 2 stacks.
+
+Interview 2:
+
+Question 1: He has a question on the laptop. I have to code it and answer the questions that followed.
+
+===
+Given n numbers (P1,P2,P3,.....Pn). Divide them in m contiguous partitions such that the sum of the maximum is minimum.
+For e.g. (5,1,4,2,3) and m =2
+then (5,1)(4,2,3)  
 
 
+DP.
+
+===
+Given a binary search tree, return the most approximate number to the one passed as input
+
+==
+
+Insert a node in to sorted circular linked list. 
+
+===
+
+Describe and code and efficient algorithm to decide if two rectangles in a coordinate plane are overlapping or not. 
+Include data structure definition and any assumptions you make about the coordinate plane (location of the origin etc).
 
 
+===
+  
+Find the kth largest element.
+I started with sorting solution.
+First sort the number in O(nlogn) time.
+I did not code it.
+After I improved it to O(n) solution, similar approach to Quick sort but looking at only one side.
+I was asked to code this solution.
+
+There seems bug in a source code. When you put commands to print something, the bug disappears. Why does it happen?
+
+
+===
+
+
+The most unexpected question was to get the median of an array, which is trivial for sorted arrays (in fact I did the 
+  solution for sorted ones). The problem was that the solution had to be done for unsorted ones. 
+
+===
+
+sort the array so that the odd number in front of the even number and their relative order doesnt change in O(n) 
+
+===
+
+Phone interview: asked to code program to find intersecting circles and maximum rectangles.
+Onsite interview: Questions on design patterns, graph traversals, puzzles and user interface.
+Find if 2 lists of rectangle are exactly equal. How would you sort the lists?
+Questions about Javascript scoping rules.
+A rectangle class to compute perimeter area etc.
+
+
+When you click on a screen it might not exactly on a link on the page. Finding the most appropriate
+ link for a click on a screen area.
+
+===
+
+Given a list of strings. Produce a list of the longest common suffixes
+
+===
 
