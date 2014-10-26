@@ -882,4 +882,534 @@ Print a tree like reading a book, left to right.
 - Implement decimal to roman and vice versa.
 
 
+/*
+
+
+Below are the questions collected from glassdoor/google
+
+
+
+*/
+
+Given a string s, find the minimum cuts that partition s 
+into substrings which are all palindrome.
+
+====
+
+implement an LRU Cache
+
+===
+
+Rotate an m*n image that is stored in an array
+
+===
+
+Given a character bit array, find the highest order bit
+ of the previous character
+
+===
+
+generate a random number but not the previous generated number
+
+===
+
+The first question is easy--find common elements in 2 sets. He 
+asked me about time complexity. I answered correctly but there 
+came the communication barrier. He did not hear me correctly and 
+I wasted a lot of time explaining my thought.
+
+Then next question is about scalability. What if the sets are very
+ large(10TB)? I did not prepare for that.
+
+The third question is a brain teaser: if 1000 couples are to give
+ birth to male and female babies(50% change each), and they would 
+ keep giving birth until they have a girl, whats the boy to girl 
+ ratio in 20 years. I got this one.
+
+Finally reverse bits of an integer.
+
+
+===
+
+use semaphore to implement mutex
+
+===
+
+Array ordering, find the submatrix
+
+===
+
+I was asked How would you find the longest substring of a string 
+containing only one character? this was then expanded to two characters,
+ etc. The second question was "How would you reverse just the vowels in a
+  string?" They then asked what I d do if the string was too big to fit in
+   memory. 
+
+
+===
+
+Reorganize array of numbers in "s1 < s2 > s3 < s4 >.... " fashion. The 
+numbers may include duplicates.
+
+===
+
+Given a graph as input, write a java method returning boolean true if the
+ graph is bipartitie, else false
+
+ ===
+
+ Go through different combinations of numbers to compute what sums to a given 
+ number and analyze the runtime
+
+ ===
+
+ Intersect lines
+
+ Max Ptah in a tree
+
+ ===
+
+ Problem 1: Effectively boiled down to: "Find the ith largest integer in an array of integers".
+  The solution was order statistics (http://en.wikipedia.org/wiki/Selection_algorithm)
+
+Problem 2: Given a simple cellular automaton. Asked to design a data structure to represent it 
+using the least amount of memory I could. Then asked to implement an algorithm to make the automaton 
+take a step (following a set of rules) and make it as efficient as possible. 
+
+===
+
+Details 
+5 in-house technical interviews. 4 algo/coding and 1 design.
+
+- strtok implementation
+- given set of characters duplicates possible, and given dictionary (list of words). Find longest 
+word from dictionary that can be made from given characters. How will you do it if * (matches one wild character)
+ is also included?
+- Access card system design
+- Implement a stack with find_min api as well.
+- Given set of points, find line with max points on it.
+- utf-8 byte stream verification and character extraction.
+
+===
+
+The design interviews I remember -
+
+1) Design an online battlefield game - What would be the protocols between the server and the client, the algorithms
+ and game flow to decide the state of the game, some basic networking (which I struggled with).
+
+2) How would you design Google images? The premise was that I should be able to search regarding specific features, 
+for example the blue content, or images that are in pages that contain specific keywords. This was a very open-ended 
+  question, we thought "together" about solutions, what will be the size of my data which maps words to images, where
+   would I store the images, how many servers I would need, etc... I had no previous experience in large scale design 
+   - The interviewer said that it wasnt expected of me. I thought I did relatively well, but I guess they ARE looking 
+   for people with previous experience in large scale design, from the input I got later on.
+
+Algorithmic interviews I remember -
+
+1) How would you design an efficient algorithm to find out in a sorted array which number appears the most times. I started
+ from the simple solution, and continued to a more complex one ( with some hints along the way from the interviewer) that
+  in summary does a binary search of the number of times the most frequent number appear - (think about it - I have an
+   array of size N, if the most frequent number appears N/2 times, then I can infer this just from sampling the values at 
+   indexes (0,N/4,N/2,N*3/4,N). I thought I did well in that interview.
+
+2) Write code that prints the Cartesian product (row by row for each combination) of a given list of lists (that contain
+ integers). Since you dont know from beforehand how many lists there are, you obviously cant just hard-code lots of for 
+loops. During the interview I gave two solutions - A recursive one, and after writing it out, they asked me to also write a 
+non-recursive one - Which I did with a counter which maps each times to a different combination of values (with some mod mathematics).
+I think I also did well in that interview.
+
+===
+
+Given a sorted matrix where the number below and right of you will always be bigger, write an algorithm to find if a particular number 
+exist in the matrix. What is the running time of your algorithm
+
+===
+
+Given a string, convert it into a palindrome with the lease number of insertions possible
+
+===
+
+How would you design a system to do such and such? I thought the interviewer wanted me to talk about functions and data storage but in 
+the end he seemed he wanted specific SQL statements which I was not too familiar with
+
+===
+
+Implement typical graph algorithm in both recursive and iterative manner
+
+===
+
+Write code to determine if a given input string contains balanced parentheses
+
+===
+
+The wiggle problem, given an array of integers arrange them such that alternate elements are large and small.(2,5,3,6,...)
+
+===
+
+Find the local minima in an array. A local minima is defined as a number whose left and right indices are greater than it in value.   View Answers (4)
+An array contains integers with the property that a particular number, called the majority element, appears more than 50% of the time. Give an algo to 
+find this majority number   View Answers (4)
+Implement std::vectors push_back()
+
+Also asked for maximum contiguous subarray problem   View Answer
+There are n points in a plane. Find the max number of points that lie on a line   View Answer
+In a given binary tree, find the number of elements that lie in a given range.   View Answer
+
+===
+
+Questions 
+Calculate the point when the time/space complexity for a merge sort would be as good/bad as a insertion sort for given values for step executions.   View Answer
+
+===
+
+Find out a substring from a huge file with high performance
+
+===
+
+Write a function with integer input which returns an integer having been flipped around in the binary sense. Example:
+Given 3, it should be turned into 0000 0011, then flipped 1100 0000, then return 64+128 = 192.
+
+Solution: for loop once
+
+===
+
+how to find the missing number from a list of n that you know only one is missing, in an efficient approach
+
+Solution: for loop and xor operation
+===
+
+- sort items to fulfill specific order (a <= b >= c <= d >= e ...)
+- find the number of repeating substrings within a given string ("abababab" = 4 times "ab")  
+
+===
+
+ What is the time complexity of Quicksort in the worst case scenario and in the average case?
+- What is the unix system call that returns file attributes about an inode?
+- Have you heard about linux 'tail' command?
+- Without using a calculator, tell me how much is 2 to the power of 24?
+
+===
+
+write code to return all words in a dictionary that can be formed from a string of numbers (e.g. 34556), where the numbers 
+map the same why they do on a phone (e.g. 1->A, B, or C).  
+
+===
+
+in order traversal of a binary tree,
+next element in inorder traversal
+
+===
+
+find the kth in two sorted arrays.
+
+===
+
+TCP vs UDP, stack vs queue
+
+===
+
+Write code that sorts a stack   View Answers (2)
+Remove duplicate characters from a string 
+
+===
+
+Given a large data set that essentially consumes all working memory, what kind of sort would one implement.
+Now add the condition that the elements are alphanumeric and same length.
+
+===
+
+the interviewer ask me to write the code to implement the sqrt function, to be more specific double sqrt(doulbe x).
+
+===
+
+how to search a heap with recursion
+
+===
+
+Describe memory fragmentation and how it relates to the garbage collector
+
+===
+Find all substrings of a palindrome string
+
+===
+
+How would I implement the autocomplete function on an iPhone or Google search?
+
+===
+
+You and opponent alternate picking gold pots out of line. You can pick either from the left or the right. All amounts 
+of gold in all pots are know. Write an algorithm to pick the most gold. Assume you opponent is using the same algorithm.
+
+DP
+===
+Write a method to return all permutations of a string
+
+===
+
+1. (a) be asked some backgrounds and presented previous work. (b) given a sorted array, find two elements whose sum 
+equals to a given value.
+2. Implement the iterable interface for a collection of arraylists.
+===
+
+Divide a string into the minimal set of palindromes that can form it
+
+===
+
+Log structured file system synchronization design
+
+===
+
+How does the Google search engine work
+
+===
+
+Design a ping-pong ranking system
+
+===
+
+1. determine the overlap.
+2. write test cases based on 1
+3. give an input stream like 1010x0x1, give all the result that transfer x into 0 or 1
+
+===
+
+The question was on n-ary tree data stream.  The question is to find the head of the tree given a data stream of key
+ value pairs.
+
+===
+
+1. O(n*log n) time to find the k-th largest element of a n*n matrix, given every row or column of the matrix is pre-sorted.
+2. O(log n) tome to find the k-th largest element of two pre-sorted array.
+
+===
+
+How to protect data when you transfer it online. e.g. You need to submit your username and password from your client to the 
+server and there is people who is listening to the information. 
+
+===
+
+Build a pseudorandom maze. Write a method to deep copy a graph. Given an n x n matrix of numbers, how do I find a number?
+
+===
+
+Design a class where you can add elements, and return the mean of the latest N elements.  
+
+===
+
+Design a cache with O(1) search time and delete time
+
+===
+
+How would you implement language identification for the search engine?
+
+===
+
+1) Implement x^n fast (divide & conquer)
+2) Implement shortest path fast (dynamic programming)  
+
+===
+
+Merge sorted, non-overlapping list of intervals with another interval [(1,3), (5,10), (12,30)] + (9,31) = [(1,3), (5,31)]
+
+Implement a system so that the billionth search query at Google each day wins a car.
+
+===
+
+given K files and N machines, N is much larger than K. given function long sum(int fileID,int machineID) which use 
+particular machine calculate the sum of file. Question:write function which calculate the sum of all files
+
+===
+
+How would you go about checking if a grid of letters had Boggle-style words in there via connected letters, length,
+ etc.   View Answer
+Given a series of heights describing building start and end points, how would you draw the horizon.  
+
+
+===
+
+Design a system that accepts a small amount of data from every user, and serves it up internally at a Google scale without
+ knowing google's architecture, replication, or authentication services.
+
+ ===
+
+ Q.Given an input string S write a function which returns true if it satisfies S = nT. Basically you have to find if a 
+ given string can be represented from a substring by iterating it “n” times. n >= 2
+
+An example would suffice –
+
+Function should return true if
+
+1) S = “abab”
+
+2) S = “abcdabcd”
+
+3) S = “abcabcabc”
+
+4) S = “zzxzzxzzx”
+
+Function should return false if
+
+1) S = “abac”
+
+2) S = “abcdabbd”
+
+3) S = “abcabcefg”
+
+4) S = “zzxzzyzzx”
+
+It would be easy to understand if you can give an algo instead of saying use kmp or suffix tree or…
+
+I came up with O(n*n) solution. Wondered how to do in O(n)
+
+Solution:
+
+rotation and compare?
+
+
+
+===
+
+Dynamically build a tree from a stream of father-child tuples
+
+===
+
+After given clearly definition of UTF-8 format. ex: 1-byte: 0b0xxxxxxx 2- bytes:....
+Asked to write a function to validate whether the input is valid UTF-8.
+Input will be string/byte array, output should be yes/no
+
+DP:
+
+
+
+===
+
+3 about programming and 1 about system design (general question about detecting bot in social network, youtube and google+).
+
+===
+
+1. Describe what happens when user surf the internet
+2. What's Java Object class. Name one of its method. What will be returned for equal() if two objects have same hashcode
+
+===
+
+Designed a method to identify utf-8 characters
+
+===
+
+There are n integers in disk. Memory has m space. how to sort the data efficiently
+
+===
+
+Given two sorted arrays with N elements each, find the median of their union in O(log n). 
+
+===
+
+1) traverse array in a spiral order. 2) check if directed graph contains a cycle.
+
+First question was in-order traversal of BST. I wrote the code. Then asked me two check if two different BSTs 
+have same inorder traversal. 
+
+Second interviewer gave me array, with elements first strictly increasing, then strictly decreasing. Asked me to find the 
+largest number. 
+
+Given infinite doubly linked list, and separate list of elements, which are linked to some linked list elements. Find out 
+from the list of elements how many neighboring groups are formed.
+
+ He gave me system design question: Observer class has three methods AddObserver(), RemoveObserver(), NotifyAllObservers().
+ After asking some clarification questions, I suggested to use doubly linked list to keep track of all observers, and hash 
+ table to look-up the individual observer. Then he asked to implement three methods. After implementing the code in JAVA he
+  told me the program would not work. Apparently the Observer was designed for Chrome browser. He went into details when user
+   clicks on mouse and then key-press is released. I responded the initial question was very vague and asked for more 
+   clarification and precise requirements. I suggested what I would change to go around the problem, but time ran out and 
+   didn't get a chance to modify the code on whiteboard.
+
+   two numbers in base 3 system. The input: two base 3 streams provided as String. function should return sum of the two 
+   numbers also in String format as base 3 stream. 
+
+He gave me file size, and asked me to partition file into chunks, so that each chunk size is power of two, and the number 
+of chunks is minimal.
+
+====
+
+How would you implement the try/finally construct in C++?
+
+1) I have a linked-list and a node has a digit.
+For example, 1->2->4->6->8.
+1 is a head and 8 is a tail.
+It means the number 12,468.
+I want to add 1.
+Then, it should be 1->2->4->6->9.
+
+(2) explain abstract and interface.
+what are they different?
+
+
+3) Bill has a fifty billion dollar.
+you have a dollar.
+your money become 2 times larger than a year before. (ex: 1->2->4->8->...)
+How long year does it take that yours is more than Bill's.
+give me an answer without calculator.
+
+===
+
+Implement a function that calculates power x y 
+
+===
+
+Given 2 strings, one is to be sorted, the other is the order. For example, first one is "hello", the second one is "loade", 
+then the sorting result is "lloeh".
+
+Solution: Hash or scan n vs n^2
+
+===
+
+one question similar but simplified subset sum
+
+===
+
+Find the average of values in an array accounting for integer overflow
+
+===
+
+Many sticks with length, every time combine two, the cost is the sum of two sticks' length. Finally, it will become a stick,
+what's the minimum cost?
+
+DP
+
+===
+
+Guessing game - I pick a number between 1 and 100 and you are trying to guess it. Every time you query a number I tell you 
+if it is higher or lower.
+
+Part 1- Write the code of it, if cost of querying a number is equal.
+Part 2- How about if cost of querying number x is x? How would you change the algorithm? 
+
+===
+
+Given a TV remote, write a script that would give directions to input some letters. Starting from the upper left-hand 
+corner. If the buttons were in 3 columns, and you wanted to type "feed", you would want the output of the program to say 
+"right, right, down, PRESS, left, PRESS, PRESS, left, PRESS" 
+
+
+===
+
+Given a number with some digits, for example 5412, calculate the minimum number with the same exact digits that is larger 
+that the original.
+In this case will be 5421. It has the same digits 1-2-4-5. And from all the combinations bigger than 5412 is the smallest.
+
+===
+
+hey asked me to design a scalable tracing engine, for which the design was the main concern
+
+===
+
+
+
+
+
+
+
+
+
+
 
