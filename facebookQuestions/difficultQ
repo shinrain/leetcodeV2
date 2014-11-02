@@ -31,6 +31,20 @@ probability density function for the data and estimate median using that.
 
 reservoir sampling 
 
+====
+
+If know the size is big:
+
+Create an array of 8-byte longs that has 2^16 entries. Take your input numbers, shift off the bottom sixteen bits, and create a histogram.
+
+Now you count up in that histogram until you reach the bin that covers the midpoint of the values.
+
+Pass through again, ignoring all numbers that don't have that same set of top bits, and make a histogram of the bottom bits.
+
+Count up through that histogram until you reach the bin that covers the midpoint of the (entire list of) values.
+
+Now you know the median, in O(n) time and O(1) space (in practice, under 1 MB).
+
 
 
 2. LIS in DP

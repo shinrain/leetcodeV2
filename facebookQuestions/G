@@ -1626,3 +1626,225 @@ Given a list of strings. Produce a list of the longest common suffixes
 
 ===
 
+
+/******************************************************
+
+// Questions below is from walain@mitbbs, 2014年10月29日
+
+// All the questions is hacked
+
+*******************************************************/
+
+1. Given an array of object A, and an array of object B. All A's have 
+different sizes, and all B's have different sizes. Any object A is of the 
+same size as exactly one object B. We have a function f(A, B) to compare the
+size of one A and one B. But we cannot compare between two A's or two B's. 
+Give an algorithm to match each A with each B.
+
+    int parition(int[] a, int[] b, int l, int r)
+    {
+        if(l>r) return -1;
+
+        int val = a[l];
+        int i = l-1, j = r+1;
+        int pos = -1;
+
+
+        while(i<j)
+        {
+            while((++i)<j && b[i]<=val)
+            {
+                if(b[i]==val) pos = i;
+            }
+            while((--j)>=i && b[j]>val);
+            if(j<i) break;
+            int t = b[i]; b[i] = b[j]; b[j] = t;
+            if(b[i]==val) pos = i;
+        }
+        int t = b[pos];
+        b[pos] = b[j];
+        b[j] = t;
+
+        val = b[j];
+        i = l-1; j = r+1;
+        pos = -1;
+        while(i<j)
+        {
+            while((++i)<j && a[i]<=val){ if(a[i]==val) pos = i;}
+            while((--j)>=i && a[j]>val);
+            if(j<i) break;
+
+            t = a[i]; a[i] = a[j]; a[j] = t;
+            if(a[i]==val) pos = i;
+        }
+        t = a[pos];
+        a[pos] = a[j];
+        a[j] = t;
+
+        return j;
+    }
+
+    void sort(int[] a, int[] b, int l, int r)
+    {
+        if(l>r) return;
+        int mid = parition(a,b,l,r);
+        sort(a,b,l,mid-1);
+        sort(a,b,mid+1,r);
+    }
+
+
+2. Given a binary tree of integers, give an ascii representation of the tree
+so that people can visually see the structure of the tree. An ascii 
+representation is a single string, so that printing out this single string 
+gives the required tree.
+
+String serialize(TreeNode root)
+{
+    if(root==null) return "#";
+    String re = Integer.toString(root.val);
+    re+=serialize(root.left);
+    re+=serialize(root.right);
+    return re;
+}
+
+3. Topological ordering
+
+4. Given a graph, there are some nodes with degree 1. These nodes are called
+terminators. There are a several terminators in the graph. There are single
+/multiple paths from each terminators to each other terminators. Compute the
+average path length of all such paths.
+
+class returnType
+{
+    int sum;
+    List<Integer> list;
+
+    returnType(int _sum, List<Integer> _list)
+    {
+        sum = _sum; list = _list;
+    }
+    public String toString()
+    {
+        String re = "("+sum+", "+list+" )";
+        return re;
+    }
+}
+
+class Solution{
+
+
+    int averageDistance(TreeNode root)
+    {
+        if(root==null) return 0;
+        if(root.left==null && root.right==null) return 0;
+        if(root.left==null)
+        {
+            returnType right = helper(root.right);
+            return right.sum/right.list.size();
+        }
+        else if(root.right==null)
+        {
+            returnType left = helper(root.left);
+            return left.sum/left.list.size();
+        }
+        else
+        {
+            returnType left = helper(root.left);
+            returnType right = helper(root.right);
+
+            int sum = left.sum+right.sum;
+            for(int i:left.list)
+                for(int j:right.list)
+                    sum+=(i+1+j);
+            int n =left.list.size()+right.list.size();
+            return sum/(n*(n-1)/2);
+        }
+
+    }
+
+
+    returnType helper(TreeNode root)
+    {
+        if(root == null) return null;
+        int sum = 0;
+        List<Integer> list = new ArrayList<Integer>();
+
+        if(root.left==null && root.right==null)
+        {
+            list.add(1);
+            sum = 0;
+        }
+        else if(root.left==null)
+        {
+            returnType r = helper(root.right);
+            sum = r.sum;
+            for(int i:r.list)
+            {
+                list.add(i+1);
+            }
+        }
+        else if (root.right == null)
+        {
+            returnType r = helper(root.left);
+            sum = r.sum;
+            for(int i:r.list)
+            {
+                list.add(i+1);
+            }
+        }
+        else
+        {
+            returnType left = helper(root.left);
+            returnType right = helper(root.right);
+
+            sum = left.sum+right.sum;
+            for(int i:left.list)
+                for(int j:right.list)
+                {
+                    sum+=(1+i+j);
+                }
+            for(int i:left.list)
+                list.add(i+1);
+            for(int i:right.list)
+                list.add(i+1);
+
+        }
+        return new returnType(sum, list);
+    }
+
+5. Implement an LRU cache and how to distribute it
+
+6. Implement a hash table and how to distribute it
+
+7. Find the longest palindrome substring in a string
+
+8. Given a mostly sorted array, where the numbers differ from their sorted 
+position by at most k slots, give an algorithm that sorts the array in less 
+than O(nlog n) time.
+
+9. Given an array a = ['x', 'b', ...., 'c'] of n chars, and b = [0.1, 0.2, .
+.., 0.01] of true probability. Write a random generator that generates the 
+chars according to the probability.
+
+10. Edit distance
+
+11. Validate UTF-8 string
+
+12. Longest increasing subsequence
+
+13. Given an infinite number (int 32) stream, find the median of the stream.
+
+14. Given an array of numbers, generate all its subsets.
+
+15. Given an array of numbers, generate all its permutations
+
+16. Given two trees, one is very big, one is small, check if the smaller one
+is a subtree of the big one
+
+17. Given integer a and b, find out the string representation of a/b. For 
+example, if a = 1, b = 3, the output should be 0.(3).
+
+System Desgin:
+1. Design tinyurl system
+2. Design unique id generation system
+3. Design a least frequent used cache
