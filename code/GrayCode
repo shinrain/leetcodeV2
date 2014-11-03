@@ -11,6 +11,29 @@ For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
 11 - 3
 10 - 2
 ---
+
+public List<Integer> grayCode(int n)
+{
+	List<Integer> re = new ArrayList<Integer>();
+
+	if(n==0)
+	{
+		re.add(0);
+		return re;
+	}
+	re.add(0);re.add(1);
+	for(int i=1;i<n;i++)
+	{
+		int add = 1<<i;
+		int siz = re.size();
+		for(int j = siz-1; j>=0; j--)
+			re.add(add+re.get(j));
+	}
+	return re;
+}
+
+----
+
 public class Solution {
     public List<Integer> grayCode(int n) {
 
