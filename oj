@@ -6554,6 +6554,35 @@ For example,
  *     }
  * }
  */
+
+ ---
+
+public ListNode removeNthFromEnd(ListNode head, int n)
+{
+        if(head==null) return null;
+
+        ListNode first = head, second = head, pre = null;
+        int count = 1;
+        while(first.next!=null)
+        {
+                count++;
+                first = first.next;
+                if(count>n)
+                {
+                        pre = second;
+                        second = second.next;
+                }
+        }
+        if(count<n) return head;
+        ListNode t = second.next;
+        second.next = null;
+        if(pre == null) head  = t;
+        else pre.next = t;
+        return head;
+
+}
+
+ ---
 public class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
 
@@ -8208,6 +8237,8 @@ public class Solution {
 
 ===
 Newton for double sqrt
+
+Equation: x_{n+1} = x_n - f(x_n)/{f'(x_n)
 
 public static double sqrt(double c)
 {

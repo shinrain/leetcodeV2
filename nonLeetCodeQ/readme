@@ -1,0 +1,506 @@
+/*
+To code list
+*/
+
+===
+/* 1. printing a tree structure with giving collection of pairs of <parent, 
+child> relation. Need to first find the root, and validate wether the given 
+relations is a valid tree, and then printing. 
+*/
+
+===
+/*
+3. 记不清楚了，比较少见的一道题，0, 1开头byte，判断最后一个字符是一个byte还
+是两个byte的问题。
+*/
+
+===
+/*
+longest common suffix of two linked list
+*/
+
+===
+/*
+2. how many (m, n) pairs such that m*m+n*n<N
+
+linear
+*/
+
+===
+3. 判断一个点是否在一个凸多边形内, O(n), O(logn)
+
+/**************************************
+Author : lxglbk
+Date : 2012/08/17
+Function : To determine whether a point is inside of a convex polygon in 2D plane
+O(logN)
+*********/
+double cross(cpoint p0, cpoint p1, cpoint p2)
+{
+    return (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y);
+}
+ 
+bool Compl_inside_convex(const cpoint & p,cpoint *con,int n)
+{
+    if(n<3) return false;
+    if(cross(con[0],p,con[1])>-eps) return false;
+    if(cross(con[0],p,con[n-1])<eps) return false;
+ 
+    int i=2,j=n-1;
+    int line=-1;
+ 
+    while(i<=j)
+    {
+        int mid=(i+j)>>1;
+        if(cross(con[0],p,con[mid])>-eps)
+        {
+            line=mid;
+            j=mid-1;
+        }
+        else i=mid+1;
+    }
+    return cross(con[line-1],p,con[line])<-eps;
+}
+
+
+/*
+输入是一个自然数T， 输出是(a_1,a_2,...,a_k)
+使得a_1^2+a_2^2+...+a_k^=T， 并且k尽可能小
+*/
+
+===
+
+/*
+其他都比较常规，有一道图的题目，一个 n*n 矩阵，每个房间可能是封闭的房间，可
+能是警察，可能是开的房间，封闭的房间不能过，返回一个 n*n矩阵， 每一个元素是
+最近的警察到这个房间的最短距离。
+
+BFS from each house.
+*/
+
+===
+
+/*就是如何实现find, insert, delete, getRandom 都是O(1)
+*/
+
+===
+
+/*索引 0 1 2 3 4
+值   3 2 1 4 0
+数组的值是下次跳的索引位置，这样的话数组有环，比如 0 -> 3 -> 4 -> 0  1 -> 2 
+-> 1， 求最长环的长度.
+*/
+
+===
+/*
+第二题，直线上有一个机器人从原点开始移动，每次可以向左移，也可以向右移，移动
+n步，再回到原点的概率是多少, 可以写程序实现。*/
+
+
+===
+/*
+2. Given a list of words, find two strings S & T such that:
+    a. S & T have no common character
+    b. S.length() * T.length() is maximized
+*/
+
+===
+/*
+int GetUglyNumber_Solution2(int index) 
+*/
+
+
+===
+
+/*Given two (dictionary) words as Strings, determine if they are isomorphic. Two words are called isomorphic if the letters in one word can be remapped to get the second word. Remapping a letter means replacing all occurrences of it with another letter while the ordering of the letters remains unchanged. No two letters may map to the same letter, but a letter may map to itself.
+
+Example:
+Given foo, app; returns true
+   we can map f -> a and o -> p
+Given bar, foo; returns false
+   we cant map both a and r to o
+
+Given turtle, tletur; returns true
+   we can map t -> t, u -> l, r -> e, l -> u, e -r
+
+Given ab, ca; returns true
+   we can map a -> c, b
+*/
+===
+
+/*Finally reverse bits of an integer.
+*/
+
+===
+/*
+I was asked How would you find the longest substring of a string 
+containing only one character? this was then expanded to two characters,
+ etc. The second question was "How would you reverse just the vowels in a
+  string?" They then asked what I d do if the string was too big to fit in
+   memory. 
+*/
+
+===
+/*Given a graph as input, write a java method returning boolean true if the
+ graph is bipartitie, else false
+
+ */
+
+===
+/*- given set of characters duplicates possible, and given dictionary (list of words).
+ Find longest 
+word from dictionary that can be made from given characters. How will you do it 
+if * (matches one wild character)
+*/
+===
+/*
+find out in a sorted array which number appears the most times
+*/
+
+===
+
+/*
+Given a sorted matrix where the number below and right of you will always be bigger, write an algorithm to find if a particular number 
+exist in the matrix
+*/
+
+===
+/*
+Given a string, convert it into a palindrome with the lease number of insertions possible
+*/
+
+===
+/*
+In a given binary tree, find the number of elements that lie in a given range.
+*/
+
+===
+/*
+Given 3, it should be turned into 0000 0011, then flipped 1100 0000, then return 64+128 = 192.
+*/
+
+===
+
+/*You and opponent alternate picking gold pots out of line. You can pick either from the left 
+or the right. All amounts of gold in all pots are know. Write an algorithm to pick the most 
+gold. Assume you opponent is using the same algorithm.
+*/
+
+===
+/*
+2. Implement the iterable interface for a collection of arraylists.
+*/
+
+===
+/*
+3. give an input stream like 1010x0x1, give all the result that transfer x into 0 or 1
+*/
+
+===
+/*
+Design a class where you can add elements, and return the mean of the latest N elements.
+*/
+
+===
+
+/* Q.Given an input string S write a function which returns true if it satisfies S = nT.
+  Basically you have to find if a given string can be represented from a substring by 
+  iterating it “n” times. n >= 2
+*/
+
+===
+/*
+Second interviewer gave me array, with elements first strictly increasing, then strictly
+decreasing. Asked me to find the largest number. 
+*/
+===
+
+/*Given infinite doubly linked list, and separate list of elements, which are linked to some
+ linked list elements. Find out from the list of elements how many neighboring groups are 
+ formed.
+*/
+
+===
+/*
+A soda water machine,press button A can generate 300-310ml, button B can generate 400-420ml and button C can generate 
+500-515ml, then given a number range [min, max], tell if all the numers of water in the range can be generated. 
+
+range DP.??
+
+public static boolean isBuidable(int low, int high, int min, int max) {
+    
+    if(low <= min && max <= high)
+      return true;
+    
+    if(low > min) 
+      return false;
+    
+    return isBuidable(low+300, high+310, min, max) ||
+         isBuidable(low+400, high+420, min, max) ||
+         isBuidable(low+500, high+515, min, max);
+  }
+*/
+
+====
+/*
+
+Question 1: The interviewer was really kind. The asked me to write a function to find all the Ramanujan numbers. He helped
+ me when I got stuck at any point and was giving me polite hints.
+
+ 1729 = 1^3 + 12^3 = 9^3 + 10^3
+
+a. sort. b. scan from two ends to find first pair, then find another in the middle
+*/
+
+===
+
+/*
+Given n numbers (P1,P2,P3,.....Pn). Divide them in m contiguous partitions such that the sum of the maximum is minimum.
+For e.g. (5,1,4,2,3) and m =2
+then (5,1)(4,2,3)  
+*/
+
+===
+/*
+Given a binary search tree, return the most approximate number to the one passed as input
+
+*/
+
+===
+/*
+Insert a node in to sorted circular linked list. 
+
+*/
+
+===
+
+/*
+The most unexpected question was to get the median of an array, which is trivial for sorted arrays (in fact I did the 
+  solution for sorted ones). The problem was that the solution had to be done for unsorted ones. 
+*/
+
+===
+/*
+Given a list of strings. Produce a list of the longest common suffixes
+
+*/
+
+===
+
+
+1. Given an array of object A, and an array of object B. All A's have 
+different sizes, and all B's have different sizes. Any object A is of the 
+same size as exactly one object B. We have a function f(A, B) to compare the
+size of one A and one B. But we cannot compare between two A's or two B's. 
+Give an algorithm to match each A with each B.
+
+    int parition(int[] a, int[] b, int l, int r)
+    {
+        if(l>r) return -1;
+
+        int val = a[l];
+        int i = l-1, j = r+1;
+        int pos = -1;
+
+
+        while(i<j)
+        {
+            while((++i)<j && b[i]<=val)
+            {
+                if(b[i]==val) pos = i;
+            }
+            while((--j)>=i && b[j]>val);
+            if(j<i) break;
+            int t = b[i]; b[i] = b[j]; b[j] = t;
+            if(b[i]==val) pos = i;
+        }
+        int t = b[pos];
+        b[pos] = b[j];
+        b[j] = t;
+
+        val = b[j];
+        i = l-1; j = r+1;
+        pos = -1;
+        while(i<j)
+        {
+            while((++i)<j && a[i]<=val){ if(a[i]==val) pos = i;}
+            while((--j)>=i && a[j]>val);
+            if(j<i) break;
+
+            t = a[i]; a[i] = a[j]; a[j] = t;
+            if(a[i]==val) pos = i;
+        }
+        t = a[pos];
+        a[pos] = a[j];
+        a[j] = t;
+
+        return j;
+    }
+
+    void sort(int[] a, int[] b, int l, int r)
+    {
+        if(l>r) return;
+        int mid = parition(a,b,l,r);
+        sort(a,b,l,mid-1);
+        sort(a,b,mid+1,r);
+    }
+
+
+2. Given a binary tree of integers, give an ascii representation of the tree
+so that people can visually see the structure of the tree. An ascii 
+representation is a single string, so that printing out this single string 
+gives the required tree.
+
+String serialize(TreeNode root)
+{
+    if(root==null) return "#";
+    String re = Integer.toString(root.val);
+    re+=serialize(root.left);
+    re+=serialize(root.right);
+    return re;
+}
+
+3. Topological ordering
+
+4. Given a graph, there are some nodes with degree 1. These nodes are called
+terminators. There are a several terminators in the graph. There are single
+/multiple paths from each terminators to each other terminators. Compute the
+average path length of all such paths.
+
+class returnType
+{
+    int sum;
+    List<Integer> list;
+
+    returnType(int _sum, List<Integer> _list)
+    {
+        sum = _sum; list = _list;
+    }
+    public String toString()
+    {
+        String re = "("+sum+", "+list+" )";
+        return re;
+    }
+}
+
+class Solution{
+
+
+    int averageDistance(TreeNode root)
+    {
+        if(root==null) return 0;
+        if(root.left==null && root.right==null) return 0;
+        if(root.left==null)
+        {
+            returnType right = helper(root.right);
+            return right.sum/right.list.size();
+        }
+        else if(root.right==null)
+        {
+            returnType left = helper(root.left);
+            return left.sum/left.list.size();
+        }
+        else
+        {
+            returnType left = helper(root.left);
+            returnType right = helper(root.right);
+
+            int sum = left.sum+right.sum;
+            for(int i:left.list)
+                for(int j:right.list)
+                    sum+=(i+1+j);
+            int n =left.list.size()+right.list.size();
+            return sum/(n*(n-1)/2);
+        }
+
+    }
+
+
+    returnType helper(TreeNode root)
+    {
+        if(root == null) return null;
+        int sum = 0;
+        List<Integer> list = new ArrayList<Integer>();
+
+        if(root.left==null && root.right==null)
+        {
+            list.add(1);
+            sum = 0;
+        }
+        else if(root.left==null)
+        {
+            returnType r = helper(root.right);
+            sum = r.sum;
+            for(int i:r.list)
+            {
+                list.add(i+1);
+            }
+        }
+        else if (root.right == null)
+        {
+            returnType r = helper(root.left);
+            sum = r.sum;
+            for(int i:r.list)
+            {
+                list.add(i+1);
+            }
+        }
+        else
+        {
+            returnType left = helper(root.left);
+            returnType right = helper(root.right);
+
+            sum = left.sum+right.sum;
+            for(int i:left.list)
+                for(int j:right.list)
+                {
+                    sum+=(1+i+j);
+                }
+            for(int i:left.list)
+                list.add(i+1);
+            for(int i:right.list)
+                list.add(i+1);
+
+        }
+        return new returnType(sum, list);
+    }
+
+5. Implement an LRU cache and how to distribute it
+
+6. Implement a hash table and how to distribute it
+
+7. Find the longest palindrome substring in a string
+
+8. Given a mostly sorted array, where the numbers differ from their sorted 
+position by at most k slots, give an algorithm that sorts the array in less 
+than O(nlog n) time.
+
+9. Given an array a = ['x', 'b', ...., 'c'] of n chars, and b = [0.1, 0.2, .
+.., 0.01] of true probability. Write a random generator that generates the 
+chars according to the probability.
+
+10. Edit distance
+
+11. Validate UTF-8 string
+
+12. Longest increasing subsequence
+
+13. Given an infinite number (int 32) stream, find the median of the stream.
+
+14. Given an array of numbers, generate all its subsets.
+
+15. Given an array of numbers, generate all its permutations
+
+16. Given two trees, one is very big, one is small, check if the smaller one
+is a subtree of the big one
+
+17. Given integer a and b, find out the string representation of a/b. For 
+example, if a = 1, b = 3, the output should be 0.(3).
+
+System Desgin:
+1. Design tinyurl system
+2. Design unique id generation system
+3. Design a least frequent used cache
+
+
+

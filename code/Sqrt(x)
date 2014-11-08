@@ -37,6 +37,8 @@ public class Solution {
 ===
 Newton for double sqrt
 
+Equation: x_{n+1} = x_n - f(x_n)/{f'(x_n)
+
 public static double sqrt(double c)
 {
     if(c<0) return Double.NaN;
