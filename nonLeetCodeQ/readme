@@ -62,6 +62,7 @@ bool Compl_inside_convex(const cpoint & p,cpoint *con,int n)
     return cross(con[line-1],p,con[line])<-eps;
 }
 
+===
 
 /*
 输入是一个自然数T， 输出是(a_1,a_2,...,a_k)
