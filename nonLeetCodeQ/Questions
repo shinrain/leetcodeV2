@@ -26,9 +26,33 @@ Given a graph as input, write a java method returning boolean true if the
 
 
 
+========================================
+(3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/convertStringXto10.java
+========================================
+
+
+
+/*
+3. give an input stream like 1010x0x1, give all the result that transfer x into 0 or 1
+*/
+
+
 
 ========================================
-(3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/doubleDivide.java
+(4). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/destructString.java
+========================================
+
+
+
+/* Q.Given an input string S write a function which returns true if it satisfies S = nT.
+  Basically you have to find if a given string can be represented from a substring by 
+  iterating it “n” times. n >= 2
+*/
+
+
+
+========================================
+(5). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/doubleDivide.java
 ========================================
 
 
@@ -39,7 +63,7 @@ example, if a = 1, b = 3, the output should be 0.(3).
 
 
 ========================================
-(4). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/equalZeroOnes.java
+(6). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/equalZeroOnes.java
 ========================================
 
 
@@ -55,7 +79,7 @@ can do it with O(n) time and O(n) space. How to do O(1) space.
 
 
 ========================================
-(5). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findGlobalMax.java
+(7). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findGlobalMax.java
 ========================================
 
 
@@ -64,10 +88,27 @@ Second interviewer gave me array, with elements first strictly increasing, then 
 decreasing. Asked me to find the largest number. 
 */
 
+   
 
 
 ========================================
-(6). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findPolice.java
+(8). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findMaxPairStringNoCommonChar.java
+========================================
+
+
+
+/*
+2. Given a list of words, find two strings S & T such that:
+    a. S & T have no common character
+    b. S.length() * T.length() is maximized
+*/
+
+
+  
+
+
+========================================
+(9). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findPolice.java
 ========================================
 
 
@@ -82,10 +123,11 @@ decreasing. Asked me to find the largest number.
 ==
 
    
+   
 
 
 ========================================
-(7). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRangeBST.java
+(10). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRangeBST.java
 ========================================
 
 
@@ -95,10 +137,22 @@ In a given binary search tree, find the number of elements that lie in a given r
 */
 
 
+ 
 
 
 ========================================
-(9). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/inversionCount.java
+(11). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRotation.java
+========================================
+
+
+Given a rotated array, find the number of rotation
+
+======
+
+
+
+========================================
+(12). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/inversionCount.java
 ========================================
 
 
@@ -110,8 +164,9 @@ In a given binary search tree, find the number of elements that lie in a given r
 
 
 
+
 ========================================
-(10). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/isBuidableSoda.java
+(13). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/isBuidableSoda.java
 ========================================
 
 
@@ -123,9 +178,8 @@ range DP.??
 */
 
 
-
 ========================================
-(11). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
+(14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
 ========================================
 
 
@@ -136,10 +190,11 @@ range DP.??
 -> 1， 求最长环的长度.
 */
 
+   
 
 
 ========================================
-(12). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCommonSuffix.java
+(15). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCommonSuffix.java
 ========================================
 
 
@@ -147,11 +202,11 @@ range DP.??
 /*
 longest common suffix of two linked list
 */
-
+   
 
 
 ========================================
-(13). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestSubstringOfTwoChars.java
+(16). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestSubstringOfTwoChars.java
 ========================================
 
 
@@ -159,35 +214,31 @@ longest common suffix of two linked list
 given a string ,return the longest substring that contains at most two 
 characters.
 */
-
-    public static void main(String[] args) {
-        System.out.println(new Solution().longestSubstringOfTwoChars("aabbbbbaxbbbaanaaaaaaaaax"));
-    }
+   
 
 
 ========================================
-(14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/meanOfKinStream.java
+(17). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/meanOfKinStream.java
 ========================================
 
 
 Design a class where you can add elements, and return the mean of the latest N elements.
 
 
+
 class Kmean
 {
 
 	void put(int val)
-	{
-	}
+
 
 	int getMean()
-	{
-	}
+
 }
 
 
 ========================================
-(15). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minConvertPalindrome.java
+(18). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minConvertPalindrome.java
 ========================================
 
 
@@ -198,7 +249,7 @@ Given a string, convert it into a palindrome with the lease number of insertions
 
 
 ========================================
-(16). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
+(19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
 ========================================
 
 
@@ -210,7 +261,7 @@ Given a string, convert it into a palindrome with the lease number of insertions
 
 
 ========================================
-(17). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
+(20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
 ========================================
 
 
@@ -223,8 +274,9 @@ then (5,1)(4,2,3)
 
 
 
+
 ========================================
-(18). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/mostTimeinArray.java
+(21). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/mostTimeinArray.java
 ========================================
 
 
@@ -236,7 +288,7 @@ find out in a sorted array which number appears the most times
 
 
 ========================================
-(19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Ramanujan.java
+(22). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Ramanujan.java
 ========================================
 
 
@@ -249,7 +301,7 @@ Question 1: The interviewer was really kind. The asked me to write a function to
 
 
 ========================================
-(20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomCache.java
+(23). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomCache.java
 ========================================
 
 
@@ -262,27 +314,23 @@ Question 1: The interviewer was really kind. The asked me to write a function to
 class Solution
 {
 
+
     boolean find(int elem)
-    {
-    }
+
 
     void insert(int elem)
-    {
-    }
+
     
     void delete(int elem)
-    {
-    }
 
     int getRandom()
-    {
-    }
+
 }
 
 
 
 ========================================
-(21). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomWalkProb.java
+(24). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomWalkProb.java
 ========================================
 
 
@@ -293,9 +341,8 @@ n步，再回到原点的概率是多少, 可以写程序实现。*/
 
 
 
-
 ========================================
-(22). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildAlphabet.java
+(25). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildAlphabet.java
 ========================================
 
 
@@ -308,25 +355,8 @@ fft, fcp, aac, act, acd, atp, tbk, tdf, …
 
 
 
-class Solution{
-
-
-    String alphabetRebuild(String[] a)
-    {
-    }
-
-    public static void main(String[] args) {
-        
-        String[] a = {"fft", "fcp", "aac", "act", "acd", "atp", "tbk", "tdf"};
-
-        System.out.println(new Solution().alphabetRebuild(a));
-    }
-
-}
-
-
 ========================================
-(23). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildUpTree.java
+(26). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildUpTree.java
 ========================================
 
 
@@ -336,46 +366,31 @@ relations is a valid tree, and then printing.
 */
 
 ===
-    static class pair
-    {
-        int left, right;
-        pair(int _left, int _right)
-        {
-            left = _left; right = _right;
-        }
-    }
-
-
-    node buildUp(pair[] a)
-    {
-    }
-
+    
 
 ========================================
-(24). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
+(27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
 ========================================
 
 
 Reorder array, so that a[i-1]<a[i]>a[i+1]
 
 
+===
 
 
 ========================================
-(25). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/reverseBit.java
+(28). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/reverseBit.java
 ========================================
 
 
 /*Finally reverse bits of an integer.
 */
 
-    int reverseInt(int val)
-    {
-    }
-
+   
 
 ========================================
-(26). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rotateBT.java
+(29). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rotateBT.java
 ========================================
 
 
@@ -417,14 +432,22 @@ upside down
 
 
 ---
-  public TreeNode rotate(TreeNode root)
-  {
-  }
 
 
 
 ========================================
-(27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/shortestPrefix.java
+(30). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/searchMatrix.java
+========================================
+
+
+/*
+Given a sorted matrix where the number below and right of you will always be bigger, write an algorithm to find if a particular number 
+exist in the matrix
+*/
+
+
+========================================
+(31). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/shortestPrefix.java
 ========================================
 
 
@@ -442,15 +465,10 @@ output: {zebra: z, dog: do, duck: du}
 */
 
 
-  public static void main(String[] args) {
-      String[] s ={"zero","dog","duck","dove"};
-      System.out.println(new Solution().func(s));
-  }
-}
 
 
 ========================================
-(28). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/uglyNumber.java
+(32). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/uglyNumber.java
 ========================================
 
 
@@ -463,15 +481,12 @@ Example: 1 2 3 4 5 6 8 9 10 12
 */
 
 
-    public static void main(String[] args) {
-        new Solution().uglyNumber(100);
-    }
-}
+    
 
 
 
 ========================================
-(29). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/UTF8Verification.java
+(33). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/UTF8Verification.java
 ========================================
 
 
@@ -480,12 +495,30 @@ Designed a method to verify utf-8 characters
 */
 
 
+
+
 ========================================
-(30). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/youngTablueKMAX.java
+(34). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/winCoinPicking.java
+========================================
+
+
+
+You and opponent alternate picking gold pots out of line. You can pick either from the left 
+or the right. All amounts of gold in all pots are know. Write an algorithm to pick the most 
+gold. Assume you opponent is using the same algorithm.    
+
+===
+
+
+========================================
+(35). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/youngTablueKMAX.java
 ========================================
 
 
 给A，B 2个array，里面都是integer，已经排好序了，由大到小，他们的长度都是N
 
 现在从A和B里各选出一个数，总成一个sum，请返回前N个最大的sum
+
+
+
 
