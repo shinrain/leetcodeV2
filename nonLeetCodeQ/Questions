@@ -1,0 +1,491 @@
+
+========================================
+(1). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/bipartitieGraph.java
+========================================
+
+
+/*
+Given a graph as input, write a java method returning boolean true if the
+ graph is bipartitie, else false
+
+ */
+
+
+
+
+========================================
+(2). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/byteArrayDecoding.java
+========================================
+
+
+
+/*
+3. 记不清楚了，比较少见的一道题，0, 1开头byte，判断最后一个字符是一个byte还
+是两个byte的问题。
+*/
+
+
+
+
+========================================
+(3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/doubleDivide.java
+========================================
+
+
+/*Given integer a and b, find out the string representation of a/b. For 
+example, if a = 1, b = 3, the output should be 0.(3).
+*/
+
+
+
+========================================
+(4). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/equalZeroOnes.java
+========================================
+
+
+/*
+Google:
+
+2. an array with 0's and 1's, find in O(n) time and O(1) space the longest 
+sequence with equal number of 1's and 0's.
+
+can do it with O(n) time and O(n) space. How to do O(1) space.
+*/
+
+
+
+========================================
+(5). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findGlobalMax.java
+========================================
+
+
+/*
+Second interviewer gave me array, with elements first strictly increasing, then strictly
+decreasing. Asked me to find the largest number. 
+*/
+
+
+
+========================================
+(6). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findPolice.java
+========================================
+
+
+
+/*
+其他都比较常规，有一道图的题目，一个 n*n 矩阵，每个房间可能是封闭的房间，可
+能是警察，可能是开的房间，封闭的房间不能过，返回一个 n*n矩阵， 每一个元素是
+最近的警察到这个房间的最短距离。
+*/
+
+
+==
+
+   
+
+
+========================================
+(7). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRangeBST.java
+========================================
+
+
+
+/*
+In a given binary search tree, find the number of elements that lie in a given range.
+*/
+
+
+
+
+========================================
+(9). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/inversionCount.java
+========================================
+
+
+/*
+   Count inversion number in unsorted array:
+   {3,1,2} -> 2, since {3,1}, {3,2}
+*/
+
+
+
+
+========================================
+(10). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/isBuidableSoda.java
+========================================
+
+
+/*
+A soda water machine,press button A can generate 300-310ml, button B can generate 400-420ml and button C can generate 
+500-515ml, then given a number range [min, max], tell if all the numers of water in the range can be generated. 
+
+range DP.??
+*/
+
+
+
+========================================
+(11). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
+========================================
+
+
+/*
+索引 0 1 2 3 4
+值   3 2 1 4 0
+数组的值是下次跳的索引位置，这样的话数组有环，比如 0 -> 3 -> 4 -> 0  1 -> 2 
+-> 1， 求最长环的长度.
+*/
+
+
+
+========================================
+(12). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCommonSuffix.java
+========================================
+
+
+
+/*
+longest common suffix of two linked list
+*/
+
+
+
+========================================
+(13). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestSubstringOfTwoChars.java
+========================================
+
+
+/*
+given a string ,return the longest substring that contains at most two 
+characters.
+*/
+
+    public static void main(String[] args) {
+        System.out.println(new Solution().longestSubstringOfTwoChars("aabbbbbaxbbbaanaaaaaaaaax"));
+    }
+
+
+========================================
+(14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/meanOfKinStream.java
+========================================
+
+
+Design a class where you can add elements, and return the mean of the latest N elements.
+
+
+class Kmean
+{
+
+	void put(int val)
+	{
+	}
+
+	int getMean()
+	{
+	}
+}
+
+
+========================================
+(15). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minConvertPalindrome.java
+========================================
+
+
+/*
+Given a string, convert it into a palindrome with the lease number of insertions possible
+*/
+
+
+
+========================================
+(16). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
+========================================
+
+
+/*	Input: 38
+	Output: [2,3,5], since 2^2+3^2+5^2 = 38*/
+
+===
+
+
+
+========================================
+(17). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
+========================================
+
+
+/*
+Given n numbers (P1,P2,P3,.....Pn). Divide them in m contiguous partitions such that the sum of the maximum is minimum.
+For e.g. (5,1,4,2,3) and m =2
+then (5,1)(4,2,3)  
+*/
+
+
+
+
+========================================
+(18). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/mostTimeinArray.java
+========================================
+
+
+
+/*
+find out in a sorted array which number appears the most times
+*/
+
+
+
+========================================
+(19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Ramanujan.java
+========================================
+
+
+/*
+Question 1: The interviewer was really kind. The asked me to write a function to find all the Ramanujan numbers. He helped
+ me when I got stuck at any point and was giving me polite hints.
+
+ 1729 = 1^3 + 12^3 = 9^3 + 10^3
+*/
+
+
+========================================
+(20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomCache.java
+========================================
+
+
+
+/*就是如何实现find, insert, delete, getRandom 都是O(1)
+*/
+
+
+
+class Solution
+{
+
+    boolean find(int elem)
+    {
+    }
+
+    void insert(int elem)
+    {
+    }
+    
+    void delete(int elem)
+    {
+    }
+
+    int getRandom()
+    {
+    }
+}
+
+
+
+========================================
+(21). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomWalkProb.java
+========================================
+
+
+
+/*
+第二题，直线上有一个机器人从原点开始移动，每次可以向左移，也可以向右移，移动
+n步，再回到原点的概率是多少, 可以写程序实现。*/
+
+
+
+
+========================================
+(22). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildAlphabet.java
+========================================
+
+
+/*
+fft, fcp, aac, act, acd, atp, tbk, tdf, …
+这些都是按照字母排序好的，但是字母顺序改了，比如 f 在 a之前，t在d之前等等，
+给定一些这样的rule，问怎么rebuild the alphabet?
+*/
+
+
+
+
+class Solution{
+
+
+    String alphabetRebuild(String[] a)
+    {
+    }
+
+    public static void main(String[] args) {
+        
+        String[] a = {"fft", "fcp", "aac", "act", "acd", "atp", "tbk", "tdf"};
+
+        System.out.println(new Solution().alphabetRebuild(a));
+    }
+
+}
+
+
+========================================
+(23). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildUpTree.java
+========================================
+
+
+/* 1. printing a tree structure with giving collection of pairs of <parent, 
+child> relation. Need to first find the root, and validate wether the given 
+relations is a valid tree, and then printing. 
+*/
+
+===
+    static class pair
+    {
+        int left, right;
+        pair(int _left, int _right)
+        {
+            left = _left; right = _right;
+        }
+    }
+
+
+    node buildUp(pair[] a)
+    {
+    }
+
+
+========================================
+(24). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
+========================================
+
+
+Reorder array, so that a[i-1]<a[i]>a[i+1]
+
+
+
+
+========================================
+(25). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/reverseBit.java
+========================================
+
+
+/*Finally reverse bits of an integer.
+*/
+
+    int reverseInt(int val)
+    {
+    }
+
+
+========================================
+(26). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rotateBT.java
+========================================
+
+
+Given a binary tree where all the right nodes are leaf nodes, flip it 
+upside down
+* and turn it into a tree with left leaf nodes.
+*
+* for example, turn these:
+*
+*        1                1
+*       /               / 
+*      2   3            2   3
+*     / 
+*    4   5
+*   / 
+*  6   7
+*
+* into these:
+*
+*        1               1
+*       /               /
+*      2---3           2---3
+*     /
+*    4---5
+*   /
+*  6---7
+*
+* where 6 is the new root node for the left tree, and 2 for the right tree.
+* oriented correctly:
+*
+*     6                  2
+*    /                 / 
+*   7   4              3   1
+*      / 
+*     5   2
+*        / 
+*       3   1
+*/
+
+
+---
+  public TreeNode rotate(TreeNode root)
+  {
+  }
+
+
+
+========================================
+(27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/shortestPrefix.java
+========================================
+
+
+/*
+Use the shorest unique prefix to represent each word in the array 
+input: ["zebra", "dog", "duck",”dot”] 
+output: {zebra: z, dog: do, duck: du} 
+
+[zebra, dog, duck, dove] 
+{zebra:z, dog: dog, duck: du, dove: dov} 
+
+[bearcat, bear] 
+{bearcat: bearc, bear: ""}
+
+*/
+
+
+  public static void main(String[] args) {
+      String[] s ={"zero","dog","duck","dove"};
+      System.out.println(new Solution().func(s));
+  }
+}
+
+
+========================================
+(28). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/uglyNumber.java
+========================================
+
+
+/*
+Print out all the ugly number sequence below a certain number
+
+Ugly Number is the product of only 2,3,5
+
+Example: 1 2 3 4 5 6 8 9 10 12 
+*/
+
+
+    public static void main(String[] args) {
+        new Solution().uglyNumber(100);
+    }
+}
+
+
+
+========================================
+(29). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/UTF8Verification.java
+========================================
+
+
+/*
+Designed a method to verify utf-8 characters
+*/
+
+
+========================================
+(30). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/youngTablueKMAX.java
+========================================
+
+
+给A，B 2个array，里面都是integer，已经排好序了，由大到小，他们的长度都是N
+
+现在从A和B里各选出一个数，总成一个sum，请返回前N个最大的sum
+
