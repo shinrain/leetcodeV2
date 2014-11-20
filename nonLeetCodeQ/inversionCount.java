@@ -20,9 +20,8 @@
             }
             else
             {
-                c[k++] = a[j];
+                c[k++] = a[j++];
                 inversion+=(j-mid);
-                j++;
             }
         }
         if (i<=mid) c[k++] = a[i++];

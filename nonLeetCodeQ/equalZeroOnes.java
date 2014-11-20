@@ -12,52 +12,36 @@ import java.lang.*;
 
 class Solution
 {
-	int longestEqualSequence(int[] num)
+	int equalZeroOnes(int[] a)
 	{
-        int n = num.length;
-        if(n<=1) return 0;
-        int max = 0;
-        int sum = 0;
-        for(int i:num)
-            sum+=i;
-        int diff = (sum*2-n);
-        int i=n-1, j = n-1;
+		int n = a.length;
+		if(n<=1)  return 0;
 
-        int one = 0, zero = 0;
-        for(;i>=0;i--)
-        {
-            if(num[i]==1) one++;
-            else zero++;
-            if(one-zero==diff)
-                break;
-        }
-        max = i;
-        int start = 0, end = i-1;
+		int[] sum = new int[n];
+		Map<Integer, Integer> map = new HashMap<>();
+		map.put(0,-1);
+		sum[0] = (a[0]==0)?-1:1;
+		for(int i=1;i<n;i++)
+		{
+			if(a[i]==0) sum[i] = sum[i-1]-1;
+			else
+				sum[i] = sum[i-1]+1;
+		}
+		int max = 0;
 
-
-        j = 0;
-
-        for(;j<i&&i<=n-1;j++)
-        {
-            if(num[j]==0) continue;
-            while(i<n)
-            {
-                if(num[i]==1) break;
-                i++;
-            }
-
-            if(i==n) break;
-            else
-            {
-                if(i-j+1>max)
-                {
-                    start = j+1;
-                    end = i;
-                    max = i-j;
-                }
-                i++;
-            }
-        }
-        return max;
-    }
+		for(int i=0;i<n;i++)
+		{
+			if(!map.containsKey(sum[i])) map.put(sum[i],i);
+			else
+			{
+				int local = i-map.get(sum[i]);
+				if(local>max) max = local;
+			}
+		}
+		return max;
+	}
+	public static void main(String[] args) {
+		int[] a = {0,0,1,1,1,1,0,0,0,1,1,0};
+		System.out.println(new Solution().equalZeroOnes(a));
+	}
 }

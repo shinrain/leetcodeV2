@@ -90,4 +90,97 @@
         if(min==Integer.MAX_VALUE) min = -1;
         return min;
     }
-   
+
+=========
+BFS solution, which is better
+
+static class pair
+{
+	int a, b;
+	pair(int _a, int _b)
+	{
+		a = _a; b = _b;
+	}
+}
+ int[][] findPolice(int[][] houses)
+ {
+ 	int m = houses.length;
+ 	if(m==0) return null;
+ 	int n = houses[0].length;
+ 	if(n==0) return null;
+
+ 	
+ 	int[][] re = new int[m][n];
+ 	for(int i=0;i<m;i++)
+ 	{
+ 		for(int j=0; j<n; j++)
+ 		{
+ 			if(houses[i][j] == 0)
+ 			{
+ 				boolean[][] visit = new boolean[m][n];
+ 				visit[i][j] = true;
+ 				re[i][j] = bfs(houses, visit, i, j);
+ 				visit[i][j] = false;
+ 			}
+ 		}
+ 	}
+ 	return re;
+ }
+
+ int bfs(int[][] houses, boolean[][] visit, int i, int j)
+ {
+ 	int m = houses.length, n = houses[0].length;
+ 	if(i>=m || j>=n) System.exit(-1);
+ 	LinkedList<pair> q = new LinkedList<>();
+ 	q.add(new pair(i,j));
+ 	int re = 0;
+ 	while(q.size()!=0)
+ 	{
+ 		int siz = q.size();
+ 		for(int ii=0; ii<siz; ii++)
+ 		{
+ 			pair cur = q.removeFirst();
+ 			if(houses[cur.a][cur.b]==1) return re;
+ 			if(cur.a+1<m && houses[cur.a+1][cur.b] !=-1 && !visit[cur.a+1][cur.b])
+ 			{
+ 				visit[cur.a+1][cur.b] = true; q.addLast(new pair(cur.a+1, cur.b));
+ 			}
+ 			if(cur.b+1<n && houses[cur.a][cur.b+1] !=-1 && !visit[cur.a][cur.b+1])
+ 			{
+ 				visit[cur.a][cur.b+1] = true; q.addLast(new pair(cur.a, cur.b+1));
+ 			}
+ 			if(cur.a-1>=0 && houses[cur.a-1][cur.b] !=-1 && !visit[cur.a-1][cur.b])
+ 			{
+ 				visit[cur.a-1][cur.b] = true; q.addLast(new pair(cur.a-1, cur.b));
+ 			}
+ 			if(cur.b-1>=0 && houses[cur.a][cur.b-1] !=-1 && !visit[cur.a][cur.b-1])
+ 			{
+ 				visit[cur.a][cur.b-1] = true; q.addLast(new pair(cur.a, cur.b-1));
+ 			}
+ 		}
+ 		re++;
+ 	}
+ 	return 0;
+ }
+
+
+=========   
+
+ public static void main(String[] args) {
+ 	int[][] houses = {{0,0,-1,0},{-1,-1,1,0},{-1,0,0,1},{1,0,-1,1}};
+ 	int[][] re = new Solution().findPolice(houses);
+ 	for(int[] a:houses)
+ 	{
+ 		for(int i:a)
+ 			System.out.print(i+" ");
+ 		System.out.println();
+ 	}
+ 	System.out.println();
+ 	for(int[] a:re)
+ 	{
+ 		for(int i:a)
+ 			System.out.print(i+" ");
+ 		System.out.println();
+ 	}
+ }
+}

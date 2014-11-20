@@ -3,20 +3,22 @@
 In a given binary search tree, find the number of elements that lie in a given range.
 */
 
+List<Integer> findNumInRange(TreeNode root, int min, int max)
+{
+	List<Integer> re = new ArrayList<>();
+	helper(root, min, max);
+	return re;
+}
 
-    void findNumInRange(TreeNode root, int min, int max)
-    {
-        List<Integer> re = new ArrayList<Integer>();
-        helper(root, min, max, re);
-        return re;
-    }
-
-    void helper(TreeNode root, int min, int max, List<Integer> re)
-    {
-        if(root==null) return;
-        if(root>=max) helper(root.left, int min, int max, re);
-        if(root<=min) helper(root.right, min, max, re);
-        re.add(root);
-        helper(root.left, min, root.val, re);
-        helper(root.right, root.val, max, re);
-    }
+void helper(TreeNode root, int min, int max, List<Integer> re)
+{
+	if(root==null) return;
+	else if(root.val<=min) helper(root.right, min, max, re);
+	else if(root.val>=max) helper(root.left, min, max, re);
+	else
+	{
+		re.add(root.val);
+		helper(root.right, min, max, re);
+		helper(root.left, min, max, re);
+	}
+}
