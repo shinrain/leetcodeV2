@@ -15,7 +15,7 @@ class Solution
 		for(;i<n;i++)
 		{
 			int bit = -1;
-			if((a[i]&(byte)0b11000000)==(byte)0b00000000) bit = 0;
+			if((a[i]&(byte)0b10000000)==(byte)0b00000000) bit = 0;
 			else if((a[i]&((byte)0b11100000))==(byte)0b11000000) bit = 1;
 			else if((a[i]&((byte)0b11110000))==(byte)0b11100000) bit = 2;
 			else if((a[i]&((byte)0b11111000))==(byte)0b11110000) bit = 3;
