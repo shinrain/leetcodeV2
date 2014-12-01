@@ -4,7 +4,67 @@
 ===
 
 Iteration:
+====
 
+Cleaner solution:
+
+List<Integer> minLenOfSquareSum(int num)
+{
+	List<Integer> re = new ArrayList<>();
+	if(num<1) return re;
+
+	int[] minimum = new int[num+1];
+	int[] pred = new int[num+1];
+
+	Arrays.fill(minimum, Integer.MAX_VALUE);
+	Arrays.fill(pred, -1);
+
+	for(int i=1;i<=num;i++)
+	{
+		int sroot = (int)Math.sqrt(i);
+		if(sroot*sroot==i)
+		{
+			minimum[i] = 1;
+			pred[i] = sroot;
+		}
+		else
+		{
+			int min = Integer.MAX_VALUE;
+			int pre = -1;
+			for(int j=sroot; j>0; j--)
+			{
+				int comp = i-j*j;
+				if(minimum[comp]<min)
+				{
+					min = minimum[comp];
+					pre = j;
+				}
+			}
+			minimum[i] = min+1;
+			pred[i] = pre;
+		}
+	}
+
+	return getSequence(pred);
+}
+
+List<Integer> getSequence(int[] pred)
+{
+	List<Integer> re = new ArrayList<>();
+
+	int cur = pred.length-1;
+	System.out.println(cur);
+	while(pred[cur]!=-1)
+	{
+		re.add(pred[cur]);
+		cur-=(pred[cur]*pred[cur]);
+	}
+	return re;
+}
+
+
+
+====
     List<Integer> shortestSquareSum(int N)
     {
         List<Integer> result = new ArrayList<Integer>();

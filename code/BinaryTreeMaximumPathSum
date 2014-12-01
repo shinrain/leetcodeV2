@@ -22,6 +22,34 @@ Return 6.
  *     TreeNode(int x) { val = x; }
  * }
  */
+ ===
+ Betterr solution:
+
+ public class Solution {
+	int max;
+    public int maxPathSum(TreeNode root) {
+        max = Integer.MIN_VALUE;
+        depth(root);
+        return max;
+    }
+
+    int depth(TreeNode root)
+    {
+    	if(root==null) return 0;
+    	int val = root.val;
+    	int left = depth(root.left);
+    	int right = depth(root.right);
+		val = Math.max(val, left+val);
+		val = Math.max(val, right+val);
+    	if(val>max) max = val;
+
+    	int maxDep = Math.max(left, right);
+    	return root.val+ Math.max(maxDep,0);
+    }
+}
+
+
+ ==
 public class Solution {
 	public int maxDeep(TreeNode root, HashMap<TreeNode, Integer> deep)
 	{

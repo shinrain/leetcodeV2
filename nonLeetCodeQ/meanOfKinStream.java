@@ -39,3 +39,33 @@ class Kmean
 		return sum/siz;
 	}
 }
+
+====
+
+This is cleaner
+
+class Kmean
+{
+
+	int[] a;
+	int cap = 10;
+	int ind;
+	int siz;
+	int sum;
+
+	void put(int val)
+	{
+		sum-=a[ind%cap];
+		sum+=val;
+		a[ind%cap] = val;
+		ind++;
+		if(siz<cap) siz++;
+	}
+
+	int getMean()
+	{
+		if(siz==0) System.exit(0);
+		return sum/siz;
+	}
+
+}

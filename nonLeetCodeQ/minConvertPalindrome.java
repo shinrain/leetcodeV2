@@ -2,6 +2,51 @@
 Given a string, convert it into a palindrome with the lease number of insertions possible
 */
 
+
+===
+if just compute the minimum # of insertions, iterative DP is good:
+
+int minConvertPalindrome(String s)
+{
+	int n = s.length();
+	if(n<=1) return 0;
+
+	int[][] map = new int[n][n];
+	for(int j=0;j<n;j++)
+	{
+		for(int i=j-1;i>=0;i--)
+		{
+
+			if(s.charAt(i)!=s.charAt(j))
+			{
+				if(i+1>=j) map[i][j] = 1;
+				else
+				{
+					map[i][j] = Math.min(map[i+1][j], map[i][j-1])+1;
+				}
+			}
+			else
+			{
+				if(i+1>=j-1) map[i][j] = 0;
+				else
+					map[i][j] = map[i+1][j-1];
+			}
+
+		}
+	}
+	for(int[] i:map)
+	{
+		for(int j:i)
+			System.out.print(j+" ");
+		System.out.println();
+	}
+	return map[0][n-1];
+}
+
+
+
+
+===
     static class Result
     {
         int num;

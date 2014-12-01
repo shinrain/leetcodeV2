@@ -7,6 +7,47 @@ Hint: Carefully consider all possible input cases. If you want a challenge, plea
 Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front
 --
 
+Better Solution:
+
+    public int atoi(String str) {
+        str = str.trim();
+        char[] a = str.toCharArray();
+        int n = a.length;
+        long re = 0;
+        boolean flg = false;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(a[i]=='-')
+            {
+                if(i==0)
+                {
+                    flg = true;
+                }
+                else break;
+            }
+            else if(a[i]=='+')
+            {
+                if(i!=0) break;
+            }
+            else
+            {
+                if(a[i]>='0' && a[i]<='9')
+                {
+                    re = re*10+a[i]-'0';
+                    if(re-Integer.MAX_VALUE>1)   break; 
+                }
+                else break;
+            }
+        }
+        re = flg?-re:re;
+        if(re>Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        if(re<Integer.MIN_VALUE) return Integer.MIN_VALUE;
+        return (int)re;
+    }
+
+===
+
 public class Solution {
     public int atoi(String str) {
 
