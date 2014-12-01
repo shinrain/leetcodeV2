@@ -3,6 +3,40 @@
 第二题，直线上有一个机器人从原点开始移动，每次可以向左移，也可以向右移，移动
 n步，再回到原点的概率是多少, 可以写程序实现。*/
 
+===
+
+cleaner solution:
+
+class Solution
+{
+    static int origin =0, total =0;
+
+    double randomWalk(int n)
+    {
+        helper(n,0,0);
+        return (double)origin/total;
+    }
+
+    void helper(int n, int i, int j)
+    {
+        if(i+j==n)
+        {
+            if(i==j) origin++;
+            total++;
+        }
+        else
+        {
+            helper(n, i+1,j);
+            helper(n, i,j+1);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution().randomWalk(3));
+    }
+}
+
+===
     static class returnType
     {
         int origin;
