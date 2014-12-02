@@ -12,7 +12,6 @@ Given a graph as input, write a java method returning boolean true if the
 
 
 
-
 ========================================
 (2). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/byteArrayDecoding.java
 ========================================
@@ -25,6 +24,23 @@ Given a graph as input, write a java method returning boolean true if the
 */
 
 
+int byteArrayDecoding(char[] a)
+{
+	int n = a.length;
+	if(n<=1) return n;
+
+	if(a[n-1]&&(1<<7)!=0) return 2;
+
+	for(int i=n-2;i>=0;i--)
+	{
+		if(a[i]&&(1<<7)==0) return ((n-i)%2==0)?1:2;
+		else
+		{
+			if(i==0) return ((n-i)%2!=0)?1:2;
+		}
+	}
+}
+
 
 ========================================
 (3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/convertStringXto10.java
@@ -35,6 +51,40 @@ Given a graph as input, write a java method returning boolean true if the
 /*
 3. give an input stream like 1010x0x1, give all the result that transfer x into 0 or 1
 */
+
+	void helper(char[] a, int k, char[] r, List<String> re)
+{
+	if(k==a.length)
+	{
+		re.add(new String(r));
+		return;
+	}
+	else
+	{
+		if(a[k]!='x')
+		{
+			r[k] = a[k]; helper(a, k+1, r, re);
+		}	
+		else
+		{
+			r[k] = '0'; helper(a, k+1, r, re);
+			r[k] = '1'; helper(a, k+1, r, re);
+		}
+	}
+}
+
+List<String> convertStringXto10(String a)
+{
+	List<String> re = new ArrayList<String>();
+	char[] c = a.toCharArray();
+	int n = c.length;
+	if(n==0) return re;
+
+	helper(c, 0, new char[n], re);
+	return re;
+}
+}
+
 
 
 
@@ -49,6 +99,31 @@ Given a graph as input, write a java method returning boolean true if the
   iterating it “n” times. n >= 2
 */
 
+int destructString(String s)
+{
+	int n = s.length();
+	if(n<=1) return 0;
+	for(int i=1;i<n/2;i++)
+	{
+		if(s.charAt(i)==s.charAt(0) && n%i==0 && helper(s, s.substring(0,i)))
+		{
+			return n/i;
+		}
+	}
+}
+
+boolean helper(String s, String t)
+{
+	int m = s.length(), n = t.length();
+	if(m<=n || m%n!=0) return false;
+
+	for(int i=0; i<m; i+=n)
+	{
+		if(!s.substring(i,i+n).equals(t)) return false;
+	}
+	return true;
+}
+
 
 
 ========================================
@@ -59,6 +134,64 @@ Given a graph as input, write a java method returning boolean true if the
 /*Given integer a and b, find out the string representation of a/b. For 
 example, if a = 1, b = 3, the output should be 0.(3).
 */
+
+String doubleDivide(int a, int b)
+{
+	if(b==0) return "NaN";
+	if(b==1) return Integer.toString(a);
+	if(a==0) return "0";
+	if(a==b) return "1";
+	String dec = Integer.toString(a/b);
+	if(a%b==0) return dec;
+	else
+	{
+		return dec+"."+helper(a%b,b);
+	}
+}
+
+String helper(int a, int b)
+{
+	if(a>b) return helper(a%b, b);
+
+	Map<Integer, Integer> map = new HashMap<>();
+	List<String> re = new ArrayList<>();
+	while(a!=0)
+	{
+		a*=10;
+		while(a<b)
+		{
+			a*=10;
+			re.add("0");
+		}
+
+		int val = a/b;
+		map.put(a/10, val);
+		re.add(Integer.toString(val));
+		a =a%b;
+		if(map.containsKey(a)) break;
+	}
+	String result = "";
+
+	if(a==0)
+	{
+		for(String ss:re)
+			result+=ss;
+	}
+	else
+	{
+		String flg = map.get(a);
+		for(String ss:re)
+		{
+			if(ss.equals(flg))
+			{
+				re+="(";
+			}
+			re+=ss;
+		}
+		re+=")";
+	}
+	return re;
+}
 
 
 
@@ -76,6 +209,34 @@ sequence with equal number of 1's and 0's.
 can do it with O(n) time and O(n) space. How to do O(1) space.
 */
 
+int equalZeroOnes(int[] a)
+{
+	int n = a.length;
+	if(n<=1)  return 0;
+
+	int[] sum = new int[n];
+	Map<Integer, Integer> map = new HashMap<>();
+
+	sum[0] = (a[0]==0)?-1:1;
+	for(int i=1;i<n;i++)
+	{
+		if(a[i]==0) sum[i] = sum[i-1]-1;
+		else
+			sum[i] = sum[i-1]+1;
+	}
+	int max = 0;
+
+	for(int i=0;i<n;i++)
+	{
+		if(!map.containsKey(sum[i])) map.put(sum[i],i);
+		else
+		{
+			int local = i-map.get(sum[i]);
+			if(local>max) max = local;
+		}
+	}
+	return max;
+}
 
 
 ========================================
@@ -88,7 +249,23 @@ Second interviewer gave me array, with elements first strictly increasing, then 
 decreasing. Asked me to find the largest number. 
 */
 
-   
+int findGlobalMax(int[] num)
+{
+	int n = num.length;
+	assert n>=3;
+
+	int l = 0, r = n-1;
+	while(l<=r)
+	{
+		int mid = l+(r-l)/2;
+		if(mid==0) l++;
+		else if(mid==n-1) r--;
+		else if(num[mid]>num[mid-1] && num[mid] < num[mid+1]) l = mid+1;
+		else if(num[mid] <num[mid-1] && num[mid]>num[mid+1]) r = mid-1;
+		else return mid;
+	}
+	return -1;
+}
 
 
 ========================================
@@ -99,10 +276,29 @@ decreasing. Asked me to find the largest number.
 
 /*
 2. Given a list of words, find two strings S & T such that:
-    a. S & T have no common character
-    b. S.length() * T.length() is maximized
+	a. S & T have no common character
+	b. S.length() * T.length() is maximized
 */
+static class strLenComparator implements Comparator<String>
+{
+	@override
+	public int compare(String a, String b)
+	{
+		return b.length()-a.length();
+	}
+}
 
+List<String> findMaxPairStringNoCommonChar(List<String> s)
+{
+	List<String> re = new ArrayList<>();
+	int n = s.size();
+	if(n<2) return re;
+
+	Collections.sort(s, new strLenComparator());
+
+	for(String ss:s)
+		System.out.println(ss);
+}
 
   
 
@@ -121,8 +317,24 @@ decreasing. Asked me to find the largest number.
 
 
 ==
+ public static void main(String[] args) {
+        int[][] houses = {{0,0,-1,0},{-1,-1,1,0},{-1,0,0,1},{1,0,-1,1}};
+        int[][] re = new Solution().findPolice(houses);
+        for(int[] a:houses)
+        {
+                for(int i:a)
+                        System.out.print(i+" ");
+                System.out.println();
+        }
+        System.out.println();
+        for(int[] a:re)
+        {
+                for(int i:a)
+                        System.out.print(i+" ");
+                System.out.println();
+        }
+ }
 
-   
    
 
 
@@ -137,7 +349,6 @@ In a given binary search tree, find the number of elements that lie in a given r
 */
 
 
- 
 
 
 ========================================
@@ -161,8 +372,10 @@ Given a rotated array, find the number of rotation
    {3,1,2} -> 2, since {3,1}, {3,2}
 */
 
-
-
+public static void main(String[] args) {
+	int[] a ={3,1,2};
+	System.out.println(new Solution().inversionCount(a, 0, a.length-1));
+}
 
 
 ========================================
@@ -178,6 +391,7 @@ range DP.??
 */
 
 
+
 ========================================
 (14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
 ========================================
@@ -189,6 +403,60 @@ range DP.??
 数组的值是下次跳的索引位置，这样的话数组有环，比如 0 -> 3 -> 4 -> 0  1 -> 2 
 -> 1， 求最长环的长度.
 */
+
+
+class Solution
+{
+	int longestCircleIndex(int[] a)
+	{
+		int n = a.length;
+		if(n<=1) return n;
+
+		Map<Integer, Integer> map = new HashMap<>();
+		for(int i=0;i<n;i++)
+		{
+			map.put(i, a[i]);
+		}
+
+		
+		int max = 0;
+
+
+		Set<Integer> set = map.keySet();
+		for(int i:set)
+		{
+			if(!map.containsKey(i)) continue;
+			int local = dfs(map, i);
+			if(local > max) max = local;
+		}
+		return max;
+	}
+
+	int dfs(Map<Integer, node> map, int i)
+	{
+		if(!map.containsKey(i)) return 0;
+		int re = 0;
+		int cur = i;
+		int local = 0;
+		while(!map.isEmpty())
+		{
+			if(!map.containsKey(cur)) break;
+			local++;
+			int t = cur;
+			cur = map.get(cur);
+			map.remove(t);
+			if(cur==i)
+			{
+				if(re<local) re = local;
+				break;
+			}
+		}
+		return re;
+	}
+	public static void main(String[] args) {
+		
+	}
+}
 
    
 
@@ -214,7 +482,39 @@ longest common suffix of two linked list
 given a string ,return the longest substring that contains at most two 
 characters.
 */
-   
+
+int longestSubstringOfTwoChars(String s)
+{
+	char[] a = s.toCharArray();
+	int n = a.length;
+	if(n<=2) return n;
+
+	int i=0, j=0;
+	int fst = a[i], snd = 0;
+
+	int max = 0;
+	while(j<n && a[j]==fst) j++;
+	if(j==n) return n;
+
+	snd = a[j];
+	while(j<n&&a[j]==snd) j++;
+	if(j==n) return n;
+
+	while(j<n)
+	{
+		if(a[j] == fst || a[j] == snd)
+		{
+			if(j-i+1>max) max = j-i+1;
+		}
+		else
+		{
+			i=j-1;
+			while(i>=0&&a[i]==a[j-1]) i--;
+		}
+		j++;
+	}
+	return max;
+}
 
 
 ========================================
@@ -229,10 +529,26 @@ Design a class where you can add elements, and return the mean of the latest N e
 class Kmean
 {
 
-	void put(int val)
+	int[] a;
+	int cap = 10;
+	int ind;
+	int siz;
+	int sum;
 
+	void put(int val)
+	{
+		sum-=a[ind%cap];
+		sum+=val;
+		a[ind%cap] = val;
+		ind++;
+		if(siz<cap) siz++;
+	}
 
 	int getMean()
+	{
+		if(siz==0) System.exit(0);
+		return sum/siz;
+	}
 
 }
 
@@ -247,6 +563,38 @@ Given a string, convert it into a palindrome with the lease number of insertions
 */
 
 
+int minConvertPalindrome(String s)
+{
+	int n = s.length();
+	if(n<=1) return 0;
+
+	int[][] map = new int[n][n];
+	for(int i=0;i<n;i++)
+	{
+		for(int j=i;j>=0;j--)
+		{
+			if(i-j+1>=1)
+			{
+				if(s.charAt(i)!=s.charAt(j))
+				{
+					if(i+1==j) map[i][j] = 1;
+					else
+					{
+						map[i][j] = Math.min(map[i+1][j], map[i][j-1])+1;
+					}
+				}
+				else
+				{
+					if(i+1>=j-1) map[i][j] = 0;
+					else
+						map[i][j] = map[i+1][j-1];
+				}
+			}
+		}
+	}
+	return map[0][n-1];
+}
+
 
 ========================================
 (19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
@@ -258,7 +606,57 @@ Given a string, convert it into a palindrome with the lease number of insertions
 
 ===
 
+List<Integer> minLenOfSquareSum(int num)
+{
+	List<Integer> re = new ArrayList<>();
+	if(num<1) return re;
 
+	int[] minimum = new int[num+1];
+	int[] pred = new int[num+1];
+
+	Arrays.fill(minimum, Integer.MAX_VALUE);
+	Arrays.fill(pred, -1);
+
+	for(int i=1;i<=num;i++)
+	{
+		int sroot = Math.sqrt(i);
+		if(sroot*sroot==i)
+		{
+			minimum[i] = 1;
+			pred[i] = 0;
+		}
+		else
+		{
+			int min = Integer.MAX_VALUE;
+			int pre = -1;
+			for(int j=sroot; j>=0; j--)
+			{
+				int comp = i-j*j;
+				if(minimum[i-comp]<min)
+				{
+					min = minimum[i-comp];
+					pre = j;
+				}
+			}
+			minimum[i] = min;
+			pred[i] = pre;
+		}
+	}
+	return getSequence(minimum, pred);
+}
+
+List<Integer> getSequence(int[] pred)
+{
+	List<Integer> re = new ArrayList<>();
+	int cur = pred.length;
+
+	while(pred[cur]!=-1)
+	{
+		re.add(pred[cur]);
+		cur-=(pred[cur]*pred[cur]);
+	}
+	return re;
+}
 
 ========================================
 (20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
@@ -272,7 +670,28 @@ then (5,1)(4,2,3)
 */
 
 
+List<List<Integer>> minPartition(int[] num, int m)
+{
+	List<List<Integer>> re = new ArrayList<>();
+	int n = num.length;
+	if(n==0) return re;
 
+	int[][] minimum = new int[n][m];
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			if(j>i) break;
+			int min = Integer.MAX_VALUE;
+			for(int k=i-1;k>=0;k--)
+			{
+				if(k<m-1) break;
+				if(minimum[i][j-1])
+			}
+		}
+	}
+
+}
 
 
 ========================================
@@ -315,15 +734,15 @@ class Solution
 {
 
 
-    boolean find(int elem)
+	boolean find(int elem)
 
 
-    void insert(int elem)
+	void insert(int elem)
 
-    
-    void delete(int elem)
+	
+	void delete(int elem)
 
-    int getRandom()
+	int getRandom()
 
 }
 
@@ -366,7 +785,7 @@ relations is a valid tree, and then printing.
 */
 
 ===
-    
+	
 
 ========================================
 (27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
@@ -481,7 +900,7 @@ Example: 1 2 3 4 5 6 8 9 10 12
 */
 
 
-    
+	
 
 
 
