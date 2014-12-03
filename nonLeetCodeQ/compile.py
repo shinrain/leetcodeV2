@@ -5,7 +5,7 @@ import os
 
 if __name__ == "__main__":
 
-	filename = open("report","w");
+	filename = open("readme","w");
 	sl_path = os.getcwd()+"/";
 	count = 1;
 	delimite = "\n========================================\n"
