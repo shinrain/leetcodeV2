@@ -5,7 +5,6 @@ Boxes
 求最小的面积放所有的盒子  
 比如 ``7*7`` , ``5*5``, ``4*6``, ``3*3``, 答案是 ``7*7 + 4*6``.
 */
-
 	static class box
 	{
 		int l,w;
@@ -16,11 +15,6 @@ Boxes
 		int getArea()
 		{
 			return l*w;
-		}
-
-		public String toString()
-		{
-			return (String.format("[%d,%d]", l, w));
 		}
 	}
 
@@ -39,27 +33,27 @@ Boxes
 		if(n==1) return b[0].getArea();
 
 		Arrays.sort(b,new boxComp());
-		boolean[] onFloor = new boolean[n];
-		for(int i=0;i<n;i++)
-			System.out.print(b[i]+" ");
-		System.out.println();
-		int max = 0;
-		for(int i=0;i<n;i++)
+
+		return dfs(b,new boolean[n],0,"");
+
+	}
+
+	int dfs(box[] b, boolean[] visited, int k)
+	{
+		if(k==b.length) return 0;
+		int re = visited[k]?0:b[k].getArea();
+		
+		int local = 0;
+		for(int i=k+1;i<b.length;i++) 
+			local +=(visited[i])?0:b[i].getArea();
+		
+		for(int i=k+1;i<b.length;i++)
 		{
-			if(!onFloor[i])
-			{
-				max+=b[i].getArea();
-				for(int j=i+1;j<n;j++)
-				{
-					if(!onFloor[j] && (b[j].l<=b[i].l && b[j].w<=b[i].w))
-					{
-						onFloor[j]  =true; break;
-					}
-				}
-			}
+			if(visited[i] || b[k].l<=b[i].l || b[k].w<=b[i].w)	continue;
+
+			visited[i] = true;
+			local = Math.min(local,dfs(b,visited, k+1));
+			visited[i] = false;
 		}
-		for(int i=0;i<n;i++)
-			if(!onFloor[i]) System.out.print(b[i]+" ");
-		System.out.println();
-		return max;
+		return local+re;
 	}
