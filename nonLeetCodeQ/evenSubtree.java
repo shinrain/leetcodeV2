@@ -5,7 +5,7 @@
 ===
 class Solution
 {
-
+// This static List is used to stored cutted node during bottom-up
 static List<TreeNode> re = new ArrayList<>();
 
 static TreeNode split(TreeNode root)

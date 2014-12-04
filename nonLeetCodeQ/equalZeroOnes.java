@@ -19,7 +19,12 @@ class Solution
 
 		int[] sum = new int[n];
 		Map<Integer, Integer> map = new HashMap<>();
+
+		// This line is very important
+		// This solve the problem when the summation is ZERO itself, in which case 
+		// the whole sequence should be considered as a longest candidate
 		map.put(0,-1);
+		//
 		sum[0] = (a[0]==0)?-1:1;
 		for(int i=1;i<n;i++)
 		{
