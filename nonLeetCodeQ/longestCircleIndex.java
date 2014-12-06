@@ -54,51 +54,62 @@
 
 ===
 Another cleaner solution:
+        int longestCircleIndex(int[] a)
+    {
+        int n = a.length;
+        if(n<=1) return n;
 
-		int longestCircleIndex(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return n;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i=0;i<n;i++)
+        {
+            map.put(i, a[i]);
+        }
 
-		Map<Integer, Integer> map = new HashMap<>();
-		for(int i=0;i<n;i++)
-		{
-			map.put(i, a[i]);
-		}
-
-		
-		int max = 0;
+        
+        int max = 0;
 
 
-		Set<Integer> set = new HashSet<>(map.keySet());
-		for(int i:set)
-		{
-			if(!map.containsKey(i)) continue;
-			int local = dfs(map, i);
-			if(local > max) max = local;
-		}
-		return max;
-	}
+        Set<Integer> set = new HashSet<>(map.keySet());
+        for(int i:set)
+        {
+            if(!map.containsKey(i)) continue;
+            int local = dfs(map, i);
+            if(local > max) max = local;
+        }
+        return max;
+    }
 
-	int dfs(Map<Integer, Integer> map, int i)
-	{
-		if(!map.containsKey(i)) return 0;
-		int re = 0;
-		int cur = i;
-		int local = 0;
-		while(!map.isEmpty())
-		{
-			if(!map.containsKey(cur)) break;
-			local++;
-			int t = cur;
-			cur = map.get(cur);
-			map.remove(t);
-			if(cur==i)
-			{
-				if(re<local) re = local;
-				break;
-			}
-		}
-		return re;
-	}
+    int dfs(Map<Integer, Integer> map, int i)
+    {
+        if(!map.containsKey(i)) return 0;
+        int re = 0;
+        int cur = i;
+
+        HashSet<Integer> toD = new HashSet<>();
+        while(!map.isEmpty())
+        {
+            if(!map.containsKey(cur)) break;
+
+            toD.add(cur);
+            cur = map.get(cur);
+
+            if(toD.contains(cur))
+            {
+                int t = cur;
+                re = 1;
+                while(map.get(t)!=cur)
+                {
+                    re++; t = map.get(t);
+                }
+                break;
+            }
+        }
+        for(int ii:toD) map.remove(ii);
+        return re;
+    }
+
+    public static void main(String[] args) {
+        int[] a={1,2,3,4,3};
+        System.out.println(new Solution().longestCircleIndex(a));
+    }
 
