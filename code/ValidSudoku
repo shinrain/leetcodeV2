@@ -5,7 +5,50 @@ Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
 The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
 
 ---
+Bit array solution:
 
+    public boolean isValidSudoku(char[][] board)
+    {
+        int m=board.length;
+        if(m==0) return false;
+        int n=board[0].length;
+        if(n==0) return false;
+
+        int[] row = new int[n], col = new int[n], sqr = new int[n];
+        Arrays.fill(row,0);Arrays.fill(col,0);Arrays.fill(sqr,0);
+
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(board[i][j]=='.') continue;
+                int val = board[i][j] -'0';
+                if(val>9||val<1) return false;
+                if(check(row, i, val-1) || check(col,j, val-1) || check(sqr,i/3*3+j/3, val-1)) return false;
+                set(row,i, val-1); set(col,j, val-1); set(sqr,i/3*3+j/3, val-1);
+            }
+        } 
+        return true;
+    }
+
+    void set(int[] a, int k, int i)
+    {
+        if(i>8) return;
+        a[k]|=(1<<i);
+    }
+    void unset(int[] a, int k, int i)
+    {
+        if(i>8) return;
+        a[k]&=~(1<<i);
+    }
+    boolean check(int[] a, int k, int i)
+    {
+        if(i>8) return false;
+        return !((a[k]&(1<<i))==0);
+    }
+
+
+==
 public class Solution {
     public boolean isValidSudoku(char[][] board) {
     	int n = board.length;
