@@ -1,6 +1,111 @@
 
 ========================================
-(1). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/bipartitieGraph.java
+(1). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/addString.java
+========================================
+
+
+/*Implement add: 
+
+"1000", "-100" == "900"
+
+*/
+	String addString(String s1, String s2)
+	{
+		s1=s1.trim();
+		s2=s2.trim();
+		int m = s1.length(), n=s2.length();
+		if(m==0) return s2;
+		if(n==0) return s1;
+		boolean f1=(s1.charAt(0)=='-'), f2=(s2.charAt(0)=='-');
+
+		if(s1.charAt(0)=='+'||s1.charAt(0)=='-') s1=s1.substring(1);
+		if(s2.charAt(0)=='+'||s2.charAt(0)=='-') s2=s2.substring(1);
+
+		String re = "";
+		if((f1&&f2)||(!f1 && !f2))
+		{
+			re = helper(s1,s2, true);
+			if(f1) re = "-"+re;
+		}
+		else
+		{
+			re = (f1)?helper(s2,s1,false):helper(s1,s2,false);
+		}
+		return re;
+	}
+
+	String helper(String s1, String s2, boolean add)
+	{
+		String re = "";
+		int i=s1.length()-1, j=s2.length()-1;
+		int carry=0;
+		while(i>=0 || j>=0)
+		{
+			if(i<0)
+			{
+				int b = (!add)?('0'-s2.charAt(j)):(s2.charAt(j)-'0');
+				int r = b+carry;
+				if(r>=0)
+				{
+					re = Integer.toString(r%10)+re;
+					carry = r/10;
+				}
+				else
+				{
+					re = Integer.toString(r+10)+re;
+					carry = -1;
+				}
+				j--;
+			}
+			else if(j<0)
+			{
+				int a = s1.charAt(i--)-'0';
+				int r = a+carry;
+				if(r>=0)
+				{
+					re = Integer.toString(r%10)+re;
+					carry = r/10;
+				}
+				else
+				{
+					re = Integer.toString(r+10)+re;
+					carry = -1;
+				}
+			}
+			else
+			{
+				int a = s1.charAt(i)-'0';
+				int b = (!add)?('0'-s2.charAt(j)):(s2.charAt(j)-'0');
+				int r = a+b+carry;
+				if(r>=0)
+				{
+					re = Integer.toString(r%10)+re;
+					carry = r/10;
+				}
+				else
+				{
+					re = Integer.toString(r+10)+re;
+					carry = -1;
+				}
+				i--;
+				j--;
+			}
+		}
+		while(re.length()!=0 && re.charAt(0)=='0') re=re.substring(1);
+		if(re.length()==0) return "0";
+		if(carry==-1) re="-"+re;
+		return re;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(new Solution().addString("-1000","-1000"));
+	}
+}
+
+
+
+========================================
+(2). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/bipartitieGraph.java
 ========================================
 
 
@@ -61,7 +166,7 @@ graphNode
 
 
 ========================================
-(2). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/byteArrayDecoding.java
+(3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/byteArrayDecoding.java
 ========================================
 
 
@@ -91,7 +196,7 @@ graphNode
 
 
 ========================================
-(3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/charMapping.java
+(4). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/charMapping.java
 ========================================
 
 
@@ -145,7 +250,7 @@ class Solution
 
 
 ========================================
-(4). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/conflictSchedule.java
+(5). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/conflictSchedule.java
 ========================================
 
 
@@ -248,7 +353,7 @@ class Solution
 
 
 ========================================
-(5). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/connectedSets.java
+(6). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/connectedSets.java
 ========================================
 
 
@@ -337,7 +442,7 @@ class Solution
 
 
 ========================================
-(6). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/convertStringXto10.java
+(7). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/convertStringXto10.java
 ========================================
 
 
@@ -379,7 +484,7 @@ class Solution
 
 
 ========================================
-(7). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/destructString.java
+(8). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/destructString.java
 ========================================
 
 
@@ -418,5788 +523,2707 @@ class Solution
 
 
 ========================================
-(8). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/doubleDivide.java
-========================================
-
-
-/*Given integer a and b, find out the string representation of a/b. For 
-example, if a = 1, b = 3, the output should be 0.(3).
-*/
-
-
-    String divide(int a, int b)
-    {
-        if(a<b) return "0."+helper(a,b);
-        if(a==b) return "1";
-        if(a==0) return "0";
-        if(b==0) return "NaN";
-        if(b==1) return Integer.toString(a);
-
-        return Integer.toString(a/b)+"."+helper(a%b,b);
-    }
-
-    String helper(int a, int b)
-    {
-        if(a>=b) return Integer.toString(a%b);
-
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        LinkedList<Integer> re = new LinkedList<Integer>();
-
-
-        while(a!=0)
-        {
-            a*=10;
-            while(a<b)
-            {
-                a*=10;
-                re.add(0);
-            }
-            int val = a/b;
-            map.put(a/10,val);
-            re.add(val);
-            a = a%b;
-            if(map.containsKey(a)) break;
-        }
-        String result = "";
-        if(a==0)
-            for(int i:re) result+=Integer.toString(i);
-        else
-        {
-            int bug = map.get(a);
-            for(int i:re)
-            {
-                if(i==bug) result+=("(");
-                result+=Integer.toString(i);
-            }
-            result+=")";            
-        }
-        return result;
-    }
-
-
-========================================
-(9). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/equalZeroOnes.java
+(9). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/distinctSubstring.java
 ========================================
 
 
 /*
-Google:
+Output the distinct substring of a given string
 
-2. an array with 0's and 1's, find in O(n) time and O(1) space the longest 
-sequence with equal number of 1's and 0's.
-
-can do it with O(n) time and O(n) space. How to do O(1) space.
+eg: banana -- 15;
 */
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	int equalZeroOnes(int[] a)
-	{
-		int n = a.length;
-		if(n<=1)  return 0;
-
-		int[] sum = new int[n];
-		Map<Integer, Integer> map = new HashMap<>();
-		map.put(0,-1);
-		sum[0] = (a[0]==0)?-1:1;
-		for(int i=1;i<n;i++)
-		{
-			if(a[i]==0) sum[i] = sum[i-1]-1;
-			else
-				sum[i] = sum[i-1]+1;
-		}
-		int max = 0;
-
-		for(int i=0;i<n;i++)
-		{
-			if(!map.containsKey(sum[i])) map.put(sum[i],i);
-			else
-			{
-				int local = i-map.get(sum[i]);
-				if(local>max) max = local;
-			}
-		}
-		return max;
-	}
-	public static void main(String[] args) {
-		int[] a = {0,0,1,1,1,1,0,0,0,1,1,0};
-		System.out.println(new Solution().equalZeroOnes(a));
-	}
-}
-
-
-
-========================================
-(10). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/evenSubtree.java
-========================================
-
-
-/*An arbitrary tree. split it into as many subtrees as you can. the number of nodes of the subtree must be even. [nodes with even #nodes in the subtree can be the root of an even-subtree]
-*/
-
-
-===
-class Solution
-{
-
-static List<TreeNode> re = new ArrayList<>();
-
-static TreeNode split(TreeNode root)
-{
-    if(root==null) return null;
-
-    if(root.left==null && root.right==null)
-    {
-    	return null;
-    }
-
-    if(root.left==null)
-    {
-    	if(split(root.right)==null)
-    	{
-    		re.add(root);
-    		return root;
-    	}
-    	else
-    	{
-    		root.right=null;
-    		return null;
-    	}
-    }
-
-    if(root.right==null)
-    {
-    	if(split(root.left)==null)
-    	{
-    		re.add(root);
-    		return root;
-    	}
-    	else
-    	{
-    		root.left=null;
-    		return null;
-    	}
-    }
-
-    TreeNode left=split(root.left), right=split(root.right);
-    if(left==null && right==null) return null;
-    if(left==null)
-    {
-    	root.right=null;
-    	re.add(root);
-    	return root;
-    }
-    if(right==null)
-    {
-    	root.left=null;
-    	re.add(root);
-    	return root;
-    }
-    return null;
-}
-
-public static void main(String[] args) {
-
-	TreeNode a1=new TreeNode(0);
-	TreeNode a2=new TreeNode(1);
-	TreeNode a3=new TreeNode(2);
-	TreeNode a4=new TreeNode(3);
-	TreeNode a5=new TreeNode(4);
-	TreeNode a6=new TreeNode(5);
-	a1.left = a2;
-	a2.left =a3;
-	a2.right=a4;
-	a1.right=a5;
-	a5.right=a6;
-	if(split(a1)==null)
-		System.out.println("false");
-	for(TreeNode nd:re)
-		System.out.println(nd);
-}
-
-}
-
-
-
-========================================
-(11). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findGlobalMax.java
-========================================
-
-
-/*
-Second interviewer gave me array, with elements first strictly increasing, then strictly
-decreasing. Asked me to find the largest number. 
-*/
-
-    int findGlobalMax(int[] a)
-    {
-        int n = a.length;
-        if(n<3) return -1;
-
-        int l = 0, r = n-1;
-        while(l<=r)
-        {
-            int mid = l+(r-l)/2;
-            if(mid==0) l++;
-            else if(mid==n-1) r--;
-            else
-            {
-                if(a[mid-1]<a[mid] && a[mid+1]<a[mid]) return a[mid];
-                else if(a[mid-1]<a[mid]) l =mid+1;
-                else r = mid-1;
-            }
-        }
-        return -1;
-    }
-
-
-========================================
-(12). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findMaxPairStringNoCommonChar.java
-========================================
-
-
-
-/*
-2. Given a list of words, find two strings S & T such that:
-    a. S & T have no common character
-    b. S.length() * T.length() is maximized
-*/
-
-
-    static class wrapper implements Comparable
-    {
-        String s;
-        wrapper(String _s)
-        {
-            s = _s;
-        }
-
-        public int compareTo(Object o)
-        {
-            return -(s.length()-((wrapper)o).s.length());
-        }
-    }
-
-    boolean checkCommon(String S, String T)
-    {
-        int m = S.length(), n = T.length();
-        if(m*n==0) return true;
-
-        int i =0, j=0;
-        while(i<m&&j<n)
-        {
-            if(S.charAt(i)<T.charAt(j)) i++;
-            else if(S.charAt(i)>T.charAt(j)) j++;
-            else return true;
-        }
-        return false;
-    }
-
-    int findMaxPairStringNoCommonChar(String[] str)
-    {
-        int n = str.length;
-        if(n<=1) return 0;
-
-        wrapper[] tmp = new wrapper[n];
-        for(int i=0;i<n;i++)
-        {
-            char[] t = str[i].toCharArray();
-            Arrays.sort(t);
-            str[i] = new String(t);
-            tmp[i] = new wrapper(str[i]);
-        }
-        Arrays.sort(tmp);
-        for(int i=0;i<n;i++)
-            str[i] = tmp[i].s;
-
-        int max = Integer.MIN_VALUE;
-        int upper = n;
-        for(int i=0;i<upper;i++)
-        {
-            for(int j=i+1;j<upper;j++)
-            {
-                if(!checkCommon(str[i],str[j]))
-                {
-                    if(str[i].length()*str[j].length() >max)
-                    {
-                        max = str[i].length()*str[j].length();
-                        upper = j;
-                        break;
-                    }
-                }
-            }
-        }
-        return max;
-    }
-
-
-========================================
-(13). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findPolice.java
-========================================
-
-
-
-/*
-其他都比较常规，有一道图的题目，一个 n*n 矩阵，每个房间可能是封闭的房间，可
-能是警察，可能是开的房间，封闭的房间不能过，返回一个 n*n矩阵， 每一个元素是
-最近的警察到这个房间的最短距离。
-*/
-
-
-==
-
-    int[][] findPolice(int[][] houses)
-    {
-        int m = houses.length;
-        if(m==0) return null;
-        int n = houses[0].length;
-        if(n==0) return null;
-
-        int[][] re = new int[m][n];
-        boolean[][] visit = new boolean[m][n];
-        for(int i=0;i<m;i++)
-            for(int j=0;j<n;j++)
-                if(houses[i][j] ==-1) visit[i][j] = true;
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(houses[i][j] == 0)
-                {
-                    visit[i][j] = true;
-                    re[i][j] = helper(houses, i, j, visit);
-                    visit[i][j] = false;
-                }
-            }
-        }
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-                System.out.print(re[i][j]+" ");
-            System.out.println();
-        }
-        return re;
-    }
-
-    int helper(int[][] houses, int i, int j, boolean[][] visit)
-    {
-        if(houses[i][j]==1) return 0;
-        if(houses[i][j]==-1) return -1;
-        int min = Integer.MAX_VALUE;
-        if(i-1>=0 && !visit[i-1][j] )
-        {
-            visit[i-1][j] = true;
-            int t = helper(houses, i-1, j, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i-1][j] =false;
-        }
-
-        if(i+1<houses.length && !visit[i+1][j])
-        {
-            visit[i+1][j] = true;
-            int t = helper(houses, i+1, j, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i+1][j] = false;
-        }
-        if(j-1>=0 && !visit[i][j-1])
-        {
-            visit[i][j-1] = true;
-            int t = helper(houses, i, j-1, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i][j-1] = false;
-        }
-        if(j+1<houses[0].length && !visit[i][j+1])
-        {
-            visit[i][j+1] = true;
-            int t = helper(houses, i, j+1, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i][j+1] = false;
-        }
-        if(min==Integer.MAX_VALUE) min = -1;
-        return min;
-    }
-
-=========
-BFS solution, which is better
-
-static class pair
-{
-	int a, b;
-	pair(int _a, int _b)
-	{
-		a = _a; b = _b;
-	}
-}
- int[][] findPolice(int[][] houses)
- {
- 	int m = houses.length;
- 	if(m==0) return null;
- 	int n = houses[0].length;
- 	if(n==0) return null;
-
- 	
- 	int[][] re = new int[m][n];
- 	for(int i=0;i<m;i++)
- 	{
- 		for(int j=0; j<n; j++)
- 		{
- 			if(houses[i][j] == 0)
- 			{
- 				boolean[][] visit = new boolean[m][n];
- 				visit[i][j] = true;
- 				re[i][j] = bfs(houses, visit, i, j);
- 				visit[i][j] = false;
- 			}
- 		}
- 	}
- 	return re;
- }
-
- int bfs(int[][] houses, boolean[][] visit, int i, int j)
- {
- 	int m = houses.length, n = houses[0].length;
- 	if(i>=m || j>=n) System.exit(-1);
- 	LinkedList<pair> q = new LinkedList<>();
- 	q.add(new pair(i,j));
- 	int re = 0;
- 	while(q.size()!=0)
- 	{
- 		int siz = q.size();
- 		for(int ii=0; ii<siz; ii++)
- 		{
- 			pair cur = q.removeFirst();
- 			if(houses[cur.a][cur.b]==1) return re;
- 			if(cur.a+1<m && houses[cur.a+1][cur.b] !=-1 && !visit[cur.a+1][cur.b])
- 			{
- 				visit[cur.a+1][cur.b] = true; q.addLast(new pair(cur.a+1, cur.b));
- 			}
- 			if(cur.b+1<n && houses[cur.a][cur.b+1] !=-1 && !visit[cur.a][cur.b+1])
- 			{
- 				visit[cur.a][cur.b+1] = true; q.addLast(new pair(cur.a, cur.b+1));
- 			}
- 			if(cur.a-1>=0 && houses[cur.a-1][cur.b] !=-1 && !visit[cur.a-1][cur.b])
- 			{
- 				visit[cur.a-1][cur.b] = true; q.addLast(new pair(cur.a-1, cur.b));
- 			}
- 			if(cur.b-1>=0 && houses[cur.a][cur.b-1] !=-1 && !visit[cur.a][cur.b-1])
- 			{
- 				visit[cur.a][cur.b-1] = true; q.addLast(new pair(cur.a, cur.b-1));
- 			}
- 		}
- 		re++;
- 	}
- 	return 0;
- }
-
-
-=========   
-
- public static void main(String[] args) {
- 	int[][] houses = {{0,0,-1,0},{-1,-1,1,0},{-1,0,0,1},{1,0,-1,1}};
- 	int[][] re = new Solution().findPolice(houses);
- 	for(int[] a:houses)
- 	{
- 		for(int i:a)
- 			System.out.print(i+" ");
- 		System.out.println();
- 	}
- 	System.out.println();
- 	for(int[] a:re)
- 	{
- 		for(int i:a)
- 			System.out.print(i+" ");
- 		System.out.println();
- 	}
- }
-}
-
-
-
-========================================
-(14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRangeBST.java
-========================================
-
-
-
-/*
-In a given binary search tree, find the number of elements that lie in a given range.
-*/
-
-List<Integer> findNumInRange(TreeNode root, int min, int max)
-{
-	List<Integer> re = new ArrayList<>();
-	helper(root, min, max);
-	return re;
-}
-
-void helper(TreeNode root, int min, int max, List<Integer> re)
-{
-	if(root==null) return;
-	else if(root.val<=min) helper(root.right, min, max, re);
-	else if(root.val>=max) helper(root.left, min, max, re);
-	else
-	{
-		re.add(root.val);
-		helper(root.right, min, max, re);
-		helper(root.left, min, max, re);
-	}
-}
-
-
-
-========================================
-(15). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRotation.java
-========================================
-
-
-Given a rotated array, find the number of rotation
-
-======
-
-	public int findTotate(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return 0;
-
-		int l = 0, r = n-1;
-		int re = -1;
-		while(l<r)
-		{
-			int mid = l+(r-l)/2;
-			if(a[mid]>a[l] && a[mid]>=a[r])
-			{
-				re = mid;
-				l = mid;
-			}else if(a[mid]<a[l] && a[mid]<=a[r])
-			{
-				re=mid;
-				r = mid;
-			}
-			else
-			{
-				l++;
-			}
-		}
-		return (re==-1)?0:re;
- 	}
-
-
-========================================
-(16). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/inversionCount.java
-========================================
-
-
-/*
-   Count inversion number in unsorted array:
-   {3,1,2} -> 2, since {3,1}, {3,2}
-*/
-
-
-    int merge(int[] a, int l, int r, int[] c)
-    {
-        if(l>=r) return 0;
-        int mid = l +(r-l)/2;
-        int i=l, j = mid+1, k=0;
-        int left = merge(a,l,mid,c);
-        int right = merge(a,mid+1,r,c);
-        int inversion = 0;
-        while(i<=mid&&j<=r)
-        {
-            if(a[i]<=a[j])
-            {
-                c[k++] = a[i++];
-            }
-            else
-            {
-                c[k++] = a[j++];
-                inversion+=(j-mid);
-            }
-        }
-        if (i<=mid) c[k++] = a[i++];
-        while(i<=mid)
-        {
-            c[k++] = a[i];
-            inversion += (r-mid);
-            i++;
-        }
-        while(j<=r) 
-        {
-            c[k++] = a[j++];
-            
-        }
-        i=l;
-
-        for(int in=0; in<k;in++)
-        {
-            a[i++] = c[in];
-        }
-        return inversion+left+right;
-    }
-
-
-
-========================================
-(17). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/isBuidableSoda.java
-========================================
-
-
-/*
-A soda water machine,press button A can generate 300-310ml, button B can generate 400-420ml and button C can generate 
-500-515ml, then given a number range [min, max], tell if all the numers of water in the range can be generated. 
-
-range DP.??
-*/
-
-public static boolean isBuidable(int low, int high, int min, int max) {
-    
-    if(low <= min && max <= high)
-      return true;
-    
-    if(low > min) 
-      return false;
-    
-    return isBuidable(low+300, high+310, min, max) ||
-         isBuidable(low+400, high+420, min, max) ||
-         isBuidable(low+500, high+515, min, max);
-  }
-
-
-========================================
-(18). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
-========================================
-
-
-/*
-索引 0 1 2 3 4
-值   3 2 1 4 0
-数组的值是下次跳的索引位置，这样的话数组有环，比如 0 -> 3 -> 4 -> 0  1 -> 2 
--> 1， 求最长环的长度.
-*/
-
-    int detect(int next, HashMap<Integer, Integer> map)
-    {
-        int re = 1;
-        int cur = next;
-        while(map.containsKey(cur))
-        {
-            cur = map.get(cur);
-            re++;
-            if(cur == next) break;
-        }
-        return re;
-    }
-
-    int longestCircle(HashMap<Integer, Integer> map)
-    {
-        HashSet<Integer> set = new HashSet<Integer>();
-        int max = 0;
-
-        while(map.size()!=0)
-        {
-            set.clear();
-            for(int i:map.keySet())
-            {
-                if(set.contains(i)) continue;
-
-                int cur = i;
-                while(!set.contains(cur) && map.keySet().contains(cur))
-                {
-                    set.add(cur);
-                    int next = map.get(cur);
-                    if(!set.contains(next)) cur = next;
-                    else
-                    {
-                        int local = detect(next, map);
-                        if(local > max) max = local;
-                        for(int j:set)
-                            map.remove(j);
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        return max;
-    }
-
-
-===
-Another cleaner solution:
-
-		int longestCircleIndex(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return n;
-
-		Map<Integer, Integer> map = new HashMap<>();
-		for(int i=0;i<n;i++)
-		{
-			map.put(i, a[i]);
-		}
-
-		
-		int max = 0;
-
-
-		Set<Integer> set = new HashSet<>(map.keySet());
-		for(int i:set)
-		{
-			if(!map.containsKey(i)) continue;
-			int local = dfs(map, i);
-			if(local > max) max = local;
-		}
-		return max;
-	}
-
-	int dfs(Map<Integer, Integer> map, int i)
-	{
-		if(!map.containsKey(i)) return 0;
-		int re = 0;
-		int cur = i;
-		int local = 0;
-		while(!map.isEmpty())
-		{
-			if(!map.containsKey(cur)) break;
-			local++;
-			int t = cur;
-			cur = map.get(cur);
-			map.remove(t);
-			if(cur==i)
-			{
-				if(re<local) re = local;
-				break;
-			}
-		}
-		return re;
-	}
-
-
-
-
-========================================
-(19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCommonSuffix.java
-========================================
-
-
-
-/*
-longest common suffix of two linked list
-*/
-    ListNode reverse(ListNode head)
-    {
-        if(head==null || head.next ==null) return head;
-        ListNode cur = head;
-        head = null;
-        while(cur!=null)
-        {
-            ListNode t = cur.next; t.next = null;
-            cur.next = head; head = cur;
-            cur = t;
-        }
-        return head;
-    }
-
-    ListNode longestCommonSuffix(ListNode n1, ListNode n2)
-    {
-        if(n1==null || n2==null) return null;
-
-        n1 = reverse(n1);
-        n2 = reverse(n2);
-
-        ListNode head = null, tail = null;
-        while(n1!=null && n2!=null)
-        {
-            if(n1.val==n2.val)
-            {
-                ListNode t = new ListNode(n1.val);
-                if(head==null)
-                {
-                    head = t; tail = t;
-                }
-                else
-                {
-                    tail.next = t; tail  = t;
-                }
-            }
-            n1 = n1.next; n2 = n2.next;
-        }
-        return reverse(head);
-    }
-
-
-
-========================================
-(20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestSubstringOfTwoChars.java
-========================================
-
-
-/*
-given a string ,return the longest substring that contains at most two 
-characters.
-*/
-    String longestSubstringOfTwoChars(String s)
-    {
-        int n = s.length();
-        if(n<=2) return s;
-
-        char[] c = s.toCharArray();
-        int i=0, j=0;
-
-        int start = 0, end = 0;
-
-        for(;j<n && c[j]==c[i];j++);
-        if(j==n) return s;
-
-        char a = c[i], b = c[j];
-        for(;j<n;j++)
-        {
-            if(c[j]==a || c[j]==b) continue;
-
-            if(j-i>end-start+1)
-            {
-                start = i; end = j-1;
-
-            }
-
-            i=j-1;
-            while(i>=0 && c[i]==c[j-1]) i--;
-            if(i<0) return s.substring(start, end+1);
-            i++;
-            a = c[i]; b=c[j];
-        } 
-        if(j-i>end-start+1) { start = i; end = j-1; }
-        return s.substring(start, end+1);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Solution().longestSubstringOfTwoChars("aabbbbbaxbbbaanaaaaaaaaax"));
-    }
-
-
-
-=====
-
-Another solution:
-
-Note: if calculate the effective length for each valid char, a final check is not needed.
-
-int longestSubstringOfTwoChars(String s)
-{
-	char[] a = s.toCharArray();
-	int n = a.length;
-	if(n<=2) return n;
-
-	int i=0, j=0;
-	int fst = a[i], snd = 0;
-
-	int max = 0, start = 0, end = 0;
-	while(j<n && a[j]==fst) j++;
-	if(j==n) return n;
-
-	snd = a[j];
-	while(j<n&&a[j]==snd) j++;
-	if(j==n) return n;
-
-	while(j<n)
-	{
-		if(a[j] == fst || a[j] == snd)
-		{
-			if(j-i+1>max)
-			{
-				max = j-i+1;
-				start = i; end = j+1;
-			}
-		}
-		else
-		{
-			i=j-1;
-			while(i>=0&&a[i]==a[j-1]) i--;
-			i++;
-			fst = a[i]; snd = a[j];
-		}
-		j++;
-	}
-	System.out.println(s.substring(start, end));
-	return max;
-}
-
-
-
-========================================
-(21). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/maxProdComposition.java
-========================================
-
-
-/*
-一个数，比如7可以拆成 1+3+3 或者3+4。 求拆成的因子相乘积最大的那个值。
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	int maxProdComposition(int num)
-	{
-		if(num<=1) return num;
-		int[] re = new int[num];
-		for(int i=0;i<num;i++)
-		{
-			int max = Integer.MIN_VALUE;
-			for(int j=i;j>=0;j--)
-			{
-				if(j==0) max = Math.max(max, i+1);
-				else max = Math.max(max, (i-j+1)*re[j-1]);
-			}
-			re[i] = max;
-		}
-		return re[num-1];
-	}
-
-	public static void main(String[] args) {
-		Solution sol = new Solution();
-		System.out.println(sol.maxProdComposition(7));
-	}
-
-}
-
-
-========================================
-(22). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/meanOfKinStream.java
-========================================
-
-
-Design a class where you can add elements, and return the mean of the latest N elements.
-
-
-
-class Kmean
-{
-	int cap;
-	int siz;
-	int sum;
-	int cur;
-	int[] arr;
-	Kmean(int _cap)
-	{
-		cap = _cap;
-		cur = siz = sum = 0;
-		arr = new int[cap];
-	}
-
-	void put(int val)
-	{
-		if(siz<cap)
-		{
-			arr[cur] = val;
-			sum+=val;
-			size++;
-			cur = (cur+1)%cap;
-		}
-		else
-		{
-			sum -=arr[cur];
-			arr[cur] = val;
-			sum+=arr[cur];
-			cur = (cur+1)%cap;
-		}
-	}
-
-	int getMean()
-	{
-		return sum/siz;
-	}
-}
-
-====
-
-This is cleaner
-
-class Kmean
-{
-
-	int[] a;
-	int cap = 10;
-	int ind;
-	int siz;
-	int sum;
-
-	void put(int val)
-	{
-		sum-=a[ind%cap];
-		sum+=val;
-		a[ind%cap] = val;
-		ind++;
-		if(siz<cap) siz++;
-	}
-
-	int getMean()
-	{
-		if(siz==0) System.exit(0);
-		return sum/siz;
-	}
-
-}
-
-
-
-========================================
-(23). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minConvertPalindrome.java
-========================================
-
-
-/*
-Given a string, convert it into a palindrome with the lease number of insertions possible
-*/
-
-
-===
-if just compute the minimum # of insertions, iterative DP is good:
-
-int minConvertPalindrome(String s)
-{
-	int n = s.length();
-	if(n<=1) return 0;
-
-	int[][] map = new int[n][n];
-	for(int j=0;j<n;j++)
-	{
-		for(int i=j-1;i>=0;i--)
-		{
-
-			if(s.charAt(i)!=s.charAt(j))
-			{
-				if(i+1>=j) map[i][j] = 1;
-				else
-				{
-					map[i][j] = Math.min(map[i+1][j], map[i][j-1])+1;
-				}
-			}
-			else
-			{
-				if(i+1>=j-1) map[i][j] = 0;
-				else
-					map[i][j] = map[i+1][j-1];
-			}
-
-		}
-	}
-	for(int[] i:map)
-	{
-		for(int j:i)
-			System.out.print(j+" ");
-		System.out.println();
-	}
-	return map[0][n-1];
-}
-
-
-
-
-===
-    static class Result
-    {
-        int num;
-        String s;
-        Result(int _num, String _s)
-        {
-            num = _num; s=_s;
-        }
-        public String toString()
-        {
-            return "{"+num+", "+s+"}";
-        }
-    }
-    String minPalindrome(String s)
-    {
-        int n = s.length();
-        if(n<=1) return s;
-
-        Result re = helper(s, 0, n-1, new HashMap<Integer, Result>());
-        System.out.println(s);
-        System.out.println(re.num);
-        return re.s;
-    }
-
-    Result helper(String s, int l, int r, HashMap<Integer, Result> map)
-    {
-        if(l>r)
-        {
-            Result re = new Result(0,"");
-            return re;
-        }
-        if(l==r)
-        {
-            Result re = new Result(0, s.substring(l,l+1));
-            return re;
-        }
-
-        int key = l*s.length()+r;
-        if(map.containsKey(key)) return map.get(key);
-
-        Result re = null;
-
-        Result left = helper(s,l,r-1,map);
-        Result right = helper(s,l+1,r,map);
-
-        if(left.num<right.num)
-        {
-            re = new Result(left.num+1, s.charAt(r)+left.s+s.charAt(r));
-        }
-        else
-        {
-              re = new Result(right.num+1, s.charAt(l)+right.s+s.charAt(l));
-        }
-
-        if(s.charAt(l)==s.charAt(r))
-        {
-            Result tmp = helper(s,l+1,r-1,map);
-
-            if(tmp.num<re.num)
-            {
-                re.num = tmp.num; re.s = tmp.s;
-                re.s = s.charAt(l)+re.s+s.charAt(l);
-            }
-        }
-
-        map.put(key, re);
-        return re;
-    }
-
-
-
-========================================
-(24). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minCOverDoc.java
-========================================
-
-
-/*
-2. Give a list of documents, find the minimal document set that can cover 
-all the characters in all the documents, like
-“a b c h j”,  "c d”, “a b c” “a f g” “a h j”
-the result should be "a b c h j" "c d" and "a f g"
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	static class lenComp implements Comparator<String>
-	{
-		public int compare(String s, String p)
-		{
-			return s.length()-p.length();
-		}
-	}
-	HashSet<String> minCoverDoc(String[] str)
-	{
-		HashSet<String> re = new HashSet<>();
-		HashSet<Character> set = new HashSet<>();
-		for(String s:str)
-			for(char c:s.toCharArray())
-				set.add(c);
-		Arrays.sort(str, new lenComp());
-
-		while(!set.isEmpty())
-		{
-			int max = 0;
-			HashSet<Character> tmp = null;
-			String tStr = "";
-			for(String s:str)
-			{
-				if(!re.contains(s))
-				{
-					HashSet<Character> r = helper(new HashSet<Character>(set), s);
-					if(r.size()>max)
-					{
-						max = r.size();
-						tmp = r;
-						tStr = s;
-					}
-				}
-			}
-			if(tmp==null) break;
-			re.add(tStr);
-			for(char c:tmp) set.remove(c);
-		}
-		return re;
-	}
-
-	HashSet<Character> helper(HashSet<Character> set, String s)
-	{
-		HashSet<Character> newSet = new HashSet<>();
-		for(char c:s.toCharArray())
-		{
-			if(set.contains(c)) newSet.add(c);
-		}
-		return newSet;
-	}
-
-	public static void main(String[] args) {
-		String[] a = {"abchj","cd", "abc", "afg","ahj"};
-
-		System.out.println(new Solution().minCoverDoc(a));
-	}
-}
-
-
-========================================
-(25). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
-========================================
-
-
-/*	Input: 38
-	Output: [2,3,5], since 2^2+3^2+5^2 = 38*/
-
-===
-
-Iteration:
-====
-
-Cleaner solution:
-
-List<Integer> minLenOfSquareSum(int num)
-{
-	List<Integer> re = new ArrayList<>();
-	if(num<1) return re;
-
-	int[] minimum = new int[num+1];
-	int[] pred = new int[num+1];
-
-	Arrays.fill(minimum, Integer.MAX_VALUE);
-	Arrays.fill(pred, -1);
-
-	for(int i=1;i<=num;i++)
-	{
-		int sroot = (int)Math.sqrt(i);
-		if(sroot*sroot==i)
-		{
-			minimum[i] = 1;
-			pred[i] = sroot;
-		}
-		else
-		{
-			int min = Integer.MAX_VALUE;
-			int pre = -1;
-			for(int j=sroot; j>0; j--)
-			{
-				int comp = i-j*j;
-				if(minimum[comp]<min)
-				{
-					min = minimum[comp];
-					pre = j;
-				}
-			}
-			minimum[i] = min+1;
-			pred[i] = pre;
-		}
-	}
-
-	return getSequence(pred);
-}
-
-List<Integer> getSequence(int[] pred)
-{
-	List<Integer> re = new ArrayList<>();
-
-	int cur = pred.length-1;
-	System.out.println(cur);
-	while(pred[cur]!=-1)
-	{
-		re.add(pred[cur]);
-		cur-=(pred[cur]*pred[cur]);
-	}
-	return re;
-}
-
-
-
-====
-    List<Integer> shortestSquareSum(int N)
-    {
-        List<Integer> result = new ArrayList<Integer>();
-
-        if(N<0) return result;
-        if(N<=1) { result.add(N); return result;}
-
-        int n = (int)(Math.sqrt(N));
-
-        if(n==-1) return result;
-
-        int[][] prefix = new int[n][N];
-        int[][] arr = new int[n][N];
-        for(int i=0;i<n;i++)
-            for(int j=0;j<N;j++)
-                arr[i][j] = Integer.MAX_VALUE;
-        for(int i=0;i<n;i++)
-            for(int j=0;j<N;j++)
-                prefix[i][j] = -1;
-
-
-        for(int i=0;i<N;i++)
-        {
-            
-            for(int j = n-1;j>=0;j--)
-            {
-                int cur = (j+1)*(j+1);
-                int min = Integer.MAX_VALUE;
-                int pre = -1;
-                if(cur>i+1) continue;
-                else if(cur==i+1) { min = 1; pre = -1;}
-                else
-                {
-                    int val = i+1-cur;
-                    for(int k = j;k>=0;k--)
-                    {
-                        if(arr[k][val-1]!= Integer.MAX_VALUE && arr[k][val-1]+1<min)
-                        {
-                            min = arr[k][val-1]+1;
-                            pre = k;
-                        }
-                    }
-                }
-                arr[j][i] = min;
-                prefix[j][i] = pre;
-            }
-        }
-
-        int ind=-1;
-        int min = Integer.MAX_VALUE;
-        for(int i=0;i<n;i++)
-            if(arr[i][N-1]<min)
-            {
-                min = arr[i][N-1];
-                ind = i;
-            }
-        if(min==Integer.MAX_VALUE) return null;
-
-        result = new ArrayList<Integer>();
-        int res = N-1;
-        while(ind!=-1)
-        {
-            result.add(ind+1);
-            int t = ind;
-            ind = prefix[ind][res];
-            res = res-(t+1)*(t+1);
-        }
-        return result;
-    }
-
-====
-
-Recursion:
-
-	List<Integer> helper(int target, int max, HashMap<Integer, List<Integer>> map, int magic)
-	{
-		if(target==0) return new ArrayList<Integer>();
-		if(target<0 || max<=0)
-		{
-			return null;
-		}
-		int sqrt = (int)Math.sqrt(target);
-		int upper = Math.min(sqrt, max);
-		if(upper==0)
-		{
-			return null;
-		}
-
-		int key = max*magic+target;
-		if(map.containsKey(key))
-		{
-			return map.get(key);
-		}
-
-		List<Integer> rr = helper(target, upper-1, map, magic);
-		int min = -1;
-		int siz = -1, minCount = 0;
-		if(rr==null)
-		{
-			siz = 0;
-			min = Integer.MAX_VALUE;
-		}
-		else
-		{
-			siz = rr.size();
-			min = rr.size();
-		}
-		int prod = upper*upper;
-		int count = 0;
-		while(target - prod>=0)
-		{
-			target -=prod;
-			count++;
-
-			List<Integer> rr_local = helper(target,upper-1, map, magic);
-			if(rr_local == null) continue;
-
-			if(rr_local.size()+count<min)
-			{
-
-				rr = rr_local;
-				minCount = count;
-				min = rr.size()+count;
-			}
-		}
-		List<Integer> re = new ArrayList<Integer>(rr);
-		for(int i=0;i<minCount;i++)
-			re.add(upper);
-		map.put(key, re);
-		return map.get(key);
-	}
-
-	List<Integer> minFactorization(int a)
-	{
-		List<Integer> re = new ArrayList<Integer>();
-		if(a<=0) return re;
-		if(a == 1)
-		{
-			re.add(1); return re;
-		}
-
-		int magic = (int)(Math.sqrt(a));
-
-		return helper(a, magic, new HashMap<Integer, List<Integer>>(), a);
-
-	}
-
-	===
-
-	Recursion 2:
-	    List<Integer> shortestSquareSum(int N)
-    {
-        List<Integer> result = new ArrayList<Integer>();
-
-        if(N<0) return result;
-        if(N<=1) { result.add(N); return result;}
-
-        int re = -1;
-        int l = 1, r = N;
-        while(l<=r)
-        {
-            int mid = l+(r-l)/2;
-            if(N/mid == mid) { re = mid; break;}
-            else if(N/mid < mid) { r = mid-1; }
-            else { re = mid; l = mid+1;}
-        }
-
-        if(re==-1) return result;
-
-        int n = re;
-        int[] arr = new int[n];
-        for(int i=0;i<n;i++)
-            arr[i] = (i+1)*(i+1);
-
-        for(int i:arr)
-            System.out.print(i+" ");
-        System.out.println();
-        HashMap<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
-        return helper(arr, 0, N,map);
-    }
-
-    List<Integer> helper(int[] arr, int k, int sum, HashMap<Integer, List<Integer>> map)
-    {
-        
-        if(sum==0) return new ArrayList<Integer>();
-        if(k==arr.length || sum<0 || arr[k]>sum) return null;
-
-
-        int key = arr.length*sum+k;
-        if(map.containsKey(key)) return map.get(key);
-
-
-        List<Integer> list = helper(arr, k+1, sum, map);
-        int min = (list==null)?Integer.MAX_VALUE:list.size();
-
-        int count = 0;
-        int minCount = 0;
-        while(sum-arr[k]>=0)
-        {
-            count++;
-            sum-=arr[k];
-            List<Integer> tmp = helper(arr, k+1, sum, map);
-            if(tmp!=null && (tmp.size()+count<min||list==null))
-            {
-                list = tmp;
-                min = tmp.size()+count;
-                minCount = count;
-            }
-        }
-        
-        if(list==null || min==Integer.MAX_VALUE) return null;
-        
-        List<Integer>re = new ArrayList<Integer>(list);
-        int sqt = (int)Math.sqrt(arr[k]);
-        for(int i=0;i<minCount;i++)
-            re.add(sqt);
-        map.put(key, re);
-
-        return re;
-    }
-
-
-
-========================================
-(26). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
-========================================
-
-
-/*
-Given n numbers (P1,P2,P3,.....Pn). Divide them in m contiguous partitions such that the sum of the maximum is minimum.
-For e.g. (5,1,4,2,3) and m =2
-then (5,1)(4,2,3)  
-*/
-
-
-
-    List<List<Integer>> minPartition(int[] a, int m)
-    {
-        List<List<Integer>> re = new ArrayList<>();
-
-        int n = a.length;
-        if(n==0) return re;
-
-        if(m==1)
-        {
-            List<Integer> r = new ArrayList<>();
-            for(int i:a) r.add(i);
-            re.add(r);
-            return re;
-        }
-
-        int[][] min = new int[m][n], pre = new int[m][n];
-        for(int[] i:min)
-            Arrays.fill(i, Integer.MAX_VALUE);
-        for(int[] i:pre)
-            Arrays.fill(i, -1);
-
-        min[0][0] = a[0];
-        for(int i=1;i<n;i++)
-            min[0][i] = Math.max(min[0][i-1], a[i]);
-
-        for(int i=1;i<m;i++)
-        {
-            for(int j=i;j<n;j++)
-            {
-                int minimum = Integer.MAX_VALUE, prev = -1;
-                int local = a[j];
-                for(int k=j;k>=i;k--)
-                {
-                    local = Math.max(local, a[k]);
-                    if(local< minimum-min[i-1][k-1])
-                    {
-                        minimum = local+min[i-1][k-1];
-                        prev = k-1;
-                    }
-                }
-                min[i][j] = minimum;
-                pre[i][j] = prev;
-            }
-        }
-        return getSequence(a, pre);
-    }
-
-    List<List<Integer>> getSequence(int[] a, int[][] pre)
-    {
-        int cur = a.length-1, m = pre.length;
-        List<List<Integer>> re = new ArrayList<>();
-        while(pre[m-1][cur]!=-1)
-        {
-            List<Integer> r = new ArrayList<>();
-            int t = pre[m-1][cur];
-            for(int i=t+1;i<=cur;i++) r.add(a[i]);
-            re.add(0,r);
-            cur = pre[m-1][cur];
-            m--;
-        }
-        List<Integer> r = new ArrayList<>();
-        for(int i=0;i<=cur;i++)
-        {
-            
-            r.add(a[i]);
-        }
-        re.add(0,r);
-        return re;
-    }
-
-==========
-/*
-Below is wrong question.
-
-minimum of maximum of sumation:
-
-*/
-    List<List<Integer>> minPartition(int[] a, int m)
-    {
-        int n = a.length;
-        if(n<m) return 0;
-
-        int[][] min = new int[n][m];
-        int[][] prefix = new int[n][m];
-
-        for(int i=0;i<n;i++)
-            for(int j=0;j<m;j++)
-            {
-                min[i][j] = Integer.MAX_VALUE;
-                prefix[i][j] = -1;
-            }
-       
-        int sum = a[0];
-
-        min[0][0] = a[0];
-        for(int i=1;i<n; i++)
-            min[i][0] = min[i-1][0]+a[i];
-
-        for(int i=1;i<n;i++)
-        {
-
-            sum+=a[i];
-            for(int j=1;j<m&&j<=i;j++)
-            {
-                int sub = 0; int pre = -1;
-                int minimum = Integer.MAX_VALUE;
-                for(int k = i;k>=j;k--)
-                {
-                    sub+=a[k];
-
-                    if(Math.max(sub, min[k-1][j-1]) < minimum)
-                    {
-                        minimum = Math.max(sub, min[k-1][j-1]);
-                        pre = k-1;
-                    }
-                }
-                min[i][j] = minimum;
-                prefix[i][j] = pre;
-            }
-        }
-        List<List<Integer>> re = new ArrayList<List<Integer>>();
-        int cur = n-1;
-        int count = m-1;
-        while(cur!=-1)
-        {
-            int pre = prefix[cur][count];
-            List<Integer> rr = new ArrayList<Integer>();
-            for(int i = pre+1;i<=cur;i++)
-                rr.add(a[i]);
-            re.add(rr);
-            count--;
-            cur = pre;
-        }
-        return re;
-    }
-
-
-========================================
-(27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/mostTimeinArray.java
-========================================
-
-
-
-/*
-find out in a sorted array which number appears the most times
-*/
-
-    int mostTimeinArray(int[] a)
-    {
-        int n = a.length;
-        if(n<=1) return n;
-
-        int max = 0;
-        int i = 0;
-        while(i<n)
-        {
-
-            int l = i, r = n-1;
-            int re = -1;
-            while(l<=r)
-            {
-                int mid = l+(r-l)/2;
-                if(a[mid]==a[i])
-                {
-                    re = mid; l = mid+1;
-                }
-                else if(a[mid]>a[i]) r = mid-1;
-                else l = mid+1;
-            }
-            if(re==-1) break;
-            if(re+1-i>max) max = re+1-i;
-            i = re+1;
-
-        }
-        return max;
-    }
-
-
-========================================
-(28). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/nextPalindrime.java
-========================================
-
-
-/*如何找比一个int大的下一个palindrome。 Write a function which returns the next palindrome greater than the given number n. e.g., f(231) = 232; f(999) = 1001; f(111) = 121
-*/
-===
-class Solution
-{
-	static int[] nextPalind(int[] a)
-	{
-		int n = a.length;
-		int[] re = new int[n];
-		if(n==1)
-		{
-			re[0] = a[0]+1; 
-			return correct(re);
-		}
-
-		boolean flg = true;
-		int l = 0, r =n-1;
-		while(l<=r)
-		{
-			if(a[l]!=a[r]) break;
-			l++;r--;
-
-		}
-		if(l>r)
-		{
-			int carry = 1;
-			for(int i=n-1;i>=0;i--)
-			{
-				a[i]+=carry;
-				carry=a[i]/10;
-				a[i]%=10;
-			}
-			if(carry!=0)
-			{
-				int[] b = new int[n+1];
-				b[0]=carry;
-				for(int i=0;i<n;i++)
-					b[i+1] =a[i];
-				return nextPalind(b);
-			}
-			return nextPalind(a);
-		}
-		l=0;r=n-1;
-		while(l<=r)
-		{
-			if(a[l]==a[r])
-			{
-				if(l+1==r && flg)
-				{
-					a[l]++;a[r]++;
-				}
-				else if(l==r && flg)
-					a[l]++;
-			}
-			else if(a[l]>a[r])
-			{
-				a[r]=a[l]; flg=false;
-			}
-			else
-			{
-				a[r]=a[l]; flg=true;
-			}
-			l++;r--;
-		}
-		return correct(a);
-	}
-
-	static int[] correct(int[] re)
-	{
-
-		int i, j;
-		int n=re.length;
-		if(re.length%2==0)
-		{
-			i=(re.length-1)/2;
-			j=i+1;
-		}
-		else
-		{
-			i=re.length/2;
-			j=i;
-		}
-		int carry =0;
-		while(i>=0&&j<n)
-		{
-			re[i]+=carry;
-			if(i!=j) re[j]+=carry;
-			if(re[i]>=10)
-			{
-				re[i]%=10;
-				re[j]%=10;
-				carry=1;
-			}
-			else
-			{
-				carry=0;
-			}
-			i--;j++;
-		}
-		if(carry==1)
-		{
-			int[] a = new int[n+2];
-			a[0]=a[n+1]=1;
-			for(i=0;i<n;i++)
-			{
-				a[i+1]=re[i];
-			}
-			return a;
-		}
-		return re;
-	}
-
-	public static void main(String[] args) {
-		// int[] num = {9, 4, 1, 8, 7, 9, 7, 8, 3, 2, 2};
-		int[] num = {2,3,1};
-		// f(231) = 232; f(999) = 1001; f(111) = 121
-		for(int i:nextPalind(num))
-			System.out.print(i+" ");
-		System.out.println();
-
-		int[] num1 = {9,9,9};
-		for(int i:nextPalind(num1))
-			System.out.print(i+" ");
-		System.out.println();
-
-		int[] num2 = {1,1,1};
-		for(int i:nextPalind(num2))
-			System.out.print(i+" ");
-		System.out.println();
-
-	}
-}
-
-
-========================================
-(29). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Ramanujan.java
-========================================
-
-
-/*
-Question 1: The interviewer was really kind. The asked me to write a function to find all the Ramanujan numbers. He helped
- me when I got stuck at any point and was giving me polite hints.
-
- 1729 = 1^3 + 12^3 = 9^3 + 10^3
-*/
-    List<List<Integer>> Ramanujan(int N)
-    {
-        List<List<Integer>> re = new ArrayList<List<Integer>>();
-        if(N<9) return re;
-        long l = 1, r = N;
-        while(l<r)
-        {
-            long sum = l*l*l+r*r*r;
-            if(sum == N)
-            {
-                List<Integer> rr = new ArrayList<Integer>();
-                rr.add((int)l); rr.add((int)r);
-                re.add(rr);
-                if(re.size()==2) return re;
-                else { l++;r--;}
-            }
-            else if(sum<N) l++;
-            else r--;
-        }
-        re.clear();
-        return re;
-    }
-
-
-========================================
-(30). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomCache.java
-========================================
-
-
-
-/*就是如何实现find, insert, delete, getRandom 都是O(1)
-*/
-
-
-
-class Solution
-{
-    int cap;
-    int size;
-    int[] arr;
-    HashMap<Integer, Integer> map;
-
-    Solution(int _cap)
-    {
-        cap = _cap;
-        size = 0;
-        arr = new int[cap];
-        map = new HashMap<Integer, Integer>();
-    }
-
-    boolean find(int elem)
-    {
-        return map.containsKey(elem);
-    }
-
-    void insert(int elem)
-    {
-        if(map.containsKey(elem)) return;
-        if(size<cap)
-        {
-            arr[size] = elem;
-            map.put(elem, size);
-            size++;
-        }
-        else
-        {
-            int[] newArr = new int[2*cap];
-            for(int i=0;i<cap;i++)
-            {
-                newArr[i] = arr[i];
-            }
-            cap = 2*cap;
-            insert(elem);
-        }
-    }
-    
-    void delete(int elem)
-    {
-        if(!map.containsKey(elem)) return;
-
-        int ind = map.get(elem);
-        int last = arr[size-1];
-        map.remove(elem);
-        map.remove(last);
-        arr[ind] = last;
-        map.put(last,ind);
-        size--;
-    }
-
-    int getRandom()
-    {
-        if(size!=0)
-        {
-            int k = random(0,size);
-            return arr[k];
-        }
-        System.exit(-11);
-    }
-}
-
-
-
-========================================
-(31). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomWalkProb.java
-========================================
-
-
-
-/*
-第二题，直线上有一个机器人从原点开始移动，每次可以向左移，也可以向右移，移动
-n步，再回到原点的概率是多少, 可以写程序实现。*/
-
-===
-
-cleaner solution:
-
-class Solution
-{
-    static int origin =0, total =0;
-
-    double randomWalk(int n)
-    {
-        helper(n,0,0);
-        return (double)origin/total;
-    }
-
-    void helper(int n, int i, int j)
-    {
-        if(i+j==n)
-        {
-            if(i==j) origin++;
-            total++;
-        }
-        else
-        {
-            helper(n, i+1,j);
-            helper(n, i,j+1);
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Solution().randomWalk(3));
-    }
-}
-
-===
-    static class returnType
-    {
-        int origin;
-        int total;
-        returnType()
-        {
-            origin = 0; total = 0;
-        }
-    }
-
-    returnType helper(int n, int i, int j)
-    {
-        if(i+j>n) return new returnType();
-        int origin = 0;
-        int total = 0;
-        if(i+j==n)
-        {
-            if(i==j) origin++;
-            total++;
-        }
-        else
-        {
-            returnType res1=helper(n,i+1,j);
-            returnType res2=helper(n,i,j+1);
-            origin = res1.origin+res2.origin;
-            total = res1.total+res2.total;
-        }
-
-        returnType re= new returnType();
-        re.origin = origin;
-        re.total = total;
-        return re;
-    }
-
-
-
-========================================
-(32). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildAlphabet.java
-========================================
-
-
-/*
-fft, fcp, aac, act, acd, atp, tbk, tdf, …
-这些都是按照字母排序好的，但是字母顺序改了，比如 f 在 a之前，t在d之前等等，
-给定一些这样的rule，问怎么rebuild the alphabet?
-*/
-
-
-
-class node
-{
-    char val;
-    int indegree;
-    HashSet<node> outNode;
-
-    node(char _val)
-    {
-        val = _val;
-        indegree = 0;
-        outNode = new HashSet<node>();
-    }
-}
-
 class Solution{
-
-
-    String alphabetRebuild(String[] a)
-    {
-        String re = "";
-        int n = a.length;
-        if(n==0) return re;
-
-        HashMap<Character, node> map = new HashMap<Character, node>();
-
-        for(String s:a)
-        {
-            for(int i=0;i<s.length();i++)
-            {
-                char c = s.charAt(i);
-                if(!map.containsKey(c))
-                {
-                    map.put(c, new node(c));
-                }
-
-                if(i+1<s.length())
-                {
-                    char next = s.charAt(i+1);
-
-                    if(next==c) continue;
-
-                    node nd = map.get(c);
-
-                    if(!map.containsKey(next))
-                        map.put(next,new node(next));
-
-                    if(!nd.outNode.contains(map.get(next)))
-                    {
-                        map.get(next).indegree++;
-                        nd.outNode.add(map.get(next));
-                    }
-                }
-            }
-        }
-
-        while(map.size()!=0)
-        {
-            node nd = null;
-            for(char c:map.keySet())
-            {
-                nd = map.get(c);
-                if(map.get(c).indegree==0) break;
-            }
-
-            if(nd==null) return re;
-            re = re+String.valueOf(nd.val);
-            for(node N : nd.outNode)
-            {
-                N.indegree--;
-            }
-            map.remove(nd.val);
-        }
-        return re;
-    }
-
-    public static void main(String[] args) {
-        
-        String[] a = {"fft", "fcp", "aac", "act", "acd", "atp", "tbk", "tdf"};
-
-        System.out.println(new Solution().alphabetRebuild(a));
-    }
-
-}
-
-
-========================================
-(33). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildUpTree.java
-========================================
-
-
-/* 1. printing a tree structure with giving collection of pairs of <parent, 
-child> relation. Need to first find the root, and validate wether the given 
-relations is a valid tree, and then printing. 
-*/
-
-===
-    static class pair
-    {
-        int left, right;
-        pair(int _left, int _right)
-        {
-            left = _left; right = _right;
-        }
-    }
-
-    static class node
-    {
-        int val;
-        int indegree;
-        HashSet<node> outgoing;
-        node(int _val)
-        {
-            val = _val; indegree = 0; outgoing = new HashSet<node>();
-        }
-    }
-
-    node buildUp(pair[] a)
-    {
-        int n = a.length; 
-        if(n==0) return null;
-
-        HashMap<Integer, node> map = new HashMap<Integer, node>();
-        for(pair p:a)
-        {
-            int par = p.left, kid = p.right;
-            if(!map.containsKey(par)) map.put(par, new node(par));
-            if(!map.containsKey(kid)) map.put(kid, new node(kid));
-            node parNode = map.get(par);
-            node kidNode = map.get(kid);
-
-            if(!parNode.outgoing.contains(kidNode)) 
-            {
-                parNode.outgoing.add(kidNode);
-                kidNode.indegree++;
-            }
-        }
-
-        node rootNode = null;
-        for(int i:map.keySet())
-        {
-            if(map.containsKey(i) && map.get(i).indegree==0)
-            {
-                if(rootNode!=null)
-                {
-                    rootNode=null; break;
-                }
-                rootNode = map.get(i);
-            }
-        }
-        if(rootNode==null) return null;
-
-        HashSet<node> set = new HashSet<node>();
-        LinkedList<node> q = new LinkedList<node>();
-
-        q.addLast(rootNode);
-        set.add(rootNode);
-        while(!q.isEmpty())
-        {
-            node cur = q.removeFirst();
-            for(node k : cur.outgoing)
-            {
-                if(set.contains(k))
-                {
-                    rootNode = null; break;
-                }
-                set.add(k); q.addLast(k);
-            }
-        }
-
-        if(rootNode==null) return null;
-        return (set.size()==map.size())?rootNode:null;
-    }
-
-
-========================================
-(34). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
-========================================
-
-
-Reorder array, so that a[i-1]<a[i]>a[i+1]
-
-
-===
-Print all results:
-
-	boolean valid(int[] r, int k)
+	static class strComp implements Comparator<String>
 	{
-		if(k==0 || k-1==0) return true;
-		if(r[k]<r[k-1]) return r[k-1]>r[k-2];
-		if(r[k]>r[k-1]) return r[k-1]<r[k-2];
-		return false;
+		public int compare(String s1, String s2)
+		{
+			int i=0;
+			char[] a = s1.toCharArray(), b=s2.toCharArray();
+			while(i<a.length && i<b.length)
+			{
+				if(a[i]<b[i]) return -1;
+				else if(a[i]>b[i]) return 1;
+				i++;
+			}
+			return b.length-a.length;
+		}
 	}
 
-
-	void helper(int[] a, int k,List<List<Integer>> re,  int[] r, boolean[] used)
+	int distinctSubstring(String s)
 	{
-		int n = a.length;
-		if(n==k)
-		{
-				List<Integer> rr = new ArrayList<Integer>();
-				for(int i:r) rr.add(i);
-				re.add(rr);
-			return;
-		}
+		int n = s.length();
+		if(n<2) return n;
 
+		List<String> list = new ArrayList<>();
 		for(int i=0;i<n;i++)
 		{
-			if(!used[i])
-			{
-				used[i] = true;
-				r[k] = a[i];
-				if(valid(r,k))
-				{
-					
-					helper(a,k+1,re, r, used);
-				}
-				used[i] = false;
-			}
-		}
-		return;
-	}
-
-	List<List<Integer>> reOrder(int[] a)
-	{
-		List<List<Integer>> re = new ArrayList<List<Integer>>();
-		int n = a.length;
-		if(n==0) return re;
-
-		helper(a, 0, re, new int[n], new boolean[n]);
-		return re;
-	}
-
-
----
-
-	public void selection(int[] a, int k, int l, int r)
-	{
-		if(l+k>r) return;
-		int val = a[l];
-
-		int i = l-1, j = r+1;
-		while(i<j)
-		{
-			while(++i<j && a[i]<=val);
-			while(i<--j && a[j] >val);
-			if(i>=j) break;
-
-			int t = a[i];
-			a[i] = a[j];
-			a[j] = t;
-		}
-		int t = a[j];
-		a[j] = a[l];
-		a[l] = t;
-		if(j-l == k) return;
-		else if(j-l<k)
-		{
-			selection(a, k+l-j, j,r);
-		}
-		else
-		{
-			selection(a,k,l,j);
-		}
-	}
-
-	void reverse(int[] a, int l, int r)
-	{
-		while(l<r)
-		{
-			int t = a[l]; a[l] = a[r]; a[r] = t;
-			l++; r--;
-		}
-	}
-	public void reorder(int[] a, int l, int r)
-	{
-		if(r-l+1<=2) return;
-
-		int mid = l+(r-l)/2;
-
-		int left = l +(mid-l)/2;
-		int num = left-l+1;
-		int right = mid+num;
-
-		reverse(a, left+1, mid);
-		reverse(a, mid+1, right);
-		reverse(a,left+1, right);
-
-		reorder(a, l, l+2*num-1);
-		reorder(a, l+2*num, r);
-	}
-
-	public void reOrder(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return;
-
-		selection(a, (n-1)/2, 0, n-1);
-		reorder(a,0,n-1);
-
-	}
-
-
-========================================
-(35). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/report.java
-========================================
-
-
-
-========================================
-(1). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/bipartitieGraph.java
-========================================
-
-
-/*
-Given a graph as input, write a java method returning boolean true if the
- graph is bipartitie, else false
-
- */
-
-
-Note: this is undirected graph. So define:
-
-graphNode
-{
-	int val;
-	HashSet<Integer> adj;
-}
-
-
-    boolean checkBipartitie(node[] G)
-    {
-        int n = G.length;
-        if(n<=1) return false;
-        if(n==2) return true;
-
-		int[] color = new int[n];
-		boolean[] visit = new boolean[n];
-
-        LinkedList<node> q = new LinkedList<node>();
-
-        for(int k=0;k<n;k++)
-        {
-        	if(visit[k]) continue;
-
-        	color[k] = -1;
-        	visit[k] = true;
-        	if(!dfs(k, G[k], visit, color)) return false;
-        }
-        return true;
-    }
-
-    boolean dfs(int k, node[] G, boolean[] visit, int[] color)
-    {
-    	for(int i:G[k].adj)
-    	{
-    		if(visit[i])
-    			if(color[i]+color[k]!=0) return false;
-    		else
-    		{
-    			visit[i]=true;
-    			color[i] = (color[k]==-1)?1:-1;
-    			if(!dfs(i,G,visit,color)) return false;
-    		}
-    	}
-    	return true;
-    }
-}
-
-
-========================================
-(2). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/byteArrayDecoding.java
-========================================
-
-
-
-/*
-3. 记不清楚了，比较少见的一道题，0, 1开头byte，判断最后一个字符是一个byte还
-是两个byte的问题。
-*/
-
-
-
-    int checkByteArray(Byte[] a)
-    {
-        int n = a.length;
-        if(n==0) return -1;
-        if(n==1) return 1;
-
-        if((a[n-1]&(1<<7))!=0) return 2;
-        for(int i=n-2;i>0;i--)
-        {
-            if( (a[i]&(1<<7))==0 ) return ((n-i)%2==1)?2:1;
-        }
-        if( (a[0]&(1<<7))==0 ) return (n%2==1)?2:1;
-        else
-            return 2;
-    }
-
-
-========================================
-(3). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/charMapping.java
-========================================
-
-
-/*3. 有一个字典因为某种原因每个字符都被替换成一个别的字符了（但还是一一对应)，
-但是单词的顺序没有改变，比如
-cat
-coffee
-common
-变成了
-dkc
-dbhhzz
-dbllbq
-让找出的这个替换的规则（guaranteed to have a unique one)
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-
-	HashMap<Character, Character> charMapping(String[]a, String[]b)
-	{
-		HashMap<Character, Character> map = new HashMap<>();
-		int n = a.length;
-		if(n==0) return map;
-
-		for(int i=0;i<n;i++)
-		{
-			for(int j=0;j<a[i].length();j++)
-			{
-				char aa = a[i].charAt(j);
-				char bb = b[i].charAt(j);
-
-				if(!map.containsKey(aa)) {map.put(aa,bb);}
-				if(map.get(aa)!=bb) return null;
-				if(!map.containsKey(bb)) {map.put(bb,aa);}
-				if(map.get(bb)!=aa) return null;
-			}
-		}
-		return map;
-	}
-
-	public static void main(String[] args) {
-		String[] a = {"cat","coffee","common"};
-		String[] b = {"dkc","dbhhzz","dbllbq"};
-
-		System.out.println(new Solution().charMapping(a,b));
-	}
-}
-
-
-========================================
-(4). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/conflictSchedule.java
-========================================
-
-
-/*
-2. we have a list of schedules, defined by start time and end time. e.g. (9:00 - 10:00) (10:00 - 11:00). Find all the conflicts and print out the pairs.
-
-*/
-import java.util.*;
-import java.lang.*;
-class event
-{
-	int id;
-	int start, end;
-	event(int _id, int _start, int _end)
-	{
-		id=_id;
-		start = _start;
-		end=_end;
-	}
-}
-
-class time
-{
-	int id;
-	int val;
-	char prop;
-	time(int _id, int _val, char _p)
-	{
-		id = _id;
-		val = _val;
-		prop = _p;
-	}
-	public String toString()
-	{
-		String re = String.format("{id:%d, val:%d, prop:%c}", id, val, prop);
-		return re;
-	}
-}
-
-
-class Solution
-{
-	static class eventComp implements Comparator<time>
-	{
-		public int compare(time a, time b)
-		{
-			if(a==null) return -1;
-			if(b==null) return 1;
-			int diff = a.val-b.val;
-			if(diff!=0) return diff;
-			if(a.prop=='e') return -1;
-			if(b.prop=='e') return 1;
-			return 0;
-		}
-	}
-
-	void conflictSchedule(event[] e)
-	{
-		int n=e.length;
-		if(n<=1) return;
-
-		time[] T = new time[2*n];
-		int ind = 0;
-		for(event ee:e)
-		{
-			T[ind++] = new time(ee.id, ee.start, 's');
-			T[ind++] = new time(ee.id, ee.end, 'e');
+			list.add(s.substring(i));
 		}
 
-		Arrays.sort(T, new eventComp());
+		Collections.sort(list, new strComp());
 
-		HashSet<Integer> ids = new HashSet<>();
-
-		for(time t:T)
-		{
-			if(t.prop=='e') ids.remove(t.id);
-			if(t.prop=='s')
-			{
-				for(int tt:ids)
-				{
-					System.out.println("comflict: "+t.id+" -- "+tt);
-				}
-				ids.add(t.id);
-			}
-		}
-	}
-
-	public static void main(String[] args) {
-		event[] a = {
-			new event(1,0,1), 
-			new event(2,0,2), 
-			new event(3,2,3), 
-			new event(4,2,4),
-			new event(5,1,3)
-		};
-		new Solution().conflictSchedule(a);
-	}
-
-}
-
-
-========================================
-(5). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/connectedSets.java
-========================================
-
-
-/*
-Given a 2–d matrix , which has only 1’s and 0’s in it. Find the total number of connected sets in that matrix. Explanation: Connected set can be defined as group of cell(s) which has 1 mentioned on it and have at least one other cell in that set with which they share the neighbor relationship. A cell with 1 in it and no surrounding neighbor having 1 in it can be considered as a set with one cell in it. Neighbors can be defined as all the cells adjacent to the given cell in 8 possible directions ( i.e N , W , E , S , NE , NW , SE , SW direction ). A cell is not a neighbor of itself.
-
-*/
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	static class pair
-	{
-		int i, j;
-		pair(int _i, int _j)
-		{
-			i=_i; j=_j;
-		}
-	}
-
-	int connectedSets(int[][] board)
-	{
-		int m = board.length;
-		if(m==0) return 0;
-		int n = board[0].length;
-		if(n==0) return 0;
-		int re = 0;
-
-		boolean[][] visited = new boolean[m][n];
-		for(int i=0;i<m;i++)
-		{
-			for(int j=0;j<n;j++)
-			{
-				if(board[i][j]==1 && !visited[i][j])
-				{
-					if(dfs(board, visited, i, j)) re++;
-				}
-			}
-		}
-		return re;
-	}
-
-	boolean dfs(int[][] board, boolean[][] visited, int i, int j)
-	{
-		int count =0;
-		Stack<pair> q = new Stack<>();
-		visited[i][j] = true;
-		q.push(new pair(i,j));
-		while(!q.isEmpty())
-		{
-			pair cur = q.pop();
-			int ii = cur.i, jj = cur.j;
-			count++;
-			if(check(ii+1,jj,board,visited)) q.push(new pair(ii+1, jj));
-			if(check(ii-1,jj,board,visited)) q.push(new pair(ii-1, jj));
-			if(check(ii,jj+1,board,visited)) q.push(new pair(ii, jj+1));
-			if(check(ii,jj-1,board,visited)) q.push(new pair(ii, jj-1));
-			if(check(ii-1,jj-1,board,visited)) q.push(new pair(ii-1, jj-1));
-			if(check(ii+1,jj-1,board,visited)) q.push(new pair(ii+1, jj-1));
-			if(check(ii-1,jj+1,board,visited)) q.push(new pair(ii-1, jj+1));
-			if(check(ii+1,jj+1,board,visited)) q.push(new pair(ii+1, jj+1));
-		}
-		if(count>1) return true;
-		else return false;
-	}
-
-	boolean check(int i, int j, int[][] board, boolean[][] visited)
-	{
-		if(i<0 || i>=board.length || j<0 || j>=board[0].length || board[i][j]!=1 || visited[i][j]) return false;
-		visited[i][j] = true;
-		return true;
-	}
-
-	public static void main(String[] args) {
-		int[][] a = {
-			{0,0,0,0,0,1},
-			{0,0,0,0,0,1},
-			{1,0,1,1,0,1},
-			{0,0,1,1,0,1},
-			{0,0,0,0,0,1},
-		};
-		System.out.println(new Solution().connectedSets(a));
-	}
-}
-
-
-========================================
-(6). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/convertStringXto10.java
-========================================
-
-
-
-/*
-3. give an input stream like 1010x0x1, give all the result that transfer x into 0 or 1
-*/
-
-    List<String> convertStringXto10(String s)
-    {
-        List<String> re = new ArrayList<String>();
-        int n = s.length();
-        if(n==0) return re;
-
-         helper(s,0,new char[n], re);
-         return re;
-    }
-    void helper(String s, int k, char[] r, List<String> re)
-    {
-        if(k==s.length())
-        {
-            re.add(new String(r));
-            return;
-        }
-
-        if(s.charAt(k) =='x')
-        {
-            r[k] = '0';
-            helper(s,k+1,r,re);
-            r[k] = '1';
-            helper(s,k+1,r,re);
-        }
-        else
-        {
-            r[k] = s.charAt(k);
-            helper(s,k+1,r,re);
-        }
-    }
-
-
-========================================
-(7). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/destructString.java
-========================================
-
-
-
-/* Q.Given an input string S write a function which returns true if it satisfies S = nT.
-  Basically you have to find if a given string can be represented from a substring by 
-  iterating it “n” times. n >= 2
-*/
-
-
-    boolean check(String p, String s)
-    {
-        int n = p.length(), m = s.length();
-        if(n>m) return false;
-
-        for(int i=0;i+n<=m;i+=n)
-        {
-            if(!p.equals(s.substring(i,i+n))) return false;
-        }
-        return true;
-    }
-
-    int destructString(String s)
-    {
-        int n = s.length();
-        if(n<=1) return -1;
-
-        char piv = s.charAt(0);
-        for(int i=1;i<n;i++)
-        {
-            if(piv==s.charAt(i) && n%(i-0)==0 && check(s.substring(0,i), s.substring(i)))
-                return n/i;
-        }
-        return -1;
-    }
-
-
-========================================
-(8). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/doubleDivide.java
-========================================
-
-
-/*Given integer a and b, find out the string representation of a/b. For 
-example, if a = 1, b = 3, the output should be 0.(3).
-*/
-
-
-    String divide(int a, int b)
-    {
-        if(a<b) return "0."+helper(a,b);
-        if(a==b) return "1";
-        if(a==0) return "0";
-        if(b==0) return "NaN";
-        if(b==1) return Integer.toString(a);
-
-        return Integer.toString(a/b)+"."+helper(a%b,b);
-    }
-
-    String helper(int a, int b)
-    {
-        if(a>=b) return Integer.toString(a%b);
-
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        LinkedList<Integer> re = new LinkedList<Integer>();
-
-
-        while(a!=0)
-        {
-            a*=10;
-            while(a<b)
-            {
-                a*=10;
-                re.add(0);
-            }
-            int val = a/b;
-            map.put(a/10,val);
-            re.add(val);
-            a = a%b;
-            if(map.containsKey(a)) break;
-        }
-        String result = "";
-        if(a==0)
-            for(int i:re) result+=Integer.toString(i);
-        else
-        {
-            int bug = map.get(a);
-            for(int i:re)
-            {
-                if(i==bug) result+=("(");
-                result+=Integer.toString(i);
-            }
-            result+=")";            
-        }
-        return result;
-    }
-
-
-========================================
-(9). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/equalZeroOnes.java
-========================================
-
-
-/*
-Google:
-
-2. an array with 0's and 1's, find in O(n) time and O(1) space the longest 
-sequence with equal number of 1's and 0's.
-
-can do it with O(n) time and O(n) space. How to do O(1) space.
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	int equalZeroOnes(int[] a)
-	{
-		int n = a.length;
-		if(n<=1)  return 0;
-
-		int[] sum = new int[n];
-		Map<Integer, Integer> map = new HashMap<>();
-		map.put(0,-1);
-		sum[0] = (a[0]==0)?-1:1;
+		int re = list.get(0).length();
 		for(int i=1;i<n;i++)
 		{
-			if(a[i]==0) sum[i] = sum[i-1]-1;
-			else
-				sum[i] = sum[i-1]+1;
-		}
-		int max = 0;
-
-		for(int i=0;i<n;i++)
-		{
-			if(!map.containsKey(sum[i])) map.put(sum[i],i);
-			else
-			{
-				int local = i-map.get(sum[i]);
-				if(local>max) max = local;
-			}
-		}
-		return max;
-	}
-	public static void main(String[] args) {
-		int[] a = {0,0,1,1,1,1,0,0,0,1,1,0};
-		System.out.println(new Solution().equalZeroOnes(a));
-	}
-}
-
-
-
-========================================
-(10). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/evenSubtree.java
-========================================
-
-
-/*An arbitrary tree. split it into as many subtrees as you can. the number of nodes of the subtree must be even. [nodes with even #nodes in the subtree can be the root of an even-subtree]
-*/
-
-
-===
-class Solution
-{
-
-static List<TreeNode> re = new ArrayList<>();
-
-static TreeNode split(TreeNode root)
-{
-    if(root==null) return null;
-
-    if(root.left==null && root.right==null)
-    {
-    	return null;
-    }
-
-    if(root.left==null)
-    {
-    	if(split(root.right)==null)
-    	{
-    		re.add(root);
-    		return root;
-    	}
-    	else
-    	{
-    		root.right=null;
-    		return null;
-    	}
-    }
-
-    if(root.right==null)
-    {
-    	if(split(root.left)==null)
-    	{
-    		re.add(root);
-    		return root;
-    	}
-    	else
-    	{
-    		root.left=null;
-    		return null;
-    	}
-    }
-
-    TreeNode left=split(root.left), right=split(root.right);
-    if(left==null && right==null) return null;
-    if(left==null)
-    {
-    	root.right=null;
-    	re.add(root);
-    	return root;
-    }
-    if(right==null)
-    {
-    	root.left=null;
-    	re.add(root);
-    	return root;
-    }
-    return null;
-}
-
-public static void main(String[] args) {
-
-	TreeNode a1=new TreeNode(0);
-	TreeNode a2=new TreeNode(1);
-	TreeNode a3=new TreeNode(2);
-	TreeNode a4=new TreeNode(3);
-	TreeNode a5=new TreeNode(4);
-	TreeNode a6=new TreeNode(5);
-	a1.left = a2;
-	a2.left =a3;
-	a2.right=a4;
-	a1.right=a5;
-	a5.right=a6;
-	if(split(a1)==null)
-		System.out.println("false");
-	for(TreeNode nd:re)
-		System.out.println(nd);
-}
-
-}
-
-
-
-========================================
-(11). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findGlobalMax.java
-========================================
-
-
-/*
-Second interviewer gave me array, with elements first strictly increasing, then strictly
-decreasing. Asked me to find the largest number. 
-*/
-
-    int findGlobalMax(int[] a)
-    {
-        int n = a.length;
-        if(n<3) return -1;
-
-        int l = 0, r = n-1;
-        while(l<=r)
-        {
-            int mid = l+(r-l)/2;
-            if(mid==0) l++;
-            else if(mid==n-1) r--;
-            else
-            {
-                if(a[mid-1]<a[mid] && a[mid+1]<a[mid]) return a[mid];
-                else if(a[mid-1]<a[mid]) l =mid+1;
-                else r = mid-1;
-            }
-        }
-        return -1;
-    }
-
-
-========================================
-(12). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findMaxPairStringNoCommonChar.java
-========================================
-
-
-
-/*
-2. Given a list of words, find two strings S & T such that:
-    a. S & T have no common character
-    b. S.length() * T.length() is maximized
-*/
-
-
-    static class wrapper implements Comparable
-    {
-        String s;
-        wrapper(String _s)
-        {
-            s = _s;
-        }
-
-        public int compareTo(Object o)
-        {
-            return -(s.length()-((wrapper)o).s.length());
-        }
-    }
-
-    boolean checkCommon(String S, String T)
-    {
-        int m = S.length(), n = T.length();
-        if(m*n==0) return true;
-
-        int i =0, j=0;
-        while(i<m&&j<n)
-        {
-            if(S.charAt(i)<T.charAt(j)) i++;
-            else if(S.charAt(i)>T.charAt(j)) j++;
-            else return true;
-        }
-        return false;
-    }
-
-    int findMaxPairStringNoCommonChar(String[] str)
-    {
-        int n = str.length;
-        if(n<=1) return 0;
-
-        wrapper[] tmp = new wrapper[n];
-        for(int i=0;i<n;i++)
-        {
-            char[] t = str[i].toCharArray();
-            Arrays.sort(t);
-            str[i] = new String(t);
-            tmp[i] = new wrapper(str[i]);
-        }
-        Arrays.sort(tmp);
-        for(int i=0;i<n;i++)
-            str[i] = tmp[i].s;
-
-        int max = Integer.MIN_VALUE;
-        int upper = n;
-        for(int i=0;i<upper;i++)
-        {
-            for(int j=i+1;j<upper;j++)
-            {
-                if(!checkCommon(str[i],str[j]))
-                {
-                    if(str[i].length()*str[j].length() >max)
-                    {
-                        max = str[i].length()*str[j].length();
-                        upper = j;
-                        break;
-                    }
-                }
-            }
-        }
-        return max;
-    }
-
-
-========================================
-(13). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findPolice.java
-========================================
-
-
-
-/*
-其他都比较常规，有一道图的题目，一个 n*n 矩阵，每个房间可能是封闭的房间，可
-能是警察，可能是开的房间，封闭的房间不能过，返回一个 n*n矩阵， 每一个元素是
-最近的警察到这个房间的最短距离。
-*/
-
-
-==
-
-    int[][] findPolice(int[][] houses)
-    {
-        int m = houses.length;
-        if(m==0) return null;
-        int n = houses[0].length;
-        if(n==0) return null;
-
-        int[][] re = new int[m][n];
-        boolean[][] visit = new boolean[m][n];
-        for(int i=0;i<m;i++)
-            for(int j=0;j<n;j++)
-                if(houses[i][j] ==-1) visit[i][j] = true;
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-            {
-                if(houses[i][j] == 0)
-                {
-                    visit[i][j] = true;
-                    re[i][j] = helper(houses, i, j, visit);
-                    visit[i][j] = false;
-                }
-            }
-        }
-        for(int i=0;i<m;i++)
-        {
-            for(int j=0;j<n;j++)
-                System.out.print(re[i][j]+" ");
-            System.out.println();
-        }
-        return re;
-    }
-
-    int helper(int[][] houses, int i, int j, boolean[][] visit)
-    {
-        if(houses[i][j]==1) return 0;
-        if(houses[i][j]==-1) return -1;
-        int min = Integer.MAX_VALUE;
-        if(i-1>=0 && !visit[i-1][j] )
-        {
-            visit[i-1][j] = true;
-            int t = helper(houses, i-1, j, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i-1][j] =false;
-        }
-
-        if(i+1<houses.length && !visit[i+1][j])
-        {
-            visit[i+1][j] = true;
-            int t = helper(houses, i+1, j, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i+1][j] = false;
-        }
-        if(j-1>=0 && !visit[i][j-1])
-        {
-            visit[i][j-1] = true;
-            int t = helper(houses, i, j-1, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i][j-1] = false;
-        }
-        if(j+1<houses[0].length && !visit[i][j+1])
-        {
-            visit[i][j+1] = true;
-            int t = helper(houses, i, j+1, visit);
-            if(t!=-1 && t+1<min)
-            {
-                min = t+1;
-            }
-            visit[i][j+1] = false;
-        }
-        if(min==Integer.MAX_VALUE) min = -1;
-        return min;
-    }
-
-=========
-BFS solution, which is better
-
-static class pair
-{
-	int a, b;
-	pair(int _a, int _b)
-	{
-		a = _a; b = _b;
-	}
-}
- int[][] findPolice(int[][] houses)
- {
- 	int m = houses.length;
- 	if(m==0) return null;
- 	int n = houses[0].length;
- 	if(n==0) return null;
-
- 	
- 	int[][] re = new int[m][n];
- 	for(int i=0;i<m;i++)
- 	{
- 		for(int j=0; j<n; j++)
- 		{
- 			if(houses[i][j] == 0)
- 			{
- 				boolean[][] visit = new boolean[m][n];
- 				visit[i][j] = true;
- 				re[i][j] = bfs(houses, visit, i, j);
- 				visit[i][j] = false;
- 			}
- 		}
- 	}
- 	return re;
- }
-
- int bfs(int[][] houses, boolean[][] visit, int i, int j)
- {
- 	int m = houses.length, n = houses[0].length;
- 	if(i>=m || j>=n) System.exit(-1);
- 	LinkedList<pair> q = new LinkedList<>();
- 	q.add(new pair(i,j));
- 	int re = 0;
- 	while(q.size()!=0)
- 	{
- 		int siz = q.size();
- 		for(int ii=0; ii<siz; ii++)
- 		{
- 			pair cur = q.removeFirst();
- 			if(houses[cur.a][cur.b]==1) return re;
- 			if(cur.a+1<m && houses[cur.a+1][cur.b] !=-1 && !visit[cur.a+1][cur.b])
- 			{
- 				visit[cur.a+1][cur.b] = true; q.addLast(new pair(cur.a+1, cur.b));
- 			}
- 			if(cur.b+1<n && houses[cur.a][cur.b+1] !=-1 && !visit[cur.a][cur.b+1])
- 			{
- 				visit[cur.a][cur.b+1] = true; q.addLast(new pair(cur.a, cur.b+1));
- 			}
- 			if(cur.a-1>=0 && houses[cur.a-1][cur.b] !=-1 && !visit[cur.a-1][cur.b])
- 			{
- 				visit[cur.a-1][cur.b] = true; q.addLast(new pair(cur.a-1, cur.b));
- 			}
- 			if(cur.b-1>=0 && houses[cur.a][cur.b-1] !=-1 && !visit[cur.a][cur.b-1])
- 			{
- 				visit[cur.a][cur.b-1] = true; q.addLast(new pair(cur.a, cur.b-1));
- 			}
- 		}
- 		re++;
- 	}
- 	return 0;
- }
-
-
-=========   
-
- public static void main(String[] args) {
- 	int[][] houses = {{0,0,-1,0},{-1,-1,1,0},{-1,0,0,1},{1,0,-1,1}};
- 	int[][] re = new Solution().findPolice(houses);
- 	for(int[] a:houses)
- 	{
- 		for(int i:a)
- 			System.out.print(i+" ");
- 		System.out.println();
- 	}
- 	System.out.println();
- 	for(int[] a:re)
- 	{
- 		for(int i:a)
- 			System.out.print(i+" ");
- 		System.out.println();
- 	}
- }
-}
-
-
-
-========================================
-(14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRangeBST.java
-========================================
-
-
-
-/*
-In a given binary search tree, find the number of elements that lie in a given range.
-*/
-
-List<Integer> findNumInRange(TreeNode root, int min, int max)
-{
-	List<Integer> re = new ArrayList<>();
-	helper(root, min, max);
-	return re;
-}
-
-void helper(TreeNode root, int min, int max, List<Integer> re)
-{
-	if(root==null) return;
-	else if(root.val<=min) helper(root.right, min, max, re);
-	else if(root.val>=max) helper(root.left, min, max, re);
-	else
-	{
-		re.add(root.val);
-		helper(root.right, min, max, re);
-		helper(root.left, min, max, re);
-	}
-}
-
-
-
-========================================
-(15). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRotation.java
-========================================
-
-
-Given a rotated array, find the number of rotation
-
-======
-
-	public int findTotate(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return 0;
-
-		int l = 0, r = n-1;
-		int re = -1;
-		while(l<r)
-		{
-			int mid = l+(r-l)/2;
-			if(a[mid]>a[l] && a[mid]>=a[r])
-			{
-				re = mid;
-				l = mid;
-			}else if(a[mid]<a[l] && a[mid]<=a[r])
-			{
-				re=mid;
-				r = mid;
-			}
-			else
-			{
-				l++;
-			}
-		}
-		return (re==-1)?0:re;
- 	}
-
-
-========================================
-(16). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/inversionCount.java
-========================================
-
-
-/*
-   Count inversion number in unsorted array:
-   {3,1,2} -> 2, since {3,1}, {3,2}
-*/
-
-
-    int merge(int[] a, int l, int r, int[] c)
-    {
-        if(l>=r) return 0;
-        int mid = l +(r-l)/2;
-        int i=l, j = mid+1, k=0;
-        int left = merge(a,l,mid,c);
-        int right = merge(a,mid+1,r,c);
-        int inversion = 0;
-        while(i<=mid&&j<=r)
-        {
-            if(a[i]<=a[j])
-            {
-                c[k++] = a[i++];
-            }
-            else
-            {
-                c[k++] = a[j++];
-                inversion+=(j-mid);
-            }
-        }
-        if (i<=mid) c[k++] = a[i++];
-        while(i<=mid)
-        {
-            c[k++] = a[i];
-            inversion += (r-mid);
-            i++;
-        }
-        while(j<=r) 
-        {
-            c[k++] = a[j++];
-            
-        }
-        i=l;
-
-        for(int in=0; in<k;in++)
-        {
-            a[i++] = c[in];
-        }
-        return inversion+left+right;
-    }
-
-
-
-========================================
-(17). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/isBuidableSoda.java
-========================================
-
-
-/*
-A soda water machine,press button A can generate 300-310ml, button B can generate 400-420ml and button C can generate 
-500-515ml, then given a number range [min, max], tell if all the numers of water in the range can be generated. 
-
-range DP.??
-*/
-
-public static boolean isBuidable(int low, int high, int min, int max) {
-    
-    if(low <= min && max <= high)
-      return true;
-    
-    if(low > min) 
-      return false;
-    
-    return isBuidable(low+300, high+310, min, max) ||
-         isBuidable(low+400, high+420, min, max) ||
-         isBuidable(low+500, high+515, min, max);
-  }
-
-
-========================================
-(18). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
-========================================
-
-
-/*
-索引 0 1 2 3 4
-值   3 2 1 4 0
-数组的值是下次跳的索引位置，这样的话数组有环，比如 0 -> 3 -> 4 -> 0  1 -> 2 
--> 1， 求最长环的长度.
-*/
-
-    int detect(int next, HashMap<Integer, Integer> map)
-    {
-        int re = 1;
-        int cur = next;
-        while(map.containsKey(cur))
-        {
-            cur = map.get(cur);
-            re++;
-            if(cur == next) break;
-        }
-        return re;
-    }
-
-    int longestCircle(HashMap<Integer, Integer> map)
-    {
-        HashSet<Integer> set = new HashSet<Integer>();
-        int max = 0;
-
-        while(map.size()!=0)
-        {
-            set.clear();
-            for(int i:map.keySet())
-            {
-                if(set.contains(i)) continue;
-
-                int cur = i;
-                while(!set.contains(cur) && map.keySet().contains(cur))
-                {
-                    set.add(cur);
-                    int next = map.get(cur);
-                    if(!set.contains(next)) cur = next;
-                    else
-                    {
-                        int local = detect(next, map);
-                        if(local > max) max = local;
-                        for(int j:set)
-                            map.remove(j);
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        return max;
-    }
-
-
-===
-Another cleaner solution:
-
-		int longestCircleIndex(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return n;
-
-		Map<Integer, Integer> map = new HashMap<>();
-		for(int i=0;i<n;i++)
-		{
-			map.put(i, a[i]);
-		}
-
-		
-		int max = 0;
-
-
-		Set<Integer> set = new HashSet<>(map.keySet());
-		for(int i:set)
-		{
-			if(!map.containsKey(i)) continue;
-			int local = dfs(map, i);
-			if(local > max) max = local;
-		}
-		return max;
-	}
-
-	int dfs(Map<Integer, Integer> map, int i)
-	{
-		if(!map.containsKey(i)) return 0;
-		int re = 0;
-		int cur = i;
-		int local = 0;
-		while(!map.isEmpty())
-		{
-			if(!map.containsKey(cur)) break;
-			local++;
-			int t = cur;
-			cur = map.get(cur);
-			map.remove(t);
-			if(cur==i)
-			{
-				if(re<local) re = local;
-				break;
-			}
+			String pre = list.get(i-1);
+			String cur = list.get(i);
+			re += (cur.length() - helper(pre, cur));
 		}
 		return re;
 	}
 
-
-
-
-========================================
-(19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCommonSuffix.java
-========================================
-
-
-
-/*
-longest common suffix of two linked list
-*/
-    ListNode reverse(ListNode head)
-    {
-        if(head==null || head.next ==null) return head;
-        ListNode cur = head;
-        head = null;
-        while(cur!=null)
-        {
-            ListNode t = cur.next; t.next = null;
-            cur.next = head; head = cur;
-            cur = t;
-        }
-        return head;
-    }
-
-    ListNode longestCommonSuffix(ListNode n1, ListNode n2)
-    {
-        if(n1==null || n2==null) return null;
-
-        n1 = reverse(n1);
-        n2 = reverse(n2);
-
-        ListNode head = null, tail = null;
-        while(n1!=null && n2!=null)
-        {
-            if(n1.val==n2.val)
-            {
-                ListNode t = new ListNode(n1.val);
-                if(head==null)
-                {
-                    head = t; tail = t;
-                }
-                else
-                {
-                    tail.next = t; tail  = t;
-                }
-            }
-            n1 = n1.next; n2 = n2.next;
-        }
-        return reverse(head);
-    }
-
-
-
-========================================
-(20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestSubstringOfTwoChars.java
-========================================
-
-
-/*
-given a string ,return the longest substring that contains at most two 
-characters.
-*/
-    String longestSubstringOfTwoChars(String s)
-    {
-        int n = s.length();
-        if(n<=2) return s;
-
-        char[] c = s.toCharArray();
-        int i=0, j=0;
-
-        int start = 0, end = 0;
-
-        for(;j<n && c[j]==c[i];j++);
-        if(j==n) return s;
-
-        char a = c[i], b = c[j];
-        for(;j<n;j++)
-        {
-            if(c[j]==a || c[j]==b) continue;
-
-            if(j-i>end-start+1)
-            {
-                start = i; end = j-1;
-
-            }
-
-            i=j-1;
-            while(i>=0 && c[i]==c[j-1]) i--;
-            if(i<0) return s.substring(start, end+1);
-            i++;
-            a = c[i]; b=c[j];
-        } 
-        if(j-i>end-start+1) { start = i; end = j-1; }
-        return s.substring(start, end+1);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Solution().longestSubstringOfTwoChars("aabbbbbaxbbbaanaaaaaaaaax"));
-    }
-
-
-
-=====
-
-Another solution:
-
-Note: if calculate the effective length for each valid char, a final check is not needed.
-
-int longestSubstringOfTwoChars(String s)
-{
-	char[] a = s.toCharArray();
-	int n = a.length;
-	if(n<=2) return n;
-
-	int i=0, j=0;
-	int fst = a[i], snd = 0;
-
-	int max = 0, start = 0, end = 0;
-	while(j<n && a[j]==fst) j++;
-	if(j==n) return n;
-
-	snd = a[j];
-	while(j<n&&a[j]==snd) j++;
-	if(j==n) return n;
-
-	while(j<n)
+	int helper(String s1, String s2)
 	{
-		if(a[j] == fst || a[j] == snd)
-		{
-			if(j-i+1>max)
-			{
-				max = j-i+1;
-				start = i; end = j+1;
-			}
-		}
-		else
-		{
-			i=j-1;
-			while(i>=0&&a[i]==a[j-1]) i--;
-			i++;
-			fst = a[i]; snd = a[j];
-		}
-		j++;
-	}
-	System.out.println(s.substring(start, end));
-	return max;
-}
-
-
-
-========================================
-(21). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/maxProdComposition.java
-========================================
-
-
-/*
-一个数，比如7可以拆成 1+3+3 或者3+4。 求拆成的因子相乘积最大的那个值。
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	int maxProdComposition(int num)
-	{
-		if(num<=1) return num;
-		int[] re = new int[num];
-		for(int i=0;i<num;i++)
-		{
-			int max = Integer.MIN_VALUE;
-			for(int j=i;j>=0;j--)
-			{
-				if(j==0) max = Math.max(max, i+1);
-				else max = Math.max(max, (i-j+1)*re[j-1]);
-			}
-			re[i] = max;
-		}
-		return re[num-1];
-	}
-
-	public static void main(String[] args) {
-		Solution sol = new Solution();
-		System.out.println(sol.maxProdComposition(7));
-	}
-
-}
-
-
-========================================
-(22). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/meanOfKinStream.java
-========================================
-
-
-Design a class where you can add elements, and return the mean of the latest N elements.
-
-
-
-class Kmean
-{
-	int cap;
-	int siz;
-	int sum;
-	int cur;
-	int[] arr;
-	Kmean(int _cap)
-	{
-		cap = _cap;
-		cur = siz = sum = 0;
-		arr = new int[cap];
-	}
-
-	void put(int val)
-	{
-		if(siz<cap)
-		{
-			arr[cur] = val;
-			sum+=val;
-			size++;
-			cur = (cur+1)%cap;
-		}
-		else
-		{
-			sum -=arr[cur];
-			arr[cur] = val;
-			sum+=arr[cur];
-			cur = (cur+1)%cap;
-		}
-	}
-
-	int getMean()
-	{
-		return sum/siz;
-	}
-}
-
-====
-
-This is cleaner
-
-class Kmean
-{
-
-	int[] a;
-	int cap = 10;
-	int ind;
-	int siz;
-	int sum;
-
-	void put(int val)
-	{
-		sum-=a[ind%cap];
-		sum+=val;
-		a[ind%cap] = val;
-		ind++;
-		if(siz<cap) siz++;
-	}
-
-	int getMean()
-	{
-		if(siz==0) System.exit(0);
-		return sum/siz;
-	}
-
-}
-
-
-
-========================================
-(23). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minConvertPalindrome.java
-========================================
-
-
-/*
-Given a string, convert it into a palindrome with the lease number of insertions possible
-*/
-
-
-===
-if just compute the minimum # of insertions, iterative DP is good:
-
-int minConvertPalindrome(String s)
-{
-	int n = s.length();
-	if(n<=1) return 0;
-
-	int[][] map = new int[n][n];
-	for(int j=0;j<n;j++)
-	{
-		for(int i=j-1;i>=0;i--)
-		{
-
-			if(s.charAt(i)!=s.charAt(j))
-			{
-				if(i+1>=j) map[i][j] = 1;
-				else
-				{
-					map[i][j] = Math.min(map[i+1][j], map[i][j-1])+1;
-				}
-			}
-			else
-			{
-				if(i+1>=j-1) map[i][j] = 0;
-				else
-					map[i][j] = map[i+1][j-1];
-			}
-
-		}
-	}
-	for(int[] i:map)
-	{
-		for(int j:i)
-			System.out.print(j+" ");
-		System.out.println();
-	}
-	return map[0][n-1];
-}
-
-
-
-
-===
-    static class Result
-    {
-        int num;
-        String s;
-        Result(int _num, String _s)
-        {
-            num = _num; s=_s;
-        }
-        public String toString()
-        {
-            return "{"+num+", "+s+"}";
-        }
-    }
-    String minPalindrome(String s)
-    {
-        int n = s.length();
-        if(n<=1) return s;
-
-        Result re = helper(s, 0, n-1, new HashMap<Integer, Result>());
-        System.out.println(s);
-        System.out.println(re.num);
-        return re.s;
-    }
-
-    Result helper(String s, int l, int r, HashMap<Integer, Result> map)
-    {
-        if(l>r)
-        {
-            Result re = new Result(0,"");
-            return re;
-        }
-        if(l==r)
-        {
-            Result re = new Result(0, s.substring(l,l+1));
-            return re;
-        }
-
-        int key = l*s.length()+r;
-        if(map.containsKey(key)) return map.get(key);
-
-        Result re = null;
-
-        Result left = helper(s,l,r-1,map);
-        Result right = helper(s,l+1,r,map);
-
-        if(left.num<right.num)
-        {
-            re = new Result(left.num+1, s.charAt(r)+left.s+s.charAt(r));
-        }
-        else
-        {
-              re = new Result(right.num+1, s.charAt(l)+right.s+s.charAt(l));
-        }
-
-        if(s.charAt(l)==s.charAt(r))
-        {
-            Result tmp = helper(s,l+1,r-1,map);
-
-            if(tmp.num<re.num)
-            {
-                re.num = tmp.num; re.s = tmp.s;
-                re.s = s.charAt(l)+re.s+s.charAt(l);
-            }
-        }
-
-        map.put(key, re);
-        return re;
-    }
-
-
-
-========================================
-(24). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minCOverDoc.java
-========================================
-
-
-/*
-2. Give a list of documents, find the minimal document set that can cover 
-all the characters in all the documents, like
-“a b c h j”,  "c d”, “a b c” “a f g” “a h j”
-the result should be "a b c h j" "c d" and "a f g"
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	static class lenComp implements Comparator<String>
-	{
-		public int compare(String s, String p)
-		{
-			return s.length()-p.length();
-		}
-	}
-	HashSet<String> minCoverDoc(String[] str)
-	{
-		HashSet<String> re = new HashSet<>();
-		HashSet<Character> set = new HashSet<>();
-		for(String s:str)
-			for(char c:s.toCharArray())
-				set.add(c);
-		Arrays.sort(str, new lenComp());
-
-		while(!set.isEmpty())
-		{
-			int max = 0;
-			HashSet<Character> tmp = null;
-			String tStr = "";
-			for(String s:str)
-			{
-				if(!re.contains(s))
-				{
-					HashSet<Character> r = helper(new HashSet<Character>(set), s);
-					if(r.size()>max)
-					{
-						max = r.size();
-						tmp = r;
-						tStr = s;
-					}
-				}
-			}
-			if(tmp==null) break;
-			re.add(tStr);
-			for(char c:tmp) set.remove(c);
-		}
-		return re;
-	}
-
-	HashSet<Character> helper(HashSet<Character> set, String s)
-	{
-		HashSet<Character> newSet = new HashSet<>();
-		for(char c:s.toCharArray())
-		{
-			if(set.contains(c)) newSet.add(c);
-		}
-		return newSet;
-	}
-
-	public static void main(String[] args) {
-		String[] a = {"abchj","cd", "abc", "afg","ahj"};
-
-		System.out.println(new Solution().minCoverDoc(a));
-	}
-}
-
-
-========================================
-(25). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
-========================================
-
-
-/*	Input: 38
-	Output: [2,3,5], since 2^2+3^2+5^2 = 38*/
-
-===
-
-Iteration:
-====
-
-Cleaner solution:
-
-List<Integer> minLenOfSquareSum(int num)
-{
-	List<Integer> re = new ArrayList<>();
-	if(num<1) return re;
-
-	int[] minimum = new int[num+1];
-	int[] pred = new int[num+1];
-
-	Arrays.fill(minimum, Integer.MAX_VALUE);
-	Arrays.fill(pred, -1);
-
-	for(int i=1;i<=num;i++)
-	{
-		int sroot = (int)Math.sqrt(i);
-		if(sroot*sroot==i)
-		{
-			minimum[i] = 1;
-			pred[i] = sroot;
-		}
-		else
-		{
-			int min = Integer.MAX_VALUE;
-			int pre = -1;
-			for(int j=sroot; j>0; j--)
-			{
-				int comp = i-j*j;
-				if(minimum[comp]<min)
-				{
-					min = minimum[comp];
-					pre = j;
-				}
-			}
-			minimum[i] = min+1;
-			pred[i] = pre;
-		}
-	}
-
-	return getSequence(pred);
-}
-
-List<Integer> getSequence(int[] pred)
-{
-	List<Integer> re = new ArrayList<>();
-
-	int cur = pred.length-1;
-	System.out.println(cur);
-	while(pred[cur]!=-1)
-	{
-		re.add(pred[cur]);
-		cur-=(pred[cur]*pred[cur]);
-	}
-	return re;
-}
-
-
-
-====
-    List<Integer> shortestSquareSum(int N)
-    {
-        List<Integer> result = new ArrayList<Integer>();
-
-        if(N<0) return result;
-        if(N<=1) { result.add(N); return result;}
-
-        int n = (int)(Math.sqrt(N));
-
-        if(n==-1) return result;
-
-        int[][] prefix = new int[n][N];
-        int[][] arr = new int[n][N];
-        for(int i=0;i<n;i++)
-            for(int j=0;j<N;j++)
-                arr[i][j] = Integer.MAX_VALUE;
-        for(int i=0;i<n;i++)
-            for(int j=0;j<N;j++)
-                prefix[i][j] = -1;
-
-
-        for(int i=0;i<N;i++)
-        {
-            
-            for(int j = n-1;j>=0;j--)
-            {
-                int cur = (j+1)*(j+1);
-                int min = Integer.MAX_VALUE;
-                int pre = -1;
-                if(cur>i+1) continue;
-                else if(cur==i+1) { min = 1; pre = -1;}
-                else
-                {
-                    int val = i+1-cur;
-                    for(int k = j;k>=0;k--)
-                    {
-                        if(arr[k][val-1]!= Integer.MAX_VALUE && arr[k][val-1]+1<min)
-                        {
-                            min = arr[k][val-1]+1;
-                            pre = k;
-                        }
-                    }
-                }
-                arr[j][i] = min;
-                prefix[j][i] = pre;
-            }
-        }
-
-        int ind=-1;
-        int min = Integer.MAX_VALUE;
-        for(int i=0;i<n;i++)
-            if(arr[i][N-1]<min)
-            {
-                min = arr[i][N-1];
-                ind = i;
-            }
-        if(min==Integer.MAX_VALUE) return null;
-
-        result = new ArrayList<Integer>();
-        int res = N-1;
-        while(ind!=-1)
-        {
-            result.add(ind+1);
-            int t = ind;
-            ind = prefix[ind][res];
-            res = res-(t+1)*(t+1);
-        }
-        return result;
-    }
-
-====
-
-Recursion:
-
-	List<Integer> helper(int target, int max, HashMap<Integer, List<Integer>> map, int magic)
-	{
-		if(target==0) return new ArrayList<Integer>();
-		if(target<0 || max<=0)
-		{
-			return null;
-		}
-		int sqrt = (int)Math.sqrt(target);
-		int upper = Math.min(sqrt, max);
-		if(upper==0)
-		{
-			return null;
-		}
-
-		int key = max*magic+target;
-		if(map.containsKey(key))
-		{
-			return map.get(key);
-		}
-
-		List<Integer> rr = helper(target, upper-1, map, magic);
-		int min = -1;
-		int siz = -1, minCount = 0;
-		if(rr==null)
-		{
-			siz = 0;
-			min = Integer.MAX_VALUE;
-		}
-		else
-		{
-			siz = rr.size();
-			min = rr.size();
-		}
-		int prod = upper*upper;
-		int count = 0;
-		while(target - prod>=0)
-		{
-			target -=prod;
-			count++;
-
-			List<Integer> rr_local = helper(target,upper-1, map, magic);
-			if(rr_local == null) continue;
-
-			if(rr_local.size()+count<min)
-			{
-
-				rr = rr_local;
-				minCount = count;
-				min = rr.size()+count;
-			}
-		}
-		List<Integer> re = new ArrayList<Integer>(rr);
-		for(int i=0;i<minCount;i++)
-			re.add(upper);
-		map.put(key, re);
-		return map.get(key);
-	}
-
-	List<Integer> minFactorization(int a)
-	{
-		List<Integer> re = new ArrayList<Integer>();
-		if(a<=0) return re;
-		if(a == 1)
-		{
-			re.add(1); return re;
-		}
-
-		int magic = (int)(Math.sqrt(a));
-
-		return helper(a, magic, new HashMap<Integer, List<Integer>>(), a);
-
-	}
-
-	===
-
-	Recursion 2:
-	    List<Integer> shortestSquareSum(int N)
-    {
-        List<Integer> result = new ArrayList<Integer>();
-
-        if(N<0) return result;
-        if(N<=1) { result.add(N); return result;}
-
-        int re = -1;
-        int l = 1, r = N;
-        while(l<=r)
-        {
-            int mid = l+(r-l)/2;
-            if(N/mid == mid) { re = mid; break;}
-            else if(N/mid < mid) { r = mid-1; }
-            else { re = mid; l = mid+1;}
-        }
-
-        if(re==-1) return result;
-
-        int n = re;
-        int[] arr = new int[n];
-        for(int i=0;i<n;i++)
-            arr[i] = (i+1)*(i+1);
-
-        for(int i:arr)
-            System.out.print(i+" ");
-        System.out.println();
-        HashMap<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
-        return helper(arr, 0, N,map);
-    }
-
-    List<Integer> helper(int[] arr, int k, int sum, HashMap<Integer, List<Integer>> map)
-    {
-        
-        if(sum==0) return new ArrayList<Integer>();
-        if(k==arr.length || sum<0 || arr[k]>sum) return null;
-
-
-        int key = arr.length*sum+k;
-        if(map.containsKey(key)) return map.get(key);
-
-
-        List<Integer> list = helper(arr, k+1, sum, map);
-        int min = (list==null)?Integer.MAX_VALUE:list.size();
-
-        int count = 0;
-        int minCount = 0;
-        while(sum-arr[k]>=0)
-        {
-            count++;
-            sum-=arr[k];
-            List<Integer> tmp = helper(arr, k+1, sum, map);
-            if(tmp!=null && (tmp.size()+count<min||list==null))
-            {
-                list = tmp;
-                min = tmp.size()+count;
-                minCount = count;
-            }
-        }
-        
-        if(list==null || min==Integer.MAX_VALUE) return null;
-        
-        List<Integer>re = new ArrayList<Integer>(list);
-        int sqt = (int)Math.sqrt(arr[k]);
-        for(int i=0;i<minCount;i++)
-            re.add(sqt);
-        map.put(key, re);
-
-        return re;
-    }
-
-
-
-========================================
-(26). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
-========================================
-
-
-/*
-Given n numbers (P1,P2,P3,.....Pn). Divide them in m contiguous partitions such that the sum of the maximum is minimum.
-For e.g. (5,1,4,2,3) and m =2
-then (5,1)(4,2,3)  
-*/
-
-
-
-    List<List<Integer>> minPartition(int[] a, int m)
-    {
-        List<List<Integer>> re = new ArrayList<>();
-
-        int n = a.length;
-        if(n==0) return re;
-
-        if(m==1)
-        {
-            List<Integer> r = new ArrayList<>();
-            for(int i:a) r.add(i);
-            re.add(r);
-            return re;
-        }
-
-        int[][] min = new int[m][n], pre = new int[m][n];
-        for(int[] i:min)
-            Arrays.fill(i, Integer.MAX_VALUE);
-        for(int[] i:pre)
-            Arrays.fill(i, -1);
-
-        min[0][0] = a[0];
-        for(int i=1;i<n;i++)
-            min[0][i] = Math.max(min[0][i-1], a[i]);
-
-        for(int i=1;i<m;i++)
-        {
-            for(int j=i;j<n;j++)
-            {
-                int minimum = Integer.MAX_VALUE, prev = -1;
-                int local = a[j];
-                for(int k=j;k>=i;k--)
-                {
-                    local = Math.max(local, a[k]);
-                    if(local< minimum-min[i-1][k-1])
-                    {
-                        minimum = local+min[i-1][k-1];
-                        prev = k-1;
-                    }
-                }
-                min[i][j] = minimum;
-                pre[i][j] = prev;
-            }
-        }
-        return getSequence(a, pre);
-    }
-
-    List<List<Integer>> getSequence(int[] a, int[][] pre)
-    {
-        int cur = a.length-1, m = pre.length;
-        List<List<Integer>> re = new ArrayList<>();
-        while(pre[m-1][cur]!=-1)
-        {
-            List<Integer> r = new ArrayList<>();
-            int t = pre[m-1][cur];
-            for(int i=t+1;i<=cur;i++) r.add(a[i]);
-            re.add(0,r);
-            cur = pre[m-1][cur];
-            m--;
-        }
-        List<Integer> r = new ArrayList<>();
-        for(int i=0;i<=cur;i++)
-        {
-            
-            r.add(a[i]);
-        }
-        re.add(0,r);
-        return re;
-    }
-
-==========
-/*
-Below is wrong question.
-
-minimum of maximum of sumation:
-
-*/
-    List<List<Integer>> minPartition(int[] a, int m)
-    {
-        int n = a.length;
-        if(n<m) return 0;
-
-        int[][] min = new int[n][m];
-        int[][] prefix = new int[n][m];
-
-        for(int i=0;i<n;i++)
-            for(int j=0;j<m;j++)
-            {
-                min[i][j] = Integer.MAX_VALUE;
-                prefix[i][j] = -1;
-            }
-       
-        int sum = a[0];
-
-        min[0][0] = a[0];
-        for(int i=1;i<n; i++)
-            min[i][0] = min[i-1][0]+a[i];
-
-        for(int i=1;i<n;i++)
-        {
-
-            sum+=a[i];
-            for(int j=1;j<m&&j<=i;j++)
-            {
-                int sub = 0; int pre = -1;
-                int minimum = Integer.MAX_VALUE;
-                for(int k = i;k>=j;k--)
-                {
-                    sub+=a[k];
-
-                    if(Math.max(sub, min[k-1][j-1]) < minimum)
-                    {
-                        minimum = Math.max(sub, min[k-1][j-1]);
-                        pre = k-1;
-                    }
-                }
-                min[i][j] = minimum;
-                prefix[i][j] = pre;
-            }
-        }
-        List<List<Integer>> re = new ArrayList<List<Integer>>();
-        int cur = n-1;
-        int count = m-1;
-        while(cur!=-1)
-        {
-            int pre = prefix[cur][count];
-            List<Integer> rr = new ArrayList<Integer>();
-            for(int i = pre+1;i<=cur;i++)
-                rr.add(a[i]);
-            re.add(rr);
-            count--;
-            cur = pre;
-        }
-        return re;
-    }
-
-
-========================================
-(27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/mostTimeinArray.java
-========================================
-
-
-
-/*
-find out in a sorted array which number appears the most times
-*/
-
-    int mostTimeinArray(int[] a)
-    {
-        int n = a.length;
-        if(n<=1) return n;
-
-        int max = 0;
-        int i = 0;
-        while(i<n)
-        {
-
-            int l = i, r = n-1;
-            int re = -1;
-            while(l<=r)
-            {
-                int mid = l+(r-l)/2;
-                if(a[mid]==a[i])
-                {
-                    re = mid; l = mid+1;
-                }
-                else if(a[mid]>a[i]) r = mid-1;
-                else l = mid+1;
-            }
-            if(re==-1) break;
-            if(re+1-i>max) max = re+1-i;
-            i = re+1;
-
-        }
-        return max;
-    }
-
-
-========================================
-(28). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/nextPalindrime.java
-========================================
-
-
-/*如何找比一个int大的下一个palindrome。 Write a function which returns the next palindrome greater than the given number n. e.g., f(231) = 232; f(999) = 1001; f(111) = 121
-*/
-===
-class Solution
-{
-	static int[] nextPalind(int[] a)
-	{
-		int n = a.length;
-		int[] re = new int[n];
-		if(n==1)
-		{
-			re[0] = a[0]+1; 
-			return correct(re);
-		}
-
-		boolean flg = true;
-		int l = 0, r =n-1;
-		while(l<=r)
-		{
-			if(a[l]!=a[r]) break;
-			l++;r--;
-
-		}
-		if(l>r)
-		{
-			int carry = 1;
-			for(int i=n-1;i>=0;i--)
-			{
-				a[i]+=carry;
-				carry=a[i]/10;
-				a[i]%=10;
-			}
-			if(carry!=0)
-			{
-				int[] b = new int[n+1];
-				b[0]=carry;
-				for(int i=0;i<n;i++)
-					b[i+1] =a[i];
-				return nextPalind(b);
-			}
-			return nextPalind(a);
-		}
-		l=0;r=n-1;
-		while(l<=r)
-		{
-			if(a[l]==a[r])
-			{
-				if(l+1==r && flg)
-				{
-					a[l]++;a[r]++;
-				}
-				else if(l==r && flg)
-					a[l]++;
-			}
-			else if(a[l]>a[r])
-			{
-				a[r]=a[l]; flg=false;
-			}
-			else
-			{
-				a[r]=a[l]; flg=true;
-			}
-			l++;r--;
-		}
-		return correct(a);
-	}
-
-	static int[] correct(int[] re)
-	{
-
-		int i, j;
-		int n=re.length;
-		if(re.length%2==0)
-		{
-			i=(re.length-1)/2;
-			j=i+1;
-		}
-		else
-		{
-			i=re.length/2;
-			j=i;
-		}
-		int carry =0;
-		while(i>=0&&j<n)
-		{
-			re[i]+=carry;
-			if(i!=j) re[j]+=carry;
-			if(re[i]>=10)
-			{
-				re[i]%=10;
-				re[j]%=10;
-				carry=1;
-			}
-			else
-			{
-				carry=0;
-			}
-			i--;j++;
-		}
-		if(carry==1)
-		{
-			int[] a = new int[n+2];
-			a[0]=a[n+1]=1;
-			for(i=0;i<n;i++)
-			{
-				a[i+1]=re[i];
-			}
-			return a;
-		}
-		return re;
-	}
-
-	public static void main(String[] args) {
-		// int[] num = {9, 4, 1, 8, 7, 9, 7, 8, 3, 2, 2};
-		int[] num = {2,3,1};
-		// f(231) = 232; f(999) = 1001; f(111) = 121
-		for(int i:nextPalind(num))
-			System.out.print(i+" ");
-		System.out.println();
-
-		int[] num1 = {9,9,9};
-		for(int i:nextPalind(num1))
-			System.out.print(i+" ");
-		System.out.println();
-
-		int[] num2 = {1,1,1};
-		for(int i:nextPalind(num2))
-			System.out.print(i+" ");
-		System.out.println();
-
-	}
-}
-
-
-========================================
-(29). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Ramanujan.java
-========================================
-
-
-/*
-Question 1: The interviewer was really kind. The asked me to write a function to find all the Ramanujan numbers. He helped
- me when I got stuck at any point and was giving me polite hints.
-
- 1729 = 1^3 + 12^3 = 9^3 + 10^3
-*/
-    List<List<Integer>> Ramanujan(int N)
-    {
-        List<List<Integer>> re = new ArrayList<List<Integer>>();
-        if(N<9) return re;
-        long l = 1, r = N;
-        while(l<r)
-        {
-            long sum = l*l*l+r*r*r;
-            if(sum == N)
-            {
-                List<Integer> rr = new ArrayList<Integer>();
-                rr.add((int)l); rr.add((int)r);
-                re.add(rr);
-                if(re.size()==2) return re;
-                else { l++;r--;}
-            }
-            else if(sum<N) l++;
-            else r--;
-        }
-        re.clear();
-        return re;
-    }
-
-
-========================================
-(30). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomCache.java
-========================================
-
-
-
-/*就是如何实现find, insert, delete, getRandom 都是O(1)
-*/
-
-
-
-class Solution
-{
-    int cap;
-    int size;
-    int[] arr;
-    HashMap<Integer, Integer> map;
-
-    Solution(int _cap)
-    {
-        cap = _cap;
-        size = 0;
-        arr = new int[cap];
-        map = new HashMap<Integer, Integer>();
-    }
-
-    boolean find(int elem)
-    {
-        return map.containsKey(elem);
-    }
-
-    void insert(int elem)
-    {
-        if(map.containsKey(elem)) return;
-        if(size<cap)
-        {
-            arr[size] = elem;
-            map.put(elem, size);
-            size++;
-        }
-        else
-        {
-            int[] newArr = new int[2*cap];
-            for(int i=0;i<cap;i++)
-            {
-                newArr[i] = arr[i];
-            }
-            cap = 2*cap;
-            insert(elem);
-        }
-    }
-    
-    void delete(int elem)
-    {
-        if(!map.containsKey(elem)) return;
-
-        int ind = map.get(elem);
-        int last = arr[size-1];
-        map.remove(elem);
-        map.remove(last);
-        arr[ind] = last;
-        map.put(last,ind);
-        size--;
-    }
-
-    int getRandom()
-    {
-        if(size!=0)
-        {
-            int k = random(0,size);
-            return arr[k];
-        }
-        System.exit(-11);
-    }
-}
-
-
-
-========================================
-(31). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomWalkProb.java
-========================================
-
-
-
-/*
-第二题，直线上有一个机器人从原点开始移动，每次可以向左移，也可以向右移，移动
-n步，再回到原点的概率是多少, 可以写程序实现。*/
-
-===
-
-cleaner solution:
-
-class Solution
-{
-    static int origin =0, total =0;
-
-    double randomWalk(int n)
-    {
-        helper(n,0,0);
-        return (double)origin/total;
-    }
-
-    void helper(int n, int i, int j)
-    {
-        if(i+j==n)
-        {
-            if(i==j) origin++;
-            total++;
-        }
-        else
-        {
-            helper(n, i+1,j);
-            helper(n, i,j+1);
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new Solution().randomWalk(3));
-    }
-}
-
-===
-    static class returnType
-    {
-        int origin;
-        int total;
-        returnType()
-        {
-            origin = 0; total = 0;
-        }
-    }
-
-    returnType helper(int n, int i, int j)
-    {
-        if(i+j>n) return new returnType();
-        int origin = 0;
-        int total = 0;
-        if(i+j==n)
-        {
-            if(i==j) origin++;
-            total++;
-        }
-        else
-        {
-            returnType res1=helper(n,i+1,j);
-            returnType res2=helper(n,i,j+1);
-            origin = res1.origin+res2.origin;
-            total = res1.total+res2.total;
-        }
-
-        returnType re= new returnType();
-        re.origin = origin;
-        re.total = total;
-        return re;
-    }
-
-
-
-========================================
-(32). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildAlphabet.java
-========================================
-
-
-/*
-fft, fcp, aac, act, acd, atp, tbk, tdf, …
-这些都是按照字母排序好的，但是字母顺序改了，比如 f 在 a之前，t在d之前等等，
-给定一些这样的rule，问怎么rebuild the alphabet?
-*/
-
-
-
-class node
-{
-    char val;
-    int indegree;
-    HashSet<node> outNode;
-
-    node(char _val)
-    {
-        val = _val;
-        indegree = 0;
-        outNode = new HashSet<node>();
-    }
-}
-
-class Solution{
-
-
-    String alphabetRebuild(String[] a)
-    {
-        String re = "";
-        int n = a.length;
-        if(n==0) return re;
-
-        HashMap<Character, node> map = new HashMap<Character, node>();
-
-        for(String s:a)
-        {
-            for(int i=0;i<s.length();i++)
-            {
-                char c = s.charAt(i);
-                if(!map.containsKey(c))
-                {
-                    map.put(c, new node(c));
-                }
-
-                if(i+1<s.length())
-                {
-                    char next = s.charAt(i+1);
-
-                    if(next==c) continue;
-
-                    node nd = map.get(c);
-
-                    if(!map.containsKey(next))
-                        map.put(next,new node(next));
-
-                    if(!nd.outNode.contains(map.get(next)))
-                    {
-                        map.get(next).indegree++;
-                        nd.outNode.add(map.get(next));
-                    }
-                }
-            }
-        }
-
-        while(map.size()!=0)
-        {
-            node nd = null;
-            for(char c:map.keySet())
-            {
-                nd = map.get(c);
-                if(map.get(c).indegree==0) break;
-            }
-
-            if(nd==null) return re;
-            re = re+String.valueOf(nd.val);
-            for(node N : nd.outNode)
-            {
-                N.indegree--;
-            }
-            map.remove(nd.val);
-        }
-        return re;
-    }
-
-    public static void main(String[] args) {
-        
-        String[] a = {"fft", "fcp", "aac", "act", "acd", "atp", "tbk", "tdf"};
-
-        System.out.println(new Solution().alphabetRebuild(a));
-    }
-
-}
-
-
-========================================
-(33). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildUpTree.java
-========================================
-
-
-/* 1. printing a tree structure with giving collection of pairs of <parent, 
-child> relation. Need to first find the root, and validate wether the given 
-relations is a valid tree, and then printing. 
-*/
-
-===
-    static class pair
-    {
-        int left, right;
-        pair(int _left, int _right)
-        {
-            left = _left; right = _right;
-        }
-    }
-
-    static class node
-    {
-        int val;
-        int indegree;
-        HashSet<node> outgoing;
-        node(int _val)
-        {
-            val = _val; indegree = 0; outgoing = new HashSet<node>();
-        }
-    }
-
-    node buildUp(pair[] a)
-    {
-        int n = a.length; 
-        if(n==0) return null;
-
-        HashMap<Integer, node> map = new HashMap<Integer, node>();
-        for(pair p:a)
-        {
-            int par = p.left, kid = p.right;
-            if(!map.containsKey(par)) map.put(par, new node(par));
-            if(!map.containsKey(kid)) map.put(kid, new node(kid));
-            node parNode = map.get(par);
-            node kidNode = map.get(kid);
-
-            if(!parNode.outgoing.contains(kidNode)) 
-            {
-                parNode.outgoing.add(kidNode);
-                kidNode.indegree++;
-            }
-        }
-
-        node rootNode = null;
-        for(int i:map.keySet())
-        {
-            if(map.containsKey(i) && map.get(i).indegree==0)
-            {
-                if(rootNode!=null)
-                {
-                    rootNode=null; break;
-                }
-                rootNode = map.get(i);
-            }
-        }
-        if(rootNode==null) return null;
-
-        HashSet<node> set = new HashSet<node>();
-        LinkedList<node> q = new LinkedList<node>();
-
-        q.addLast(rootNode);
-        set.add(rootNode);
-        while(!q.isEmpty())
-        {
-            node cur = q.removeFirst();
-            for(node k : cur.outgoing)
-            {
-                if(set.contains(k))
-                {
-                    rootNode = null; break;
-                }
-                set.add(k); q.addLast(k);
-            }
-        }
-
-        if(rootNode==null) return null;
-        return (set.size()==map.size())?rootNode:null;
-    }
-
-
-========================================
-(34). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
-========================================
-
-
-Reorder array, so that a[i-1]<a[i]>a[i+1]
-
-
-===
-Print all results:
-
-	boolean valid(int[] r, int k)
-	{
-		if(k==0 || k-1==0) return true;
-		if(r[k]<r[k-1]) return r[k-1]>r[k-2];
-		if(r[k]>r[k-1]) return r[k-1]<r[k-2];
-		return false;
-	}
-
-
-	void helper(int[] a, int k,List<List<Integer>> re,  int[] r, boolean[] used)
-	{
-		int n = a.length;
-		if(n==k)
-		{
-				List<Integer> rr = new ArrayList<Integer>();
-				for(int i:r) rr.add(i);
-				re.add(rr);
-			return;
-		}
-
-		for(int i=0;i<n;i++)
-		{
-			if(!used[i])
-			{
-				used[i] = true;
-				r[k] = a[i];
-				if(valid(r,k))
-				{
-					
-					helper(a,k+1,re, r, used);
-				}
-				used[i] = false;
-			}
-		}
-		return;
-	}
-
-	List<List<Integer>> reOrder(int[] a)
-	{
-		List<List<Integer>> re = new ArrayList<List<Integer>>();
-		int n = a.length;
-		if(n==0) return re;
-
-		helper(a, 0, re, new int[n], new boolean[n]);
-		return re;
-	}
-
-
----
-
-	public void selection(int[] a, int k, int l, int r)
-	{
-		if(l+k>r) return;
-		int val = a[l];
-
-		int i = l-1, j = r+1;
-		while(i<j)
-		{
-			while(++i<j && a[i]<=val);
-			while(i<--j && a[j] >val);
-			if(i>=j) break;
-
-			int t = a[i];
-			a[i] = a[j];
-			a[j] = t;
-		}
-		int t = a[j];
-		a[j] = a[l];
-		a[l] = t;
-		if(j-l == k) return;
-		else if(j-l<k)
-		{
-			selection(a, k+l-j, j,r);
-		}
-		else
-		{
-			selection(a,k,l,j);
-		}
-	}
-
-	void reverse(int[] a, int l, int r)
-	{
-		while(l<r)
-		{
-			int t = a[l]; a[l] = a[r]; a[r] = t;
-			l++; r--;
-		}
-	}
-	public void reorder(int[] a, int l, int r)
-	{
-		if(r-l+1<=2) return;
-
-		int mid = l+(r-l)/2;
-
-		int left = l +(mid-l)/2;
-		int num = left-l+1;
-		int right = mid+num;
-
-		reverse(a, left+1, mid);
-		reverse(a, mid+1, right);
-		reverse(a,left+1, right);
-
-		reorder(a, l, l+2*num-1);
-		reorder(a, l+2*num, r);
-	}
-
-	public void reOrder(int[] a)
-	{
-		int n = a.length;
-		if(n<=1) return;
-
-		selection(a, (n-1)/2, 0, n-1);
-		reorder(a,0,n-1);
-
-	}
-
-
-========================================
-(35). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/reverseBit.java
-========================================
-
-
-/*Finally reverse bits of an integer.
-*/
-
-    int reverseInt(int val)
-    {
-        val = (val&(0xAAAAAAAA))>>1|((val&(0x55555555))<<1);
-        val = (val&(0xCCCCCCCC))>>2|((val&(0x33333333))<<2);
-        val = (val&(0xF0F0F0F0))>>4|((val&(0x0F0F0F0F0F))<<4);
-        val = (val&(0xFF00FF00))>>8|((val&(0x00FF00FF))<<8);
-        val = (val&(0xFFFF0000))>>16|((val&(0x0000FFFF))<<16);
-        return val;
-    }
-
-
-========================================
-(36). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rotateBT.java
-========================================
-
-
-Given a binary tree where all the right nodes are leaf nodes, flip it 
-upside down
-* and turn it into a tree with left leaf nodes.
-*
-* for example, turn these:
-*
-*        1                1
-*       /               / 
-*      2   3            2   3
-*     / 
-*    4   5
-*   / 
-*  6   7
-*
-* into these:
-*
-*        1               1
-*       /               /
-*      2---3           2---3
-*     /
-*    4---5
-*   /
-*  6---7
-*
-* where 6 is the new root node for the left tree, and 2 for the right tree.
-* oriented correctly:
-*
-*     6                  2
-*    /                 / 
-*   7   4              3   1
-*      / 
-*     5   2
-*        / 
-*       3   1
-*/
-
-
----
-  public TreeNode rotate(TreeNode root)
-  {
-      if(root == null) return null;
-
-      if(root.left == null && root.right == null) return root;
-
-      TreeNode newRoot =  rotate(root.left);
-      root.left.left = root.right;
-      root.left.right = root;
-      root.left = null;
-      root.right = null;
-      return newRoot;
-  }
-
-
-
-========================================
-(37). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/searchMatrix.java
-========================================
-
-
-/*
-Given a sorted matrix where the number below and right of you will always be bigger, write an algorithm to find if a particular number 
-exist in the matrix
-*/
-
-
-    boolean searchMatrix(int[][] a, int val)
-    {
-        int m = a.length;
-        if(m==0) return false;
-        int n = a[0].length;
-        if(n==0) return false;
-
-        int mm = 0, nn = n-1;
-        while(mm<m&&nn>0)
-        {
-            int l = mm, r = m-1;
-            int re1 = -1;
-            while(l<=r)
-            {
-                int mid = l+(r-l)/2;
-                if(a[mid][nn] == val) return true;
-                else if(a[mid][nn] >val)
-                {
-                    re1 = mid; r = mid-1;
-                }
-                else l = mid+1;
-            }
-            if(re1==-1) return false;
-
-            l = 0; r = nn;
-            int re2 = -1;
-            while(l<=r)
-            {
-                int mid = l+(r-l)/2;
-                if(a[re1][mid]==val) return true;
-                else if(a[re1][mid] > val)
-                {
-                    r = mid-1;
-                }
-                else
-                {
-                    re2 = mid;
-                    l = mid+1;
-                }
-            }
-            if(re2==-1) return false;
-
-            mm = re1; nn = re2;
-        }
-        return false;
-    }
-
-
-========================================
-(38). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/shortestPrefix.java
-========================================
-
-
-/*
-Use the shorest unique prefix to represent each word in the array 
-input: ["zebra", "dog", "duck",”dot”] 
-output: {zebra: z, dog: do, duck: du} 
-
-[zebra, dog, duck, dove] 
-{zebra:z, dog: dog, duck: du, dove: dov} 
-
-[bearcat, bear] 
-{bearcat: bearc, bear: ""}
-
-*/
-===
-
-cleaner solution:
-
-    HashMap<String, String> func(String[] s)
-    {
-        int n = s.length;
-        if(n==0) return null;
-        String[] re  = new String[n];
-
-        HashMap<String, String> map = new HashMap<>();
-        for(String ss:s) map.put(ss, "");
-        sort(s,0,n-1,map);
-        return map;
-    }
-
-    void sort(String[] s, int l, int r, HashMap<String, String>map)
-    {
-        if(l>=r) return;
-        int mid = partition(s, l, r, map);
-        sort(s,l,mid-1,map);
-        sort(s,mid+1,r,map);
-    }
-
-    int partition(String[] s, int l, int r, HashMap<String, String> map)
-    {
-        if(l>r) return -1;
-
-        int i=l-1, j=r+1;
-        while(i<j)
-        {
-            while(++i<j && compare(s,i,l, map));
-            while(--j>=i && compare(s,j,l, map));
-            if(i>j) break;
-
-            String t = s[i]; s[i] = s[j]; s[j] = t;
-        }
-        String t = s[l]; s[l] = s[j]; s[j] = t;
-        return j;
-    }
-
-    boolean compare(String[] s, int l, int r, HashMap<String, String> map)
-    {
-        String a = s[l], b = s[r];
-        if(a.equals(b)) return true;
-
-        int m = a.length(), n = b.length();
-        int i = 0;
-        while(i<m&&i<n)
-        {
-            if(a.charAt(i)==b.charAt(i)) i++;
-            else
-            {
-                if(map.get(a).length()-1<i) map.put(a, a.substring(0,i+1));
-                if(map.get(b).length()-1<i) map.put(b, b.substring(0,i+1));
-                return a.charAt(i)<=b.charAt(i);
-            }
-        }
-        if(i==m) map.put(a,a);
-        if(i==n) map.put(b,b);
-        return m<=n;
-    }
-
-
-
-====
-
-  boolean compare(String s, String p, HashMap<String, String> map)
-  {
-    int m = s.length(), n=p.length();
-    if(s.equals(p)) return true;
-    System.out.println("Compare "+s+", "+p);
-
-    int i=0;
-    for(;i<m && i<n;i++)
-    {
-        if(s.charAt(i) < p.charAt(i))
-        {
-            String ss = map.get(s);
-            String pp = map.get(p);
-            if(ss.length()-1<i)
-            {
-                map.put(s,s.substring(0,i+1));
-            }
-            if(pp.length()-1<i)
-            {
-                map.put(p,p.substring(0,i+1));
-            }
-            return true;
-        }
-        else if(s.charAt(i) > p.charAt(i))
-        {
-            String ss = map.get(s);
-            String pp = map.get(p);
-            if(ss.length()-1<i)
-            {
-                map.put(s,s.substring(0,i+1));
-            }
-            if(pp.length()-1<i)
-            {
-                map.put(p,p.substring(0,i+1));
-            }
-            return false;
-        }
-    }
-
-    if(s.length()-1<i)
-    {
-        map.put(s,s);
-    }
-    if(p.length()-1<i)
-    {
-        map.put(p,p);
-    }
-    return m<n;
-  }
-
-  int partition(String[] s, int l, int r, HashMap<String, String> map)
-  {
-    if(l>r) return -1;
-    String val = s[l];
-    int i=l-1, j=r+1;
-    while(i<j)
-    {
-        while((++i)<j && compare(s[i], val, map));
-        while((--j)>=i && !compare(s[j], val, map));
-        if(i>j) break;
-        String t = s[i];
-        s[i] = s[j];
-        s[j] = t;
-    }
-    String t = s[l];
-    s[l] = s[j];
-    s[j] = t;
-    return j;
-  }
-
-  void sort(String[] s, int l, int r,HashMap<String, String> map)
-  {
-    if(l>r) return;
-    
-    int mid = partition(s,l,r, map);
-    System.out.println("sort "+l+" "+r+", mid="+mid);
-    sort(s,l,mid-1, map);
-    sort(s,mid+1, r, map);
-  }
-
-  HashMap<String, String> func(String[] s)
-  {
-    HashMap<String, String> map = new HashMap<String, String>();
-    int n = s.length;
-    if(n==0) return map;
-
-    for(String i:s)
-    {
-        map.put(i, "");
-    }
-    sort(s, 0, n-1, map);
-    return map;
-  }
-  public static void main(String[] args) {
-      String[] s ={"zero","dog","duck","dove"};
-      System.out.println(new Solution().func(s));
-  }
-}
-
-
-========================================
-(39). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/threeIncreaseElem.java
-========================================
-
-
-/*1. Given a array of integers , find 3 indexes i,j,k such that, i<j<k and a[i] < a[j] < a[k]. Best possible is a O(n) algorithm.
-*/
-
-import java.util.*;
-import java.lang.*;
-
-class Solution
-{
-	List<Integer> threeIncreaseElem(int[] a)
-	{
-		List<Integer> re = new ArrayList<>();
-		int n = a.length;
-		if(n==0) return re;
-
-		int[] min = new int[n];
-
-		min[0] = a[0];
-		for(int i=1;i<n;i++)
-		{
-			min[i] = Math.min(min[i-1], a[i]);
-		}
-
-		int max = a[n-1];
-		for(int i=n-2;i>=0;i--)
-		{
-			if(max<=a[i]) max = a[i];
-			else
-			{
-				if(a[i]>min[i])
-				{
-					re.add(min[i]); re.add(a[i]);re.add(max);
-					return re;
-				}
-			}
-		}
-		return re;
-	}
-	public static void main(String[] args) {
-		int[] a = {2,2,1,2,3,2,1,32};
-		System.out.println(new Solution().threeIncreaseElem(a));
-	}
-}
-
-
-========================================
-(40). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/threePower.java
-========================================
-
-
-// Check if a number power of 3.
-
-
-
-	static boolean threePow(int x)
-	{
-	    if(x<=0) return false;
-	    if(x==1) return true;
-	    int div = 3;
-	    while(x!=0)
-	    {
-	        if(x==1) return true;
-	        if(x%div==0)
-	        {
-	            if(x/div<div*3)
-	            {
-	            	x/=3;
-	            	div=3;
-	            	continue;
-	            }
-	            x/=div;
-	            div*=3;
-	        }
-	        else return false;
-	    }
-	    return false;
-	}
-
-
-
-========================================
-(41). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/uglyNumber.java
-========================================
-
-
-/*
-Print out all the ugly number sequence below a certain number
-
-Ugly Number is the product of only 2,3,5
-
-Example: 1 2 3 4 5 6 8 9 10 12 
-*/
-
-
-    void uglyNumber(int N)
-    {
-        if(N<=0){ System.out.println(0); }
-        else if(N==1) { System.out.println(1);}
-        else
-        {
-            int[] re = new int[N];
-            int cur = 0;
-            int Two = 0, Three = 0, Five = 0;
-            re[cur++] = 1;
-            for(int i=1;i<N;i++)
-            {
-                int min = Math.min(re[Two]*2, Math.min(re[Three]*3,re[Five]*5));
-                re[cur++] = min;
-                while(re[Two]*2 <= min) Two++;
-                while(re[Three]*3 <= min) Three++;
-                while(re[Five]*5 <= min) Five++; 
-            }
-            for(int i:re)
-                System.out.print(i+" ");
-            System.out.println();
-        }
-    }
-    public static void main(String[] args) {
-        new Solution().uglyNumber(100);
-    }
-}
-
-
-
-========================================
-(42). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/UTF8Verification.java
-========================================
-
-
-/*
-Designed a method to verify utf-8 characters
-*/
-
-class Solution
-{
-	static boolean validate(byte[] a)
-	{
-		int n = a.length;
-		if(n==0) return false;
-
-		byte valid = (byte)0b11000000;
-
 		int i=0;
-		for(;i<n;i++)
+		while(i<s1.length() && i<s2.length())
 		{
-			int bit = -1;
-			if((a[i]&(byte)0b10000000)==(byte)0b00000000) bit = 0;
-			else if((a[i]&((byte)0b11100000))==(byte)0b11000000) bit = 1;
-			else if((a[i]&((byte)0b11110000))==(byte)0b11100000) bit = 2;
-			else if((a[i]&((byte)0b11111000))==(byte)0b11110000) bit = 3;
-			else return false;
-
-			for(int j=i+1;j<=i+bit;j++)
-			{
-				if((a[j]&valid )!= (byte)0b10000000) return false;
-			}
-			if(bit==-1) return false;
-			i+=bit;
+			if(s1.charAt(i)!=s2.charAt(i)) break;
+			i++;
 		}
-		return true;
+		return i;
+	}
+	public static void main(String[] args) {
+		System.out.println(new Solution().distinctSubstring("banana"));
 	}
 
-     public static void main(String[] args) {
-     	byte[] bytes1 = {(byte) 0b11001111, (byte) 0b10111111};
-		System.out.println(validate(bytes1)); // true
 
-		byte[] bytes2 = {(byte) 0b11101111, (byte) 0b10101010, (byte) 0b10111111};
-		System.out.println(validate(bytes2)); // true
+========================================
+(10). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/doubleDivide.java
+========================================
 
-		byte[] bytes3 = {(byte) 0b10001111, (byte) 0b10111111};
-		System.out.println(validate(bytes3)); // false
 
-		byte[] bytes4 = {(byte) 0b11101111, (byte) 0b10101010, (byte) 0b00111111};
-		System.out.println(validate(bytes4)); // false
-     }
- 
+/*Given integer a and b, find out the string representation of a/b. For 
+example, if a = 1, b = 3, the output should be 0.(3).
+*/
+
+
+    String divide(int a, int b)
+    {
+        if(a<b) return "0."+helper(a,b);
+        if(a==b) return "1";
+        if(a==0) return "0";
+        if(b==0) return "NaN";
+        if(b==1) return Integer.toString(a);
+
+        return Integer.toString(a/b)+"."+helper(a%b,b);
+    }
+
+    String helper(int a, int b)
+    {
+        if(a>=b) return Integer.toString(a%b);
+
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        LinkedList<Integer> re = new LinkedList<Integer>();
+
+
+        while(a!=0)
+        {
+            a*=10;
+            while(a<b)
+            {
+                a*=10;
+                re.add(0);
+            }
+            int val = a/b;
+            map.put(a/10,val);
+            re.add(val);
+            a = a%b;
+            if(map.containsKey(a)) break;
+        }
+        String result = "";
+        if(a==0)
+            for(int i:re) result+=Integer.toString(i);
+        else
+        {
+            int bug = map.get(a);
+            for(int i:re)
+            {
+                if(i==bug) result+=("(");
+                result+=Integer.toString(i);
+            }
+            result+=")";            
+        }
+        return result;
+    }
+
+
+========================================
+(11). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/equalZeroOnes.java
+========================================
+
+
+/*
+Google:
+
+2. an array with 0's and 1's, find in O(n) time and O(1) space the longest 
+sequence with equal number of 1's and 0's.
+
+can do it with O(n) time and O(n) space. How to do O(1) space.
+*/
+
+import java.util.*;
+import java.lang.*;
+
+class Solution
+{
+	int equalZeroOnes(int[] a)
+	{
+		int n = a.length;
+		if(n<=1)  return 0;
+
+		int[] sum = new int[n];
+		Map<Integer, Integer> map = new HashMap<>();
+
+		// This line is very important
+		// This solve the problem when the summation is ZERO itself, in which case 
+		// the whole sequence should be considered as a longest candidate
+		map.put(0,-1);
+		//
+		sum[0] = (a[0]==0)?-1:1;
+		for(int i=1;i<n;i++)
+		{
+			if(a[i]==0) sum[i] = sum[i-1]-1;
+			else
+				sum[i] = sum[i-1]+1;
+		}
+		int max = 0;
+
+		for(int i=0;i<n;i++)
+		{
+			if(!map.containsKey(sum[i])) map.put(sum[i],i);
+			else
+			{
+				int local = i-map.get(sum[i]);
+				if(local>max) max = local;
+			}
+		}
+		return max;
+	}
+	public static void main(String[] args) {
+		int[] a = {0,0,1,1,1,1,0,0,0,1,1,0};
+		System.out.println(new Solution().equalZeroOnes(a));
+	}
 }
 
 
+
 ========================================
-(43). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/winCoinPicking.java
+(12). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/evenSubtree.java
 ========================================
 
 
+/*An arbitrary tree. split it into as many subtrees as you can. the number of nodes of the subtree must be even. [nodes with even #nodes in the subtree can be the root of an even-subtree]
+*/
 
-You and opponent alternate picking gold pots out of line. You can pick either from the left 
-or the right. All amounts of gold in all pots are know. Write an algorithm to pick the most 
-gold. Assume you opponent is using the same algorithm.    
 
 ===
-
-int winCoinPicking(int[] a)
-    {
-        int n = a.length;
-        if(n==0) return 0;
-        if(n==1) return a[0];
-
-        return helper(a,0,n-1,new HashMap<Integer, Integer>());
-    }
-
-    int helper(int[] a, int l, int r, HashMap<Integer, Integer> map)
-    {
-        if(l>r) return 0;
-        if(l==r) return a[l];
-
-        int k = l*a.length+r;
-        if(map.containsKey(k)) return map.get(k);
-        int re = Math.max(a[l]+Math.min(helper(a,l+1,r-1,map), helper(a,l+1,r,map)) , a[r]+Math.min(helper(a,l,r-2,map), helper(a,l+1,r-1,map)));
-
-        map.put(k,re);
-        return re;
-    }
-
-
-========================================
-(44). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/youngTablueKMAX.java
-========================================
-
-
-给A，B 2个array，里面都是integer，已经排好序了，由大到小，他们的长度都是N
-
-现在从A和B里各选出一个数，总成一个sum，请返回前N个最大的sum
-
-
-
-
-class Pair implements Comparable
+class Solution
 {
-	int val, i, j;
-	Pair(int _i, int _j, int ai, int bj)
-	{
-		val = ai+bj;
-		i = _i; j = _j;
-	}
+// This static List is used to stored cutted node during bottom-up
+static List<TreeNode> re = new ArrayList<>();
 
-	public int compareTo(Object o)
+static TreeNode split(TreeNode root)
+{
+    if(root==null) return null;
+
+    if(root.left==null && root.right==null)
+    {
+    	return null;
+    }
+
+    if(root.left==null)
+    {
+    	if(split(root.right)==null)
+    	{
+    		re.add(root);
+    		return root;
+    	}
+    	else
+    	{
+    		root.right=null;
+    		return null;
+    	}
+    }
+
+    if(root.right==null)
+    {
+    	if(split(root.left)==null)
+    	{
+    		re.add(root);
+    		return root;
+    	}
+    	else
+    	{
+    		root.left=null;
+    		return null;
+    	}
+    }
+
+    TreeNode left=split(root.left), right=split(root.right);
+    if(left==null && right==null) return null;
+    if(left==null)
+    {
+    	root.right=null;
+    	re.add(root);
+    	return root;
+    }
+    if(right==null)
+    {
+    	root.left=null;
+    	re.add(root);
+    	return root;
+    }
+    return null;
+}
+
+public static void main(String[] args) {
+
+	TreeNode a1=new TreeNode(0);
+	TreeNode a2=new TreeNode(1);
+	TreeNode a3=new TreeNode(2);
+	TreeNode a4=new TreeNode(3);
+	TreeNode a5=new TreeNode(4);
+	TreeNode a6=new TreeNode(5);
+	a1.left = a2;
+	a2.left =a3;
+	a2.right=a4;
+	a1.right=a5;
+	a5.right=a6;
+	if(split(a1)==null)
+		System.out.println("false");
+	for(TreeNode nd:re)
+		System.out.println(nd);
+}
+
+}
+
+
+
+========================================
+(13). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Fibonacci.java
+========================================
+
+
+Fibonacci_logN
+
+import java.util.*;
+import java.lang.*;
+
+class fourNum
+{
+	int a0, a1, a2, a3;
+	fourNum(int _a0, int _a1, int _a2, int _a3)
+	{ a0 = _a0; a1=_a1; a2=_a2; a3=_a3;}
+
+	public fourNum multiple(fourNum o)
 	{
-		Pair p = (Pair)o;
-		return val-p.val;
+		fourNum re = new fourNum(0,0,0,0);
+		re.a0 = a0*o.a0 + a1*o.a2;
+		re.a1 = a0*o.a1 + a1*o.a3;
+		re.a2 = a2*o.a0 + a3*o.a2;
+		re.a3 = a2*o.a1 + a3*o.a3;
+		return re;
 	}
 }
 
 class Solution
 {
-	public List<Integer> youngTablueKMAX(int[] a, int[] b, int k)
+	public fourNum helper(int n)
 	{
-		List<Integer> re = new ArrayList<Integer>();
-
-		int m = a.length, n = b.length;
-		if(k<=0 || k>=m*n) return re;
-
-		if(k==1)
+		if(n==0 || n==1) return new fourNum(1,1,1,0);
+		fourNum t = helper(n/2);
+		if(n%2==0)
 		{
-			re.add(a[0]+b[0]);
+			return t.multiple(t);
+		}
+		else
+		{
+			return t.multiple(t).multiple(new fourNum(1,1,1,0));
+		}
+	}
+
+	public int fibonacci(int n)
+	{
+		if(n<=1) return 1;
+		return helper(n).a0;
+	}
+}
+
+
+
+========================================
+(14). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findGlobalMax.java
+========================================
+
+
+/*
+Second interviewer gave me array, with elements first strictly increasing, then strictly
+decreasing. Asked me to find the largest number. 
+*/
+
+    int findGlobalMax(int[] a)
+    {
+        int n = a.length;
+        if(n<3) return -1;
+
+        int l = 0, r = n-1;
+        while(l<=r)
+        {
+            int mid = l+(r-l)/2;
+            if(mid==0) l++;
+            else if(mid==n-1) r--;
+            else
+            {
+                if(a[mid-1]<a[mid] && a[mid+1]<a[mid]) return a[mid];
+                else if(a[mid-1]<a[mid]) l =mid+1;
+                else r = mid-1;
+            }
+        }
+        return -1;
+    }
+
+
+========================================
+(15). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findMaxPairStringNoCommonChar.java
+========================================
+
+
+
+/*
+2. Given a list of words, find two strings S & T such that:
+    a. S & T have no common character
+    b. S.length() * T.length() is maximized
+*/
+
+
+    static class wrapper implements Comparable
+    {
+        String s;
+        wrapper(String _s)
+        {
+            s = _s;
+        }
+
+        public int compareTo(Object o)
+        {
+            return -(s.length()-((wrapper)o).s.length());
+        }
+    }
+
+    boolean checkCommon(String S, String T)
+    {
+        int m = S.length(), n = T.length();
+        if(m*n==0) return true;
+
+        int i =0, j=0;
+        while(i<m&&j<n)
+        {
+            if(S.charAt(i)<T.charAt(j)) i++;
+            else if(S.charAt(i)>T.charAt(j)) j++;
+            else return true;
+        }
+        return false;
+    }
+
+    int findMaxPairStringNoCommonChar(String[] str)
+    {
+        int n = str.length;
+        if(n<=1) return 0;
+
+        wrapper[] tmp = new wrapper[n];
+        for(int i=0;i<n;i++)
+        {
+            char[] t = str[i].toCharArray();
+            Arrays.sort(t);
+            str[i] = new String(t);
+            tmp[i] = new wrapper(str[i]);
+        }
+        Arrays.sort(tmp);
+        for(int i=0;i<n;i++)
+            str[i] = tmp[i].s;
+
+        int max = Integer.MIN_VALUE;
+        int upper = n;
+        for(int i=0;i<upper;i++)
+        {
+            for(int j=i+1;j<upper;j++)
+            {
+                if(!checkCommon(str[i],str[j]))
+                {
+                    if(str[i].length()*str[j].length() >max)
+                    {
+                        max = str[i].length()*str[j].length();
+                        upper = j;
+                        break;
+                    }
+                }
+            }
+        }
+        return max;
+    }
+
+
+========================================
+(16). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findPolice.java
+========================================
+
+
+
+/*
+其他都比较常规，有一道图的题目，一个 n*n 矩阵，每个房间可能是封闭的房间，可
+能是警察，可能是开的房间，封闭的房间不能过，返回一个 n*n矩阵， 每一个元素是
+最近的警察到这个房间的最短距离。
+*/
+
+
+==
+
+    int[][] findPolice(int[][] houses)
+    {
+        int m = houses.length;
+        if(m==0) return null;
+        int n = houses[0].length;
+        if(n==0) return null;
+
+        int[][] re = new int[m][n];
+        boolean[][] visit = new boolean[m][n];
+        for(int i=0;i<m;i++)
+            for(int j=0;j<n;j++)
+                if(houses[i][j] ==-1) visit[i][j] = true;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(houses[i][j] == 0)
+                {
+                    visit[i][j] = true;
+                    re[i][j] = helper(houses, i, j, visit);
+                    visit[i][j] = false;
+                }
+            }
+        }
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+                System.out.print(re[i][j]+" ");
+            System.out.println();
+        }
+        return re;
+    }
+
+    int helper(int[][] houses, int i, int j, boolean[][] visit)
+    {
+        if(houses[i][j]==1) return 0;
+        if(houses[i][j]==-1) return -1;
+        int min = Integer.MAX_VALUE;
+        if(i-1>=0 && !visit[i-1][j] )
+        {
+            visit[i-1][j] = true;
+            int t = helper(houses, i-1, j, visit);
+            if(t!=-1 && t+1<min)
+            {
+                min = t+1;
+            }
+            visit[i-1][j] =false;
+        }
+
+        if(i+1<houses.length && !visit[i+1][j])
+        {
+            visit[i+1][j] = true;
+            int t = helper(houses, i+1, j, visit);
+            if(t!=-1 && t+1<min)
+            {
+                min = t+1;
+            }
+            visit[i+1][j] = false;
+        }
+        if(j-1>=0 && !visit[i][j-1])
+        {
+            visit[i][j-1] = true;
+            int t = helper(houses, i, j-1, visit);
+            if(t!=-1 && t+1<min)
+            {
+                min = t+1;
+            }
+            visit[i][j-1] = false;
+        }
+        if(j+1<houses[0].length && !visit[i][j+1])
+        {
+            visit[i][j+1] = true;
+            int t = helper(houses, i, j+1, visit);
+            if(t!=-1 && t+1<min)
+            {
+                min = t+1;
+            }
+            visit[i][j+1] = false;
+        }
+        if(min==Integer.MAX_VALUE) min = -1;
+        return min;
+    }
+
+=========
+BFS solution, which is better
+
+static class pair
+{
+	int a, b;
+	pair(int _a, int _b)
+	{
+		a = _a; b = _b;
+	}
+}
+ int[][] findPolice(int[][] houses)
+ {
+ 	int m = houses.length;
+ 	if(m==0) return null;
+ 	int n = houses[0].length;
+ 	if(n==0) return null;
+
+ 	
+ 	int[][] re = new int[m][n];
+ 	for(int i=0;i<m;i++)
+ 	{
+ 		for(int j=0; j<n; j++)
+ 		{
+ 			if(houses[i][j] == 0)
+ 			{
+ 				boolean[][] visit = new boolean[m][n];
+ 				visit[i][j] = true;
+ 				re[i][j] = bfs(houses, visit, i, j);
+ 				visit[i][j] = false;
+ 			}
+ 		}
+ 	}
+ 	return re;
+ }
+
+ int bfs(int[][] houses, boolean[][] visit, int i, int j)
+ {
+ 	int m = houses.length, n = houses[0].length;
+ 	if(i>=m || j>=n) System.exit(-1);
+ 	LinkedList<pair> q = new LinkedList<>();
+ 	q.add(new pair(i,j));
+ 	int re = 0;
+ 	while(q.size()!=0)
+ 	{
+ 		int siz = q.size();
+ 		for(int ii=0; ii<siz; ii++)
+ 		{
+ 			pair cur = q.removeFirst();
+ 			if(houses[cur.a][cur.b]==1) return re;
+ 			if(cur.a+1<m && houses[cur.a+1][cur.b] !=-1 && !visit[cur.a+1][cur.b])
+ 			{
+ 				visit[cur.a+1][cur.b] = true; q.addLast(new pair(cur.a+1, cur.b));
+ 			}
+ 			if(cur.b+1<n && houses[cur.a][cur.b+1] !=-1 && !visit[cur.a][cur.b+1])
+ 			{
+ 				visit[cur.a][cur.b+1] = true; q.addLast(new pair(cur.a, cur.b+1));
+ 			}
+ 			if(cur.a-1>=0 && houses[cur.a-1][cur.b] !=-1 && !visit[cur.a-1][cur.b])
+ 			{
+ 				visit[cur.a-1][cur.b] = true; q.addLast(new pair(cur.a-1, cur.b));
+ 			}
+ 			if(cur.b-1>=0 && houses[cur.a][cur.b-1] !=-1 && !visit[cur.a][cur.b-1])
+ 			{
+ 				visit[cur.a][cur.b-1] = true; q.addLast(new pair(cur.a, cur.b-1));
+ 			}
+ 		}
+ 		re++;
+ 	}
+ 	return 0;
+ }
+
+
+=========   
+
+ public static void main(String[] args) {
+ 	int[][] houses = {{0,0,-1,0},{-1,-1,1,0},{-1,0,0,1},{1,0,-1,1}};
+ 	int[][] re = new Solution().findPolice(houses);
+ 	for(int[] a:houses)
+ 	{
+ 		for(int i:a)
+ 			System.out.print(i+" ");
+ 		System.out.println();
+ 	}
+ 	System.out.println();
+ 	for(int[] a:re)
+ 	{
+ 		for(int i:a)
+ 			System.out.print(i+" ");
+ 		System.out.println();
+ 	}
+ }
+}
+
+
+
+========================================
+(17). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRangeBST.java
+========================================
+
+
+
+/*
+In a given binary search tree, find the number of elements that lie in a given range.
+*/
+
+List<Integer> findNumInRange(TreeNode root, int min, int max)
+{
+	List<Integer> re = new ArrayList<>();
+	helper(root, min, max);
+	return re;
+}
+
+void helper(TreeNode root, int min, int max, List<Integer> re)
+{
+	if(root==null) return;
+	else if(root.val<=min) helper(root.right, min, max, re);
+	else if(root.val>=max) helper(root.left, min, max, re);
+	else
+	{
+		re.add(root.val);
+		helper(root.right, min, max, re);
+		helper(root.left, min, max, re);
+	}
+}
+
+
+
+========================================
+(18). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/findRotation.java
+========================================
+
+
+Given a rotated array, find the number of rotation
+
+======
+
+	public int findTotate(int[] a)
+	{
+		int n = a.length;
+		if(n<=1) return 0;
+
+		int l = 0, r = n-1;
+		int re = -1;
+		while(l<r)
+		{
+			int mid = l+(r-l)/2;
+			if(a[mid]>a[l] && a[mid]>=a[r])
+			{
+				re = mid;
+				l = mid;
+			}else if(a[mid]<a[l] && a[mid]<=a[r])
+			{
+				re=mid;
+				r = mid;
+			}
+			else
+			{
+				l++;
+			}
+		}
+		return (re==-1)?0:re;
+ 	}
+
+
+========================================
+(19). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/inversionCount.java
+========================================
+
+
+/*
+   Count inversion number in unsorted array:
+   {3,1,2} -> 2, since {3,1}, {3,2}
+*/
+
+
+    int merge(int[] a, int l, int r, int[] c)
+    {
+        if(l>=r) return 0;
+        int mid = l +(r-l)/2;
+        int i=l, j = mid+1, k=0;
+        int left = merge(a,l,mid,c);
+        int right = merge(a,mid+1,r,c);
+        int inversion = 0;
+        while(i<=mid&&j<=r)
+        {
+            if(a[i]<=a[j])
+            {
+                c[k++] = a[i++];
+            }
+            else
+            {
+                c[k++] = a[j++];
+                inversion+=(j-mid);
+            }
+        }
+        if (i<=mid) c[k++] = a[i++];
+        while(i<=mid)
+        {
+            c[k++] = a[i];
+            inversion += (r-mid);
+            i++;
+        }
+        while(j<=r) 
+        {
+            c[k++] = a[j++];
+            
+        }
+        i=l;
+
+        for(int in=0; in<k;in++)
+        {
+            a[i++] = c[in];
+        }
+        return inversion+left+right;
+    }
+
+
+
+========================================
+(20). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/isBuidableSoda.java
+========================================
+
+
+/*
+A soda water machine,press button A can generate 300-310ml, button B can generate 400-420ml and button C can generate 
+500-515ml, then given a number range [min, max], tell if all the numers of water in the range can be generated. 
+
+range DP.??
+*/
+
+public static boolean isBuidable(int low, int high, int min, int max) {
+    
+    if(low <= min && max <= high)
+      return true;
+    
+    if(low > min) 
+      return false;
+    
+    return isBuidable(low+300, high+310, min, max) ||
+         isBuidable(low+400, high+420, min, max) ||
+         isBuidable(low+500, high+515, min, max);
+  }
+
+
+========================================
+(21). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/kSum.java
+========================================
+
+
+/*Given n distinct positive integers, integer k (k <= n) and a number target.
+
+Find k numbers where sum is target. Calculate how many solutions there are?
+
+Example
+Given [1,2,3,4], k=2, target=5. There are 2 solutions:
+
+[1,4] and [2,3], return 2.*/
+
+===
+
+DP solution:
+
+	public int solutionKSum(int A[],int k,int target)
+	{
+		int n = A.length;
+		if(n==0) return 0;
+
+		int[][][] map = new int[n+1][k+1][target+1];
+		for(int i=1;i<=n;i++)
+		{
+			for(int j=1;j<=i;j++)
+			    if(A[j-1]<=target)
+				    map[i][1][A[j-1]]++;
+
+		}
+		for(int i=1;i<=n;i++)
+		{
+			for(int j=2;j<=Math.min(i,k);j++)
+			{
+				for(int t=1;t<=target;t++)
+				{
+					map[i][j][t] += map[i-1][j][t];
+
+					if(t-A[i-1]>0)
+					{
+						map[i][j][t]+=(map[i-1][j-1][t-A[i-1]]);
+					}
+				}
+			}
+		}
+		return map[n][k][target];
+	}
+
+
+
+========================================
+(22). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/LargestBSTinBT.java
+========================================
+
+
+
+Given a binary tree, find the largest Binary Search Tree (BST), where largest 
+means BST with largest number of nodes in it. The largest BST may or may not 
+include all of its descendants.
+
+-----
+
+
+class returnType
+{
+	int countNode;
+	int maxNode;
+	TreeNode largestBST;
+	TreeNode child;
+
+	returnType(int _countNode, int _maxNode, TreeNode _largestBST, TreeNode _child)
+	{
+		countNode  = _countNode;
+		_maxNode = maxNode;
+		_largestBST = largestBST;
+		_child = child;
+	}
+}
+
+class Solution
+{
+
+	TreeNode helper(TreeNode p, int min, int max, returnType cur)
+	{
+		if(p==null)
+		{
+			return new returnType(0, cur.maxNode, cur.largestBST, cur.child);
+		}
+
+		if(min<p.val && p.val<max)
+		{
+			returnType left = helper(p.left, min, p.val, cur);
+			TreeNode re = new TreeNode(p.val);
+			re.left = (left.countNode)?null:left.child;
+
+			returnType right = helper(p.right, p.val, max, cur);
+			re.right = (right.countNode)?null:right.child;
+
+			cur.child = re;
+			int total = left.countNode+right.countNode+1;
+			if(total > cur.maxNode)
+			{
+				cur.maxNode = total;
+				cur.largestBST = re;
+			}
+			return new returnType(total, cur.maxNode, cur.largestBST, cur.child);
+		}
+		else
+		{
+			returnType re = helper(p, Integer.MIN_VALUE Integer.MAX_VALUE, cur);
+			re.countNode = 0;
 			return re;
 		}
-
-		PriorityQueue<Pair> q = new PriorityQueue<Pair>();
-		for(int i=0;i<n;i++)
-		{
-			q.add(new Pair(0,i,a[0], b[i]));
-		}
-		int count = 0;
-		while(!q.isEmpty() && count<=k)
-		{
-			Pair cur = q.poll();
-			if(cur == null) break;
-			re.add(cur.val);
-
-			cur.i++;
-			if(cur.i == m) continue;
-
-			q.add(new Pair(cur.i, cur.j, a[cur.i], b[cur.j]));
-		}
-		return re;
 	}
+
+	TreeNode findLargestBST(TreeNode root)
+	{
+		returnType re =  helper(root, Integer.MIN_VALUE, Integer.MAX_VALUE, new returnType(0, Integer.MIN_VALUE, null, null));
+		return re.largestBST;
+	}
+
 }
 
+
+
+========================================
+(23). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCircleIndex.java
+========================================
+
+
+/*
+索引 0 1 2 3 4
+值   3 2 1 4 0
+数组的值是下次跳的索引位置，这样的话数组有环，比如 0 -> 3 -> 4 -> 0  1 -> 2 
+-> 1， 求最长环的长度.
+*/
+
+    int detect(int next, HashMap<Integer, Integer> map)
+    {
+        int re = 1;
+        int cur = next;
+        while(map.containsKey(cur))
+        {
+            cur = map.get(cur);
+            re++;
+            if(cur == next) break;
+        }
+        return re;
+    }
+
+    int longestCircle(HashMap<Integer, Integer> map)
+    {
+        HashSet<Integer> set = new HashSet<Integer>();
+        int max = 0;
+
+        while(map.size()!=0)
+        {
+            set.clear();
+            for(int i:map.keySet())
+            {
+                if(set.contains(i)) continue;
+
+                int cur = i;
+                while(!set.contains(cur) && map.keySet().contains(cur))
+                {
+                    set.add(cur);
+                    int next = map.get(cur);
+                    if(!set.contains(next)) cur = next;
+                    else
+                    {
+                        int local = detect(next, map);
+                        if(local > max) max = local;
+                        for(int j:set)
+                            map.remove(j);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return max;
+    }
+
+
+===
+Another cleaner solution:
+        int longestCircleIndex(int[] a)
+    {
+        int n = a.length;
+        if(n<=1) return n;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i=0;i<n;i++)
+        {
+            map.put(i, a[i]);
+        }
+
+        
+        int max = 0;
+
+
+        Set<Integer> set = new HashSet<>(map.keySet());
+        for(int i:set)
+        {
+            if(!map.containsKey(i)) continue;
+            int local = dfs(map, i);
+            if(local > max) max = local;
+        }
+        return max;
+    }
+
+    int dfs(Map<Integer, Integer> map, int i)
+    {
+        if(!map.containsKey(i)) return 0;
+        int re = 0;
+        int cur = i;
+
+        HashSet<Integer> toD = new HashSet<>();
+        while(!map.isEmpty())
+        {
+            if(!map.containsKey(cur)) break;
+
+            toD.add(cur);
+            cur = map.get(cur);
+
+            if(toD.contains(cur))
+            {
+                int t = cur;
+                re = 1;
+                while(map.get(t)!=cur)
+                {
+                    re++; t = map.get(t);
+                }
+                break;
+            }
+        }
+        for(int ii:toD) map.remove(ii);
+        return re;
+    }
+
+    public static void main(String[] args) {
+        int[] a={1,2,3,4,3};
+        System.out.println(new Solution().longestCircleIndex(a));
+    }
 
 
 
 
 ========================================
-(36). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/reverseBit.java
+(24). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestCommonSuffix.java
+========================================
+
+
+
+/*
+longest common suffix of two linked list
+*/
+    ListNode reverse(ListNode head)
+    {
+        if(head==null || head.next ==null) return head;
+        ListNode cur = head;
+        head = null;
+        while(cur!=null)
+        {
+            ListNode t = cur.next; t.next = null;
+            cur.next = head; head = cur;
+            cur = t;
+        }
+        return head;
+    }
+
+    ListNode longestCommonSuffix(ListNode n1, ListNode n2)
+    {
+        if(n1==null || n2==null) return null;
+
+        n1 = reverse(n1);
+        n2 = reverse(n2);
+
+        ListNode head = null, tail = null;
+        while(n1!=null && n2!=null)
+        {
+            if(n1.val==n2.val)
+            {
+                ListNode t = new ListNode(n1.val);
+                if(head==null)
+                {
+                    head = t; tail = t;
+                }
+                else
+                {
+                    tail.next = t; tail  = t;
+                }
+            }
+            n1 = n1.next; n2 = n2.next;
+        }
+        return reverse(head);
+    }
+
+
+
+========================================
+(25). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/longestSubstringOfTwoChars.java
+========================================
+
+
+/*
+given a string ,return the longest substring that contains at most two 
+characters.
+*/
+    String longestSubstringOfTwoChars(String s)
+    {
+        int n = s.length();
+        if(n<=2) return s;
+
+        char[] c = s.toCharArray();
+        int i=0, j=0;
+
+        int start = 0, end = 0;
+
+        for(;j<n && c[j]==c[i];j++);
+        if(j==n) return s;
+
+        char a = c[i], b = c[j];
+        for(;j<n;j++)
+        {
+            if(c[j]==a || c[j]==b) continue;
+
+            if(j-i>end-start+1)
+            {
+                start = i; end = j-1;
+
+            }
+
+            i=j-1;
+            while(i>=0 && c[i]==c[j-1]) i--;
+            if(i<0) return s.substring(start, end+1);
+            i++;
+            a = c[i]; b=c[j];
+        } 
+        if(j-i>end-start+1) { start = i; end = j-1; }
+        return s.substring(start, end+1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution().longestSubstringOfTwoChars("aabbbbbaxbbbaanaaaaaaaaax"));
+    }
+
+
+
+=====
+
+Another solution:
+
+Note: if calculate the effective length for each valid char, a final check is not needed.
+
+int longestSubstringOfTwoChars(String s)
+{
+	char[] a = s.toCharArray();
+	int n = a.length;
+	if(n<=2) return n;
+
+	int i=0, j=0;
+	int fst = a[i], snd = 0;
+
+	int max = 0, start = 0, end = 0;
+	while(j<n && a[j]==fst) j++;
+	if(j==n) return n;
+
+	snd = a[j];
+	while(j<n&&a[j]==snd) j++;
+	if(j==n) return n;
+
+	while(j<n)
+	{
+		if(a[j] == fst || a[j] == snd)
+		{
+			if(j-i+1>max)
+			{
+				max = j-i+1;
+				start = i; end = j+1;
+			}
+		}
+		else
+		{
+			i=j-1;
+			while(i>=0&&a[i]==a[j-1]) i--;
+			i++;
+			fst = a[i]; snd = a[j];
+		}
+		j++;
+	}
+	System.out.println(s.substring(start, end));
+	return max;
+}
+
+
+
+========================================
+(26). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/maxProdComposition.java
+========================================
+
+
+/*
+一个数，比如7可以拆成 1+3+3 或者3+4。 求拆成的因子相乘积最大的那个值。
+*/
+
+import java.util.*;
+import java.lang.*;
+
+class Solution
+{
+	int maxProdComposition(int num)
+	{
+		if(num<=1) return num;
+		int[] re = new int[num];
+		for(int i=0;i<num;i++)
+		{
+			int max = Integer.MIN_VALUE;
+			for(int j=i;j>=0;j--)
+			{
+				if(j==0) max = Math.max(max, i+1);
+				else max = Math.max(max, (i-j+1)*re[j-1]);
+			}
+			re[i] = max;
+		}
+		return re[num-1];
+	}
+
+	public static void main(String[] args) {
+		Solution sol = new Solution();
+		System.out.println(sol.maxProdComposition(7));
+	}
+
+}
+
+
+========================================
+(27). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/meanOfKinStream.java
+========================================
+
+
+Design a class where you can add elements, and return the mean of the latest N elements.
+
+
+
+class Kmean
+{
+	int cap;
+	int siz;
+	int sum;
+	int cur;
+	int[] arr;
+	Kmean(int _cap)
+	{
+		cap = _cap;
+		cur = siz = sum = 0;
+		arr = new int[cap];
+	}
+
+	void put(int val)
+	{
+		if(siz<cap)
+		{
+			arr[cur] = val;
+			sum+=val;
+			size++;
+			cur = (cur+1)%cap;
+		}
+		else
+		{
+			sum -=arr[cur];
+			arr[cur] = val;
+			sum+=arr[cur];
+			cur = (cur+1)%cap;
+		}
+	}
+
+	int getMean()
+	{
+		return sum/siz;
+	}
+}
+
+====
+
+This is cleaner
+
+class Kmean
+{
+
+	int[] a;
+	int cap = 10;
+	int ind;
+	int siz;
+	int sum;
+
+	void put(int val)
+	{
+		sum-=a[ind%cap];
+		sum+=val;
+		a[ind%cap] = val;
+		ind++;
+		if(siz<cap) siz++;
+	}
+
+	int getMean()
+	{
+		if(siz==0) System.exit(0);
+		return sum/siz;
+	}
+
+}
+
+
+
+========================================
+(28). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minConvertPalindrome.java
+========================================
+
+
+/*
+Given a string, convert it into a palindrome with the lease number of insertions possible
+*/
+
+
+===
+if just compute the minimum # of insertions, iterative DP is good:
+
+int minConvertPalindrome(String s)
+{
+	int n = s.length();
+	if(n<=1) return 0;
+
+	int[][] map = new int[n][n];
+	for(int j=0;j<n;j++)
+	{
+		for(int i=j-1;i>=0;i--)
+		{
+
+			if(s.charAt(i)!=s.charAt(j))
+			{
+				if(i+1>=j) map[i][j] = 1;
+				else
+				{
+					map[i][j] = Math.min(map[i+1][j], map[i][j-1])+1;
+				}
+			}
+			else
+			{
+				if(i+1>=j-1) map[i][j] = 0;
+				else
+					map[i][j] = map[i+1][j-1];
+			}
+
+		}
+	}
+	for(int[] i:map)
+	{
+		for(int j:i)
+			System.out.print(j+" ");
+		System.out.println();
+	}
+	return map[0][n-1];
+}
+
+
+
+
+===
+    static class Result
+    {
+        int num;
+        String s;
+        Result(int _num, String _s)
+        {
+            num = _num; s=_s;
+        }
+        public String toString()
+        {
+            return "{"+num+", "+s+"}";
+        }
+    }
+    String minPalindrome(String s)
+    {
+        int n = s.length();
+        if(n<=1) return s;
+
+        Result re = helper(s, 0, n-1, new HashMap<Integer, Result>());
+        System.out.println(s);
+        System.out.println(re.num);
+        return re.s;
+    }
+
+    Result helper(String s, int l, int r, HashMap<Integer, Result> map)
+    {
+        if(l>r)
+        {
+            Result re = new Result(0,"");
+            return re;
+        }
+        if(l==r)
+        {
+            Result re = new Result(0, s.substring(l,l+1));
+            return re;
+        }
+
+        int key = l*s.length()+r;
+        if(map.containsKey(key)) return map.get(key);
+
+        Result re = null;
+
+        Result left = helper(s,l,r-1,map);
+        Result right = helper(s,l+1,r,map);
+
+        if(left.num<right.num)
+        {
+            re = new Result(left.num+1, s.charAt(r)+left.s+s.charAt(r));
+        }
+        else
+        {
+              re = new Result(right.num+1, s.charAt(l)+right.s+s.charAt(l));
+        }
+
+        if(s.charAt(l)==s.charAt(r))
+        {
+            Result tmp = helper(s,l+1,r-1,map);
+
+            if(tmp.num<re.num)
+            {
+                re.num = tmp.num; re.s = tmp.s;
+                re.s = s.charAt(l)+re.s+s.charAt(l);
+            }
+        }
+
+        map.put(key, re);
+        return re;
+    }
+
+
+
+========================================
+(29). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minCOverDoc.java
+========================================
+
+
+/*
+2. Give a list of documents, find the minimal document set that can cover 
+all the characters in all the documents, like
+“a b c h j”,  "c d”, “a b c” “a f g” “a h j”
+the result should be "a b c h j" "c d" and "a f g"
+*/
+
+import java.util.*;
+import java.lang.*;
+
+class Solution
+{
+	static class lenComp implements Comparator<String>
+	{
+		public int compare(String s, String p)
+		{
+			return s.length()-p.length();
+		}
+	}
+	HashSet<String> minCoverDoc(String[] str)
+	{
+		HashSet<String> re = new HashSet<>();
+		HashSet<Character> set = new HashSet<>();
+		for(String s:str)
+			for(char c:s.toCharArray())
+				set.add(c);
+		Arrays.sort(str, new lenComp());
+
+		while(!set.isEmpty())
+		{
+			int max = 0;
+			HashSet<Character> tmp = null;
+			String tStr = "";
+			for(String s:str)
+			{
+				if(!re.contains(s))
+				{
+					HashSet<Character> r = helper(new HashSet<Character>(set), s);
+					if(r.size()>max)
+					{
+						max = r.size();
+						tmp = r;
+						tStr = s;
+					}
+				}
+			}
+			if(tmp==null) break;
+			re.add(tStr);
+			for(char c:tmp) set.remove(c);
+		}
+		return re;
+	}
+
+	HashSet<Character> helper(HashSet<Character> set, String s)
+	{
+		HashSet<Character> newSet = new HashSet<>();
+		for(char c:s.toCharArray())
+		{
+			if(set.contains(c)) newSet.add(c);
+		}
+		return newSet;
+	}
+
+	public static void main(String[] args) {
+		String[] a = {"abchj","cd", "abc", "afg","ahj"};
+
+		System.out.println(new Solution().minCoverDoc(a));
+	}
+}
+
+
+========================================
+(30). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minLenOfSquareSum.java
+========================================
+
+
+/*	Input: 38
+	Output: [2,3,5], since 2^2+3^2+5^2 = 38*/
+
+===
+
+Iteration:
+====
+
+Cleaner solution:
+
+List<Integer> minLenOfSquareSum(int num)
+{
+	List<Integer> re = new ArrayList<>();
+	if(num<1) return re;
+
+	int[] minimum = new int[num+1];
+	int[] pred = new int[num+1];
+
+	Arrays.fill(minimum, Integer.MAX_VALUE);
+	Arrays.fill(pred, -1);
+
+	for(int i=1;i<=num;i++)
+	{
+		int sroot = (int)Math.sqrt(i);
+		if(sroot*sroot==i)
+		{
+			minimum[i] = 1;
+			pred[i] = sroot;
+		}
+		else
+		{
+			int min = Integer.MAX_VALUE;
+			int pre = -1;
+			for(int j=sroot; j>0; j--)
+			{
+				int comp = i-j*j;
+				if(minimum[comp]<min)
+				{
+					min = minimum[comp];
+					pre = j;
+				}
+			}
+			minimum[i] = min+1;
+			pred[i] = pre;
+		}
+	}
+
+	return getSequence(pred);
+}
+
+List<Integer> getSequence(int[] pred)
+{
+	List<Integer> re = new ArrayList<>();
+
+	int cur = pred.length-1;
+	System.out.println(cur);
+	while(pred[cur]!=-1)
+	{
+		re.add(pred[cur]);
+		cur-=(pred[cur]*pred[cur]);
+	}
+	return re;
+}
+
+
+
+====
+    List<Integer> shortestSquareSum(int N)
+    {
+        List<Integer> result = new ArrayList<Integer>();
+
+        if(N<0) return result;
+        if(N<=1) { result.add(N); return result;}
+
+        int n = (int)(Math.sqrt(N));
+
+        if(n==-1) return result;
+
+        int[][] prefix = new int[n][N];
+        int[][] arr = new int[n][N];
+        for(int i=0;i<n;i++)
+            for(int j=0;j<N;j++)
+                arr[i][j] = Integer.MAX_VALUE;
+        for(int i=0;i<n;i++)
+            for(int j=0;j<N;j++)
+                prefix[i][j] = -1;
+
+
+        for(int i=0;i<N;i++)
+        {
+            
+            for(int j = n-1;j>=0;j--)
+            {
+                int cur = (j+1)*(j+1);
+                int min = Integer.MAX_VALUE;
+                int pre = -1;
+                if(cur>i+1) continue;
+                else if(cur==i+1) { min = 1; pre = -1;}
+                else
+                {
+                    int val = i+1-cur;
+                    for(int k = j;k>=0;k--)
+                    {
+                        if(arr[k][val-1]!= Integer.MAX_VALUE && arr[k][val-1]+1<min)
+                        {
+                            min = arr[k][val-1]+1;
+                            pre = k;
+                        }
+                    }
+                }
+                arr[j][i] = min;
+                prefix[j][i] = pre;
+            }
+        }
+
+        int ind=-1;
+        int min = Integer.MAX_VALUE;
+        for(int i=0;i<n;i++)
+            if(arr[i][N-1]<min)
+            {
+                min = arr[i][N-1];
+                ind = i;
+            }
+        if(min==Integer.MAX_VALUE) return null;
+
+        result = new ArrayList<Integer>();
+        int res = N-1;
+        while(ind!=-1)
+        {
+            result.add(ind+1);
+            int t = ind;
+            ind = prefix[ind][res];
+            res = res-(t+1)*(t+1);
+        }
+        return result;
+    }
+
+====
+
+Recursion:
+
+	List<Integer> helper(int target, int max, HashMap<Integer, List<Integer>> map, int magic)
+	{
+		if(target==0) return new ArrayList<Integer>();
+		if(target<0 || max<=0)
+		{
+			return null;
+		}
+		int sqrt = (int)Math.sqrt(target);
+		int upper = Math.min(sqrt, max);
+		if(upper==0)
+		{
+			return null;
+		}
+
+		int key = max*magic+target;
+		if(map.containsKey(key))
+		{
+			return map.get(key);
+		}
+
+		List<Integer> rr = helper(target, upper-1, map, magic);
+		int min = -1;
+		int siz = -1, minCount = 0;
+		if(rr==null)
+		{
+			siz = 0;
+			min = Integer.MAX_VALUE;
+		}
+		else
+		{
+			siz = rr.size();
+			min = rr.size();
+		}
+		int prod = upper*upper;
+		int count = 0;
+		while(target - prod>=0)
+		{
+			target -=prod;
+			count++;
+
+			List<Integer> rr_local = helper(target,upper-1, map, magic);
+			if(rr_local == null) continue;
+
+			if(rr_local.size()+count<min)
+			{
+
+				rr = rr_local;
+				minCount = count;
+				min = rr.size()+count;
+			}
+		}
+		List<Integer> re = new ArrayList<Integer>(rr);
+		for(int i=0;i<minCount;i++)
+			re.add(upper);
+		map.put(key, re);
+		return map.get(key);
+	}
+
+	List<Integer> minFactorization(int a)
+	{
+		List<Integer> re = new ArrayList<Integer>();
+		if(a<=0) return re;
+		if(a == 1)
+		{
+			re.add(1); return re;
+		}
+
+		int magic = (int)(Math.sqrt(a));
+
+		return helper(a, magic, new HashMap<Integer, List<Integer>>(), a);
+
+	}
+
+	===
+
+	Recursion 2:
+	    List<Integer> shortestSquareSum(int N)
+    {
+        List<Integer> result = new ArrayList<Integer>();
+
+        if(N<0) return result;
+        if(N<=1) { result.add(N); return result;}
+
+        int re = -1;
+        int l = 1, r = N;
+        while(l<=r)
+        {
+            int mid = l+(r-l)/2;
+            if(N/mid == mid) { re = mid; break;}
+            else if(N/mid < mid) { r = mid-1; }
+            else { re = mid; l = mid+1;}
+        }
+
+        if(re==-1) return result;
+
+        int n = re;
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++)
+            arr[i] = (i+1)*(i+1);
+
+        for(int i:arr)
+            System.out.print(i+" ");
+        System.out.println();
+        HashMap<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        return helper(arr, 0, N,map);
+    }
+
+    List<Integer> helper(int[] arr, int k, int sum, HashMap<Integer, List<Integer>> map)
+    {
+        
+        if(sum==0) return new ArrayList<Integer>();
+        if(k==arr.length || sum<0 || arr[k]>sum) return null;
+
+
+        int key = arr.length*sum+k;
+        if(map.containsKey(key)) return map.get(key);
+
+
+        List<Integer> list = helper(arr, k+1, sum, map);
+        int min = (list==null)?Integer.MAX_VALUE:list.size();
+
+        int count = 0;
+        int minCount = 0;
+        while(sum-arr[k]>=0)
+        {
+            count++;
+            sum-=arr[k];
+            List<Integer> tmp = helper(arr, k+1, sum, map);
+            if(tmp!=null && (tmp.size()+count<min||list==null))
+            {
+                list = tmp;
+                min = tmp.size()+count;
+                minCount = count;
+            }
+        }
+        
+        if(list==null || min==Integer.MAX_VALUE) return null;
+        
+        List<Integer>re = new ArrayList<Integer>(list);
+        int sqt = (int)Math.sqrt(arr[k]);
+        for(int i=0;i<minCount;i++)
+            re.add(sqt);
+        map.put(key, re);
+
+        return re;
+    }
+
+
+
+========================================
+(31). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/minPartition.java
+========================================
+
+
+/*
+Given n numbers (P1,P2,P3,.....Pn). Divide them in m contiguous partitions such that the sum of the maximum is minimum.
+For e.g. (5,1,4,2,3) and m =2
+then (5,1)(4,2,3)  
+*/
+
+
+
+    List<List<Integer>> minPartition(int[] a, int m)
+    {
+        List<List<Integer>> re = new ArrayList<>();
+
+        int n = a.length;
+        if(n==0) return re;
+
+        if(m==1)
+        {
+            List<Integer> r = new ArrayList<>();
+            for(int i:a) r.add(i);
+            re.add(r);
+            return re;
+        }
+
+        int[][] min = new int[m][n], pre = new int[m][n];
+        for(int[] i:min)
+            Arrays.fill(i, Integer.MAX_VALUE);
+        for(int[] i:pre)
+            Arrays.fill(i, -1);
+
+        min[0][0] = a[0];
+        for(int i=1;i<n;i++)
+            min[0][i] = Math.max(min[0][i-1], a[i]);
+
+        for(int i=1;i<m;i++)
+        {
+            for(int j=i;j<n;j++)
+            {
+                int minimum = Integer.MAX_VALUE, prev = -1;
+                int local = a[j];
+                for(int k=j;k>=i;k--)
+                {
+                    local = Math.max(local, a[k]);
+                    if(local< minimum-min[i-1][k-1])
+                    {
+                        minimum = local+min[i-1][k-1];
+                        prev = k-1;
+                    }
+                }
+                min[i][j] = minimum;
+                pre[i][j] = prev;
+            }
+        }
+        return getSequence(a, pre);
+    }
+
+    List<List<Integer>> getSequence(int[] a, int[][] pre)
+    {
+        int cur = a.length-1, m = pre.length;
+        List<List<Integer>> re = new ArrayList<>();
+        while(pre[m-1][cur]!=-1)
+        {
+            List<Integer> r = new ArrayList<>();
+            int t = pre[m-1][cur];
+            for(int i=t+1;i<=cur;i++) r.add(a[i]);
+            re.add(0,r);
+            cur = pre[m-1][cur];
+            m--;
+        }
+        List<Integer> r = new ArrayList<>();
+        for(int i=0;i<=cur;i++)
+        {
+            
+            r.add(a[i]);
+        }
+        re.add(0,r);
+        return re;
+    }
+
+==========
+/*
+Below is wrong question.
+
+minimum of maximum of sumation:
+
+*/
+    List<List<Integer>> minPartition(int[] a, int m)
+    {
+        int n = a.length;
+        if(n<m) return 0;
+
+        int[][] min = new int[n][m];
+        int[][] prefix = new int[n][m];
+
+        for(int i=0;i<n;i++)
+            for(int j=0;j<m;j++)
+            {
+                min[i][j] = Integer.MAX_VALUE;
+                prefix[i][j] = -1;
+            }
+       
+        int sum = a[0];
+
+        min[0][0] = a[0];
+        for(int i=1;i<n; i++)
+            min[i][0] = min[i-1][0]+a[i];
+
+        for(int i=1;i<n;i++)
+        {
+
+            sum+=a[i];
+            for(int j=1;j<m&&j<=i;j++)
+            {
+                int sub = 0; int pre = -1;
+                int minimum = Integer.MAX_VALUE;
+                for(int k = i;k>=j;k--)
+                {
+                    sub+=a[k];
+
+                    if(Math.max(sub, min[k-1][j-1]) < minimum)
+                    {
+                        minimum = Math.max(sub, min[k-1][j-1]);
+                        pre = k-1;
+                    }
+                }
+                min[i][j] = minimum;
+                prefix[i][j] = pre;
+            }
+        }
+        List<List<Integer>> re = new ArrayList<List<Integer>>();
+        int cur = n-1;
+        int count = m-1;
+        while(cur!=-1)
+        {
+            int pre = prefix[cur][count];
+            List<Integer> rr = new ArrayList<Integer>();
+            for(int i = pre+1;i<=cur;i++)
+                rr.add(a[i]);
+            re.add(rr);
+            count--;
+            cur = pre;
+        }
+        return re;
+    }
+
+
+========================================
+(32). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/mostTimeinArray.java
+========================================
+
+
+
+/*
+find out in a sorted array which number appears the most times
+*/
+
+    int mostTimeinArray(int[] a)
+    {
+        int n = a.length;
+        if(n<=1) return n;
+
+        int max = 0;
+        int i = 0;
+        while(i<n)
+        {
+
+            int l = i, r = n-1;
+            int re = -1;
+            while(l<=r)
+            {
+                int mid = l+(r-l)/2;
+                if(a[mid]==a[i])
+                {
+                    re = mid; l = mid+1;
+                }
+                else if(a[mid]>a[i]) r = mid-1;
+                else l = mid+1;
+            }
+            if(re==-1) break;
+            if(re+1-i>max) max = re+1-i;
+            i = re+1;
+
+        }
+        return max;
+    }
+
+
+========================================
+(33). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/nextPalindrime.java
+========================================
+
+
+/*如何找比一个int大的下一个palindrome。 Write a function which returns the next palindrome greater than the given number n. e.g., f(231) = 232; f(999) = 1001; f(111) = 121
+*/
+===
+class Solution
+{
+	static int[] nextPalind(int[] a)
+	{
+		int n = a.length;
+		int[] re = new int[n];
+		if(n==1)
+		{
+			re[0] = a[0]+1; 
+			return correct(re);
+		}
+
+		boolean flg = true;
+		int l = 0, r =n-1;
+		while(l<=r)
+		{
+			if(a[l]!=a[r]) break;
+			l++;r--;
+
+		}
+		if(l>r)
+		{
+			int carry = 1;
+			for(int i=n-1;i>=0;i--)
+			{
+				a[i]+=carry;
+				carry=a[i]/10;
+				a[i]%=10;
+			}
+			if(carry!=0)
+			{
+				int[] b = new int[n+1];
+				b[0]=carry;
+				for(int i=0;i<n;i++)
+					b[i+1] =a[i];
+				return nextPalind(b);
+			}
+			return nextPalind(a);
+		}
+		l=0;r=n-1;
+		while(l<=r)
+		{
+			if(a[l]==a[r])
+			{
+				if(l+1==r && flg)
+				{
+					a[l]++;a[r]++;
+				}
+				else if(l==r && flg)
+					a[l]++;
+			}
+			else if(a[l]>a[r])
+			{
+				a[r]=a[l]; flg=false;
+			}
+			else
+			{
+				a[r]=a[l]; flg=true;
+			}
+			l++;r--;
+		}
+		return correct(a);
+	}
+
+	static int[] correct(int[] re)
+	{
+
+		int i, j;
+		int n=re.length;
+		if(re.length%2==0)
+		{
+			i=(re.length-1)/2;
+			j=i+1;
+		}
+		else
+		{
+			i=re.length/2;
+			j=i;
+		}
+		int carry =0;
+		while(i>=0&&j<n)
+		{
+			re[i]+=carry;
+			if(i!=j) re[j]+=carry;
+			if(re[i]>=10)
+			{
+				re[i]%=10;
+				re[j]%=10;
+				carry=1;
+			}
+			else
+			{
+				carry=0;
+			}
+			i--;j++;
+		}
+		if(carry==1)
+		{
+			int[] a = new int[n+2];
+			a[0]=a[n+1]=1;
+			for(i=0;i<n;i++)
+			{
+				a[i+1]=re[i];
+			}
+			return a;
+		}
+		return re;
+	}
+
+	public static void main(String[] args) {
+		// int[] num = {9, 4, 1, 8, 7, 9, 7, 8, 3, 2, 2};
+		int[] num = {2,3,1};
+		// f(231) = 232; f(999) = 1001; f(111) = 121
+		for(int i:nextPalind(num))
+			System.out.print(i+" ");
+		System.out.println();
+
+		int[] num1 = {9,9,9};
+		for(int i:nextPalind(num1))
+			System.out.print(i+" ");
+		System.out.println();
+
+		int[] num2 = {1,1,1};
+		for(int i:nextPalind(num2))
+			System.out.print(i+" ");
+		System.out.println();
+
+	}
+}
+
+
+========================================
+(34). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/packBoxes.java
+========================================
+
+
+/*
+Boxes
+-----
+有若干个盒子，每个盒子有length和width，不考虑高度。只要尺寸fit，大盒子就可以放小盒子，但是一层只能套一个，即便还有空余；但可以多层嵌套。  
+求最小的面积放所有的盒子  
+比如 ``7*7`` , ``5*5``, ``4*6``, ``3*3``, 答案是 ``7*7 + 4*6``.
+*/
+	static class box
+	{
+		int l,w;
+		box(int _l, int _w)
+		{
+			l=_l; w=_w;
+		}
+		int getArea()
+		{
+			return l*w;
+		}
+	}
+
+	static class boxComp implements Comparator<box>
+	{
+		public int compare(box b1, box b2)
+		{
+			return b2.getArea()-b1.getArea();
+		}
+	}
+
+	int minAreaBoxes(box[] b)
+	{
+		int n=b.length;
+		if(n==0) return 0;
+		if(n==1) return b[0].getArea();
+
+		Arrays.sort(b,new boxComp());
+
+		return dfs(b,new boolean[n],0,"");
+
+	}
+
+	int dfs(box[] b, boolean[] visited, int k)
+	{
+		if(k==b.length) return 0;
+		int re = visited[k]?0:b[k].getArea();
+		
+		int local = 0;
+		for(int i=k+1;i<b.length;i++) 
+			local +=(visited[i])?0:b[i].getArea();
+		
+		for(int i=k+1;i<b.length;i++)
+		{
+			if(visited[i] || b[k].l<=b[i].l || b[k].w<=b[i].w)	continue;
+
+			visited[i] = true;
+			local = Math.min(local,dfs(b,visited, k+1));
+			visited[i] = false;
+		}
+		return local+re;
+	}
+
+
+========================================
+(35). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/Ramanujan.java
+========================================
+
+
+/*
+Question 1: The interviewer was really kind. The asked me to write a function to find all the Ramanujan numbers. He helped
+ me when I got stuck at any point and was giving me polite hints.
+
+ 1729 = 1^3 + 12^3 = 9^3 + 10^3
+*/
+    List<List<Integer>> Ramanujan(int N)
+    {
+        List<List<Integer>> re = new ArrayList<List<Integer>>();
+        if(N<9) return re;
+        long l = 1, r = N;
+        while(l<r)
+        {
+            long sum = l*l*l+r*r*r;
+            if(sum == N)
+            {
+                List<Integer> rr = new ArrayList<Integer>();
+                rr.add((int)l); rr.add((int)r);
+                re.add(rr);
+                if(re.size()==2) return re;
+                else { l++;r--;}
+            }
+            else if(sum<N) l++;
+            else r--;
+        }
+        re.clear();
+        return re;
+    }
+
+
+========================================
+(36). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomCache.java
+========================================
+
+
+
+/*就是如何实现find, insert, delete, getRandom 都是O(1)
+*/
+
+
+
+class Solution
+{
+    int cap;
+    int size;
+    int[] arr;
+    HashMap<Integer, Integer> map;
+
+    Solution(int _cap)
+    {
+        cap = _cap;
+        size = 0;
+        arr = new int[cap];
+        map = new HashMap<Integer, Integer>();
+    }
+
+    boolean find(int elem)
+    {
+        return map.containsKey(elem);
+    }
+
+    void insert(int elem)
+    {
+        if(map.containsKey(elem)) return;
+        if(size<cap)
+        {
+            arr[size] = elem;
+            map.put(elem, size);
+            size++;
+        }
+        else
+        {
+            int[] newArr = new int[2*cap];
+            for(int i=0;i<cap;i++)
+            {
+                newArr[i] = arr[i];
+            }
+            cap = 2*cap;
+            insert(elem);
+        }
+    }
+    
+    void delete(int elem)
+    {
+        if(!map.containsKey(elem)) return;
+
+        int ind = map.get(elem);
+        int last = arr[size-1];
+        map.remove(elem);
+        map.remove(last);
+        arr[ind] = last;
+        map.put(last,ind);
+        size--;
+    }
+
+    int getRandom()
+    {
+        if(size!=0)
+        {
+            int k = random(0,size);
+            return arr[k];
+        }
+        System.exit(-11);
+    }
+}
+
+
+
+========================================
+(37). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/randomWalkProb.java
+========================================
+
+
+
+/*
+第二题，直线上有一个机器人从原点开始移动，每次可以向左移，也可以向右移，移动
+n步，再回到原点的概率是多少, 可以写程序实现。*/
+
+===
+
+cleaner solution:
+
+class Solution
+{
+    static int origin =0, total =0;
+
+    double randomWalk(int n)
+    {
+        helper(n,0,0);
+        return (double)origin/total;
+    }
+
+    void helper(int n, int i, int j)
+    {
+        if(i+j==n)
+        {
+            if(i==j) origin++;
+            total++;
+        }
+        else
+        {
+            helper(n, i+1,j);
+            helper(n, i,j+1);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution().randomWalk(3));
+    }
+}
+
+===
+    static class returnType
+    {
+        int origin;
+        int total;
+        returnType()
+        {
+            origin = 0; total = 0;
+        }
+    }
+
+    returnType helper(int n, int i, int j)
+    {
+        if(i+j>n) return new returnType();
+        int origin = 0;
+        int total = 0;
+        if(i+j==n)
+        {
+            if(i==j) origin++;
+            total++;
+        }
+        else
+        {
+            returnType res1=helper(n,i+1,j);
+            returnType res2=helper(n,i,j+1);
+            origin = res1.origin+res2.origin;
+            total = res1.total+res2.total;
+        }
+
+        returnType re= new returnType();
+        re.origin = origin;
+        re.total = total;
+        return re;
+    }
+
+
+
+========================================
+(38). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildAlphabet.java
+========================================
+
+
+/*
+fft, fcp, aac, act, acd, atp, tbk, tdf, …
+这些都是按照字母排序好的，但是字母顺序改了，比如 f 在 a之前，t在d之前等等，
+给定一些这样的rule，问怎么rebuild the alphabet?
+*/
+
+
+
+class node
+{
+    char val;
+    int indegree;
+    HashSet<node> outNode;
+
+    node(char _val)
+    {
+        val = _val;
+        indegree = 0;
+        outNode = new HashSet<node>();
+    }
+}
+
+class Solution{
+
+
+    String alphabetRebuild(String[] a)
+    {
+        String re = "";
+        int n = a.length;
+        if(n==0) return re;
+
+        HashMap<Character, node> map = new HashMap<Character, node>();
+
+        for(String s:a)
+        {
+            for(int i=0;i<s.length();i++)
+            {
+                char c = s.charAt(i);
+                if(!map.containsKey(c))
+                {
+                    map.put(c, new node(c));
+                }
+
+                if(i+1<s.length())
+                {
+                    char next = s.charAt(i+1);
+
+                    if(next==c) continue;
+
+                    node nd = map.get(c);
+
+                    if(!map.containsKey(next))
+                        map.put(next,new node(next));
+
+                    if(!nd.outNode.contains(map.get(next)))
+                    {
+                        map.get(next).indegree++;
+                        nd.outNode.add(map.get(next));
+                    }
+                }
+            }
+        }
+
+        while(map.size()!=0)
+        {
+            node nd = null;
+            for(char c:map.keySet())
+            {
+                nd = map.get(c);
+                if(map.get(c).indegree==0) break;
+            }
+
+            if(nd==null) return re;
+            re = re+String.valueOf(nd.val);
+            for(node N : nd.outNode)
+            {
+                N.indegree--;
+            }
+            map.remove(nd.val);
+        }
+        return re;
+    }
+
+    public static void main(String[] args) {
+        
+        String[] a = {"fft", "fcp", "aac", "act", "acd", "atp", "tbk", "tdf"};
+
+        System.out.println(new Solution().alphabetRebuild(a));
+    }
+
+}
+
+
+========================================
+(39). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rebuildUpTree.java
+========================================
+
+
+/* 1. printing a tree structure with giving collection of pairs of <parent, 
+child> relation. Need to first find the root, and validate wether the given 
+relations is a valid tree, and then printing. 
+*/
+
+===
+    static class pair
+    {
+        int left, right;
+        pair(int _left, int _right)
+        {
+            left = _left; right = _right;
+        }
+    }
+
+    static class node
+    {
+        int val;
+        int indegree;
+        HashSet<node> outgoing;
+        node(int _val)
+        {
+            val = _val; indegree = 0; outgoing = new HashSet<node>();
+        }
+    }
+
+    node buildUp(pair[] a)
+    {
+        int n = a.length; 
+        if(n==0) return null;
+
+        HashMap<Integer, node> map = new HashMap<Integer, node>();
+        for(pair p:a)
+        {
+            int par = p.left, kid = p.right;
+            if(!map.containsKey(par)) map.put(par, new node(par));
+            if(!map.containsKey(kid)) map.put(kid, new node(kid));
+            node parNode = map.get(par);
+            node kidNode = map.get(kid);
+
+            if(!parNode.outgoing.contains(kidNode)) 
+            {
+                parNode.outgoing.add(kidNode);
+                kidNode.indegree++;
+            }
+        }
+
+        node rootNode = null;
+        for(int i:map.keySet())
+        {
+            if(map.containsKey(i) && map.get(i).indegree==0)
+            {
+                if(rootNode!=null)
+                {
+                    rootNode=null; break;
+                }
+                rootNode = map.get(i);
+            }
+        }
+        if(rootNode==null) return null;
+
+        HashSet<node> set = new HashSet<node>();
+        LinkedList<node> q = new LinkedList<node>();
+
+        q.addLast(rootNode);
+        set.add(rootNode);
+        while(!q.isEmpty())
+        {
+            node cur = q.removeFirst();
+            for(node k : cur.outgoing)
+            {
+                if(set.contains(k))
+                {
+                    rootNode = null; break;
+                }
+                set.add(k); q.addLast(k);
+            }
+        }
+
+        if(rootNode==null) return null;
+        return (set.size()==map.size())?rootNode:null;
+    }
+
+
+========================================
+(40). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/ReorderArray.java
+========================================
+
+
+Reorder array, so that a[i-1]<a[i]>a[i+1]
+
+
+===
+Print all results:
+
+	boolean valid(int[] r, int k)
+	{
+		if(k==0 || k-1==0) return true;
+		if(r[k]<r[k-1]) return r[k-1]>r[k-2];
+		if(r[k]>r[k-1]) return r[k-1]<r[k-2];
+		return false;
+	}
+
+
+	void helper(int[] a, int k,List<List<Integer>> re,  int[] r, boolean[] used)
+	{
+		int n = a.length;
+		if(n==k)
+		{
+				List<Integer> rr = new ArrayList<Integer>();
+				for(int i:r) rr.add(i);
+				re.add(rr);
+			return;
+		}
+
+		for(int i=0;i<n;i++)
+		{
+			if(!used[i])
+			{
+				used[i] = true;
+				r[k] = a[i];
+				if(valid(r,k))
+				{
+					
+					helper(a,k+1,re, r, used);
+				}
+				used[i] = false;
+			}
+		}
+		return;
+	}
+
+	List<List<Integer>> reOrder(int[] a)
+	{
+		List<List<Integer>> re = new ArrayList<List<Integer>>();
+		int n = a.length;
+		if(n==0) return re;
+
+		helper(a, 0, re, new int[n], new boolean[n]);
+		return re;
+	}
+
+
+---
+
+	public void selection(int[] a, int k, int l, int r)
+	{
+		if(l+k>r) return;
+		int val = a[l];
+
+		int i = l-1, j = r+1;
+		while(i<j)
+		{
+			while(++i<j && a[i]<=val);
+			while(i<--j && a[j] >val);
+			if(i>=j) break;
+
+			int t = a[i];
+			a[i] = a[j];
+			a[j] = t;
+		}
+		int t = a[j];
+		a[j] = a[l];
+		a[l] = t;
+		if(j-l == k) return;
+		else if(j-l<k)
+		{
+			selection(a, k+l-j, j,r);
+		}
+		else
+		{
+			selection(a,k,l,j);
+		}
+	}
+
+	void reverse(int[] a, int l, int r)
+	{
+		while(l<r)
+		{
+			int t = a[l]; a[l] = a[r]; a[r] = t;
+			l++; r--;
+		}
+	}
+	public void reorder(int[] a, int l, int r)
+	{
+		if(r-l+1<=2) return;
+
+		int mid = l+(r-l)/2;
+
+		int left = l +(mid-l)/2;
+		int num = left-l+1;
+		int right = mid+num;
+
+		reverse(a, left+1, mid);
+		reverse(a, mid+1, right);
+		reverse(a,left+1, right);
+
+		reorder(a, l, l+2*num-1);
+		reorder(a, l+2*num, r);
+	}
+
+	public void reOrder(int[] a)
+	{
+		int n = a.length;
+		if(n<=1) return;
+
+		selection(a, (n-1)/2, 0, n-1);
+		reorder(a,0,n-1);
+
+	}
+
+
+========================================
+(41). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/reverseBit.java
 ========================================
 
 
@@ -6218,7 +3242,7 @@ class Solution
 
 
 ========================================
-(37). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rotateBT.java
+(42). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/rotateBT.java
 ========================================
 
 
@@ -6277,7 +3301,7 @@ upside down
 
 
 ========================================
-(38). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/searchMatrix.java
+(43). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/searchMatrix.java
 ========================================
 
 
@@ -6336,7 +3360,7 @@ exist in the matrix
 
 
 ========================================
-(39). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/shortestPrefix.java
+(44). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/shortestPrefix.java
 ========================================
 
 
@@ -6520,7 +3544,7 @@ cleaner solution:
 
 
 ========================================
-(40). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/threeIncreaseElem.java
+(45). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/threeIncreaseElem.java
 ========================================
 
 
@@ -6569,7 +3593,7 @@ class Solution
 
 
 ========================================
-(41). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/threePower.java
+(46). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/threePower.java
 ========================================
 
 
@@ -6604,7 +3628,105 @@ class Solution
 
 
 ========================================
-(42). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/uglyNumber.java
+(47). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/topologySort.java
+========================================
+
+
+/*
+fft, fcp, aac, act, acd, atp, tbk, tdf, …
+这些都是按照字母排序好的，但是字母顺序改了，比如 f 在 a之前，t在d之前等等，
+给定一些这样的rule，问怎么rebuild the alphabet?
+*/
+
+
+
+class node
+{
+    char val;
+    int indegree;
+    HashSet<node> outNode;
+
+    node(char _val)
+    {
+        val = _val;
+        indegree = 0;
+        outNode = new HashSet<node>();
+    }
+}
+
+class Solution{
+
+
+    String alphabetRebuild(String[] a)
+    {
+        String re = "";
+        int n = a.length;
+        if(n==0) return re;
+
+        HashMap<Character, node> map = new HashMap<Character, node>();
+
+        for(String s:a)
+        {
+            for(int i=0;i<s.length();i++)
+            {
+                char c = s.charAt(i);
+                if(!map.containsKey(c))
+                {
+                    map.put(c, new node(c));
+                }
+
+                if(i+1<s.length())
+                {
+                    char next = s.charAt(i+1);
+
+                    if(next==c) continue;
+
+                    node nd = map.get(c);
+
+                    if(!map.containsKey(next))
+                        map.put(next,new node(next));
+
+                    if(!nd.outNode.contains(map.get(next)))
+                    {
+                        map.get(next).indegree++;
+                        nd.outNode.add(map.get(next));
+                    }
+                }
+            }
+        }
+
+        while(map.size()!=0)
+        {
+            node nd = null;
+            for(char c:map.keySet())
+            {
+                nd = map.get(c);
+                if(map.get(c).indegree==0) break;
+            }
+
+            if(nd==null) return re;
+            re = re+String.valueOf(nd.val);
+            for(node N : nd.outNode)
+            {
+                N.indegree--;
+            }
+            map.remove(nd.val);
+        }
+        return re;
+    }
+
+    public static void main(String[] args) {
+        
+        String[] a = {"fft", "fcp", "aac", "act", "acd", "atp", "tbk", "tdf"};
+
+        System.out.println(new Solution().alphabetRebuild(a));
+    }
+
+}
+
+
+========================================
+(48). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/uglyNumber.java
 ========================================
 
 
@@ -6648,7 +3770,7 @@ Example: 1 2 3 4 5 6 8 9 10 12
 
 
 ========================================
-(43). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/UTF8Verification.java
+(49). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/UTF8Verification.java
 ========================================
 
 
@@ -6703,7 +3825,7 @@ class Solution
 
 
 ========================================
-(44). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/winCoinPicking.java
+(50). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/winCoinPicking.java
 ========================================
 
 
@@ -6738,7 +3860,7 @@ int winCoinPicking(int[] a)
 
 
 ========================================
-(45). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/youngTablueKMAX.java
+(51). /Users/linxie/Documents/github/leetcodeV2/nonLeetCodeQ/youngTablueKMAX.java
 ========================================
 
 
