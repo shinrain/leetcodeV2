@@ -87,11 +87,15 @@ def find_conflict(intvs):
 
 3. design data structure supporting insert(int v), remove(int v), getRandom(), what is your choice given a stream of integers, how to get median value efficiently. what if we want to get the top x% number? [list+hash table; max-heap + min-heap; keep it sorted!?]
 
+{max-min heap with x% number difference}
 
+==
 4. we have a history of match result of pingpong games, assume each match is <player1, player2, result, timestamp>, player1 and player2 are long type, result is a bit value (1 means player1 win). design a algorithm to sort the players by their possibility to win future games. [For each play, winning score = \sum 1* {delay factor^(current time - winning time)}; pagerank 
-
 ]
 
+Learning
+
+===
 
 1. Multiple threads can publish and receive each other's message: whenever a thread publishes a message, all the other threads can receive and print out that message; if multiple message get published, the messages should be queued or whatever recorded and other threads can print out the message one by one; no published message should be missed by any other threads.
 
@@ -394,6 +398,7 @@ Use stacks to implement a queue. amortized time complexity? worst case complexit
 
 Least cost to cut a batten: the cost of cutting each segment is the cost of the segment length, an array is storing each end point, eg: [0, 3, 7, 8, 11, 12], the batten length is 12, there are 4 cutting point.
 
+DP
 
 删除一个单链中的节点， 不知该链表的head [node.prev.next = node.next]
 
