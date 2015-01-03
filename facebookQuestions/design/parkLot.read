@@ -1,0 +1,158 @@
+Design a valet parking system. Requirements of the valet parking system should be: 
+1. Customer are given a ticket that they can use to redeem to get their vehicle back 
+2. Parking spots come in three sizes, small, med, large 
+3. Thee types of vehicles, small, med, large 
+-a small vehicle can park in a small, medium, and large spot 
+-a medium vehicle can park in a medium and large spot 
+-a large vehicle can park in a large spot
+
+
+class Ticket {
+        public string PersonName;
+        public string TicketID;
+    }
+
+    class ValetParking
+    {
+        private Dictionary<Ticket, Spot> ticketRemainder = new Dictionary<Ticket, Spot>();
+
+        private List<Spot> smallSpots = new List<Spot>();
+        private List<Spot> mediumSpots = new List<Spot>();
+        private List<Spot> bigSpots = new List<Spot>();
+
+        public ValetParking(int small, int medium, int big) 
+        {
+            CreateSpots(small, VehicleSize.Small);
+            CreateSpots(medium, VehicleSize.Medium);
+            CreateSpots(big, VehicleSize.Big);
+        }
+
+        private void CreateSpots(int total, VehicleSize type) {
+            List<Spot> list = null;
+
+            switch (type) 
+            {
+                case VehicleSize.Small:
+                    {
+                        list = smallSpots; break;
+                    }
+                case VehicleSize.Medium:
+                    {
+                        list = mediumSpots; break;
+                    }
+                case VehicleSize.Big:
+                    {
+                        list = bigSpots; break;
+                    }
+            }
+
+            for (int i = 0; i < total; i++)
+            {
+                list.Add(new Spot(type));
+            }
+        }
+
+        private Spot FindSpot(Vehicle v) 
+        {
+            if (v == null) return null;
+
+            List<List<Spot>> spotsToSearch = new List<List<Spot>>();
+
+            spotsToSearch.Add(smallSpots);
+
+            if (v.Size == VehicleSize.Medium || v.Size == VehicleSize.Big) {
+                spotsToSearch.Add(mediumSpots);
+            }
+            if (v.Size == VehicleSize.Big)
+            {
+                spotsToSearch.Add(bigSpots);
+            }
+
+            foreach (List<Spot> parking in spotsToSearch) 
+            {
+                foreach (Spot s in parking)
+                {
+                    if (!s.IsEmpty) 
+                    {
+                        return s;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public Ticket Park(Vehicle v, string personName) {
+
+            Spot s = FindSpot(v);
+
+            if (s != null) {
+                s.Park(v);
+                Ticket t = new Ticket() { PersonName = personName, TicketID = "Ticket ID : " + s.GetHashCode() };
+
+                ticketRemainder.Add(t, s);
+
+                return t;
+            }
+
+            return null;
+        } 
+
+        public Vehicle Unpark(Ticket ticket) {
+            if (ticket != null && ticketRemainder.ContainsKey(ticket)) {
+                Spot s = ticketRemainder[ticket];
+                return s.Unpark();
+            }
+
+            return null;
+        }
+    }
+
+    public enum VehicleSize { Small, Medium, Big }
+
+    class Vehicle 
+    {
+        private VehicleSize size = VehicleSize.Small;
+        public VehicleSize Size 
+        {
+            get { return size; }
+        }
+    }
+
+    class Spot {
+        private VehicleSize size = VehicleSize.Small;
+        public VehicleSize Size
+        {
+            get { return size; }
+        }
+
+        public Spot(VehicleSize vs) {
+            size = vs;
+        }
+
+        private Vehicle ParkedVehicle { get; set; }
+
+        public void Park(Vehicle v) 
+        {
+            if (IsEmpty)
+            {
+                ParkedVehicle = v;
+            }
+        }
+
+        public Vehicle Unpark() {
+            if (!IsEmpty) {
+                Vehicle v = ParkedVehicle;
+                ParkedVehicle = null;
+
+                return v;
+            }
+
+            return null;
+        }
+
+        public bool IsEmpty 
+        {
+            get { return ParkedVehicle == null; }
+        }
+    }
